@@ -1,0 +1,27 @@
+{
+  "name": "polyana-ski-bot",
+  "version": "1.0.0",
+  "description": "🧐 Telegram assistant in Krasnaya Polyana",
+  "main": "",
+  "scripts": {
+    "start": "nodemon ./app/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikitaSheremeta/polyana-ski-bot.git"
+  },
+  "keywords": [
+    "node.js",
+    "telegraf.js"
+  ],
+  "author": "Nikita N. Sheremeta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NikitaSheremeta/polyana-ski-bot/issues"
+  },
+  "homepage": "https://github.com/NikitaSheremeta/polyana-ski-bot#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "telegraf": "^3.38.0"
+  }
+}
