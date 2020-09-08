@@ -1,14 +1,16 @@
 require('dotenv').config();
 
-const { Extra, Markup, Telegraf } = require('telegraf');
+const { Telegraf } = require('telegraf');
 const session = require('telegraf/session');
 const Stage = require('telegraf/stage');
-const Scene = require('telegraf/scenes/base');
+
+const opening = require('./controllers/opening/index');
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 
-const { leave } = Stage;
+const stage = new Stage([opening]);
 
-bot.start(ctx => ctx.reply('Hello World!'));
+bot.use(session());
+bot.use(stage.middleware());
 
-bot.launch();
+bot.start(ctx => ctx.scene.enter('opening'));
