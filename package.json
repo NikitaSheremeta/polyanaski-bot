@@ -23,5 +23,8 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "telegraf": "^3.38.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.8.1"
   }
 }
