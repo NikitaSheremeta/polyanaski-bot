@@ -4,7 +4,7 @@
   "description": "🧐 Telegram assistant in Krasnaya Polyana",
   "main": "",
   "scripts": {
-    "start": "nodemon ./app/app.js"
+    "start": "nodemon ./src/index.js"
   },
   "repository": {
     "type": "git",
