@@ -14,10 +14,7 @@
     "menu": {
       "one": "One button",
       "two": "Two button",
-      "three": "Three button",
-      "four": "Four button",
-      "five": "Five button",
-      "six": "Six button"
+      "three": "Three button"
     }
   }
 }
