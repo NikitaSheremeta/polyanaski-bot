@@ -22,7 +22,8 @@
   "homepage": "https://github.com/NikitaSheremeta/polyana-ski-bot#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "telegraf": "^3.38.0"
+    "telegraf": "^3.38.0",
+    "telegraf-i18n": "^6.6.0"
   },
   "devDependencies": {
     "eslint": "^7.8.1"

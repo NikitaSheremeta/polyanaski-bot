@@ -1,0 +1,23 @@
+{
+  "scenes": {
+    "opening": {
+      "welcome": "Welcome йопта",
+      "description": "Description",
+      "go": "GO!"
+    }
+  },
+  "keyboards": {
+    "navigation": {
+      "next": "Дальше",
+      "back": "Назад"
+    },
+    "menu": {
+      "one": "One button",
+      "two": "Two button",
+      "three": "Three button",
+      "four": "Four button",
+      "five": "Five button",
+      "six": "Six button"
+    }
+  }
+}
