@@ -1,20 +1,22 @@
 const { Markup } = require('telegraf');
 
 const getMainMenu = (ctx) => {
-  const about = ctx.i18n.t('keyboards.main-menu.about');
-  const journey = ctx.i18n.t('keyboards.main-menu.journey');
-  const hotels = ctx.i18n.t('keyboards.main-menu.hotels');
-  const riding = ctx.i18n.t('keyboards.main-menu.riding');
-  const rent = ctx.i18n.t('keyboards.main-menu.rent');
-  const instructors = ctx.i18n.t('keyboards.main-menu.instructors');
-  const freeride = ctx.i18n.t('keyboards.main-menu.freeride');
-  const contacts = ctx.i18n.t('keyboards.main-menu.contacts');
+  const buttons = {
+    about: ctx.i18n.t('keyboards.main-menu.about'),
+    journey: ctx.i18n.t('keyboards.main-menu.journey'),
+    hotels: ctx.i18n.t('keyboards.main-menu.hotels'),
+    riding: ctx.i18n.t('keyboards.main-menu.riding'),
+    rent: ctx.i18n.t('keyboards.main-menu.rent'),
+    instructors: ctx.i18n.t('keyboards.main-menu.instructors'),
+    freeride: ctx.i18n.t('keyboards.main-menu.freeride'),
+    contacts: ctx.i18n.t('keyboards.main-menu.contacts')
+  };
 
   let mainMenu = Markup.keyboard([
-    [about, journey],
-    [hotels, riding],
-    [rent, instructors],
-    [freeride, contacts]
+    [buttons.about, buttons.journey],
+    [buttons.hotels, buttons.riding],
+    [buttons.rent, buttons.instructors],
+    [buttons.freeride, buttons.contacts]
   ]);
 
   mainMenu = mainMenu.resize().extra();
