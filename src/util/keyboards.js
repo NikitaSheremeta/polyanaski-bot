@@ -1,15 +1,25 @@
 const { Markup } = require('telegraf');
 
-const getMenuKeyboard = (ctx) => {
-  const one = ctx.i18n.t('keyboards.menu.one');
-  const two = ctx.i18n.t('keyboards.menu.two');
-  const three = ctx.i18n.t('keyboards.menu.three');
+const getMainMenu = (ctx) => {
+  const about = ctx.i18n.t('keyboards.main-menu.about');
+  const journey = ctx.i18n.t('keyboards.main-menu.journey');
+  const hotels = ctx.i18n.t('keyboards.main-menu.hotels');
+  const riding = ctx.i18n.t('keyboards.main-menu.riding');
+  const rent = ctx.i18n.t('keyboards.main-menu.rent');
+  const instructors = ctx.i18n.t('keyboards.main-menu.instructors');
+  const freeride = ctx.i18n.t('keyboards.main-menu.freeride');
+  const contacts = ctx.i18n.t('keyboards.main-menu.contacts');
 
-  let menuKeyboard = Markup.keyboard([one, two, three]);
+  let mainMenu = Markup.keyboard([
+    [about, journey],
+    [hotels, riding],
+    [rent, instructors],
+    [freeride, contacts]
+  ]);
 
-  menuKeyboard = menuKeyboard.resize().extra();
+  mainMenu = mainMenu.resize().extra();
 
-  return { menuKeyboard };
+  return { mainMenu };
 };
 
-module.exports = { getMenuKeyboard };
+module.exports = { getMainMenu };
