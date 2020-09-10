@@ -10,9 +10,14 @@ const start = new Scene('start');
 start.enter((ctx) => {
   const { mainMenu } = getMainMenu(ctx);
 
-  const message = ctx.i18n.t('scenes.start.greeting');
+  const messages = {
+    greeting: ctx.i18n.t('scenes.start.greeting'),
+    description: ctx.i18n.t('scenes.start.description')
+  };
 
-  return ctx.reply(message, mainMenu);
+  ctx.reply(messages.greeting);
+
+  ctx.reply(messages.description, mainMenu);
 });
 
 start.leave((ctx) => ctx.reply('Bye!'));
