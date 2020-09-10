@@ -1,20 +1,21 @@
 {
   "scenes": {
     "opening": {
-      "welcome": "Welcome йопта",
-      "description": "Description",
-      "go": "GO!"
+      "greeting": "Приветсвие",
+      "description": "Описание возможностей бота",
+      "welcome-back": "С возвращением!",
+      "go": "Го!"
     }
   },
   "keyboards": {
     "navigation": {
-      "next": "Дальше",
-      "back": "Назад"
+      "back": "Назад",
+      "next": "Дальше"
     },
     "menu": {
-      "one": "One button",
-      "two": "Two button",
-      "three": "Three button"
+      "one": "Первая кнопка",
+      "two": "Вторая кнопка",
+      "three": "Третья кнопка"
     }
   }
 }
