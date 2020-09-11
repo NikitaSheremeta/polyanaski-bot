@@ -1,4 +1,16 @@
-const { Markup } = require('telegraf');
+const Markup = require('telegraf/markup');
+
+const getStartMenu = (ctx) => {
+  const buttons = {
+    start: ctx.i18n.t('keyboards.start-menu.start')
+  };
+
+  let startMenu = Markup.keyboard([buttons.start]);
+
+  startMenu = startMenu.resize().extra();
+
+  return { startMenu };
+};
 
 const getMainMenu = (ctx) => {
   const buttons = {
@@ -24,4 +36,4 @@ const getMainMenu = (ctx) => {
   return { mainMenu };
 };
 
-module.exports = { getMainMenu };
+module.exports = { getStartMenu, getMainMenu };
