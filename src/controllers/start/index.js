@@ -6,9 +6,9 @@ const { getStartMenu, getMainMenu } = require('../../util/keyboards');
 
 const { leave } = Stage;
 
-const start = new Scene('start');
-
 const REPLY_INTERVAL = 1600;
+
+const start = new Scene('start');
 
 start.enter((ctx) => {
   const { startMenu } = getStartMenu(ctx);

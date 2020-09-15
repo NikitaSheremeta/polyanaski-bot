@@ -1,9 +1,7 @@
 const Markup = require('telegraf/markup');
 
 const getStartMenu = (ctx) => {
-  const buttons = {
-    start: ctx.i18n.t('keyboards.start-menu.start')
-  };
+  const buttons = { start: ctx.i18n.t('keyboards.start-menu.start') };
 
   let startMenu = Markup.keyboard([buttons.start]);
 
