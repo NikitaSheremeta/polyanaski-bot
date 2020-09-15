@@ -1,9 +1,9 @@
 require('dotenv').config();
 
 const path = require('path');
+const TelegrafI18n = require('telegraf-i18n');
 const { Telegraf } = require('telegraf');
 const Stage = require('telegraf/stage');
-const TelegrafI18n = require('telegraf-i18n');
 
 const { start } = require('./controllers/start/index');
 
@@ -16,12 +16,12 @@ const i18n = new TelegrafI18n({
   sessionName: 'session',
   allowMissing: false,
   directory: path.resolve(__dirname, './locales'),
-  useSession: true,
+  useSession: true
 });
 
 bot.use(Telegraf.session());
-bot.use(stage.middleware());
 bot.use(i18n.middleware());
+bot.use(stage.middleware());
 
 bot.start((ctx) => ctx.scene.enter('start'));
 

@@ -1,9 +1,14 @@
-const { Extra, Markup } = require('telegraf');
+const { match } = require('telegraf-i18n');
+const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
 
-const { getStartMenu } = require('../../util/keyboards');
+const { getStartMenu, getMainMenu } = require('../../util/keyboards');
+
+const { leave } = Stage;
 
 const start = new Scene('start');
+
+const REPLY_INTERVAL = 1600;
 
 start.enter((ctx) => {
   const { startMenu } = getStartMenu(ctx);
@@ -15,14 +20,17 @@ start.enter((ctx) => {
 
   ctx.reply(messages.greeting);
 
-  ctx.reply(messages.description, startMenu);
+  setTimeout(() => ctx.reply(messages.description, startMenu), REPLY_INTERVAL);
 });
 
 start.leave((ctx) => {
-  ctx.reply('Выход из сценария', Extra.markup(Markup.removeKeyboard()));
+  const { mainMenu } = getMainMenu(ctx);
+
+  const messages = { go: ctx.i18n.t('shared.go') };
+
+  ctx.reply(messages.go, mainMenu);
 });
 
-start.hears(/инфо/gi, (ctx) => ctx.reply('Стартовая сцена'));
-start.hears(/понятно/gi, (ctx) => ctx.scene.leave(ctx));
+start.hears(match('keyboards.start-menu.start'), leave());
 
 module.exports = { start };
