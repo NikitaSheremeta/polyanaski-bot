@@ -14,11 +14,7 @@
     }],
     "keyword-spacing": ["error", {
       "before": true,
-      "after": true,
-      "overrides": {
-        "if": { "after": false },
-        "switch": { "after": false }
-      }
+      "after": true
     }],
     "no-magic-numbers": ["error", {
       "ignoreArrayIndexes": true,
