@@ -1,16 +1,16 @@
 const Markup = require('telegraf/markup');
 
-const getStartMenu = (ctx) => {
+const getStartKeyboard = (ctx) => {
   const buttons = { start: ctx.i18n.t('keyboards.start-menu.start') };
 
-  let startMenu = Markup.keyboard([buttons.start]);
+  let keyboard = Markup.keyboard([buttons.start]);
 
-  startMenu = startMenu.resize().extra();
+  keyboard = keyboard.resize().extra();
 
-  return { startMenu };
+  return { keyboard };
 };
 
-const getMainMenu = (ctx) => {
+const getMainKeyboard = (ctx) => {
   const buttons = {
     about: ctx.i18n.t('keyboards.main-menu.about'),
     journey: ctx.i18n.t('keyboards.main-menu.journey'),
@@ -22,16 +22,26 @@ const getMainMenu = (ctx) => {
     contacts: ctx.i18n.t('keyboards.main-menu.contacts')
   };
 
-  let mainMenu = Markup.keyboard([
+  let keyboard = Markup.keyboard([
     [buttons.about, buttons.hotels],
     [buttons.riding, buttons.rent],
     [buttons.instructors, buttons.freeride],
     [buttons.contacts]
   ]);
 
-  mainMenu = mainMenu.resize().extra();
+  keyboard = keyboard.resize().extra();
 
-  return { mainMenu };
+  return { keyboard };
 };
 
-module.exports = { getStartMenu, getMainMenu };
+const getBackKeyboard = (ctx) => {
+  const buttons = { back: ctx.i18n.t('keyboards.navigation.back') };
+
+  let keyboard = Markup.keyboard([buttons.back]);
+
+  keyboard = keyboard.resize().extra();
+
+  return { keyboard };
+};
+
+module.exports = { getStartKeyboard, getMainKeyboard, getBackKeyboard };
