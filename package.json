@@ -1,7 +1,7 @@
 {
   "name": "polyana-ski-bot",
   "version": "1.0.1",
-  "description": "🧐 Telegram assistant in Krasnaya Polyana",
+  "description": "Telegram assistant in Krasnaya Polyana",
   "scripts": {
     "serve": "NODE_ENV=production node ./src/app.js",
     "watch": "nodemon ./src/app.js",
@@ -27,6 +27,7 @@
     "telegraf-i18n": "^6.6.0"
   },
   "devDependencies": {
-    "eslint": "^7.8.1"
+    "eslint": "^7.8.1",
+    "nodemon": "^2.0.4"
   }
 }
