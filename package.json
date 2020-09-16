@@ -1,10 +1,11 @@
 {
   "name": "polyana-ski-bot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "🧐 Telegram assistant in Krasnaya Polyana",
-  "main": "",
   "scripts": {
-    "start": "nodemon ./src/app.js"
+    "serve": "NODE_ENV=production node ./src/app.js",
+    "watch": "nodemon ./src/app.js",
+    "start": "npm run serve"
   },
   "repository": {
     "type": "git",
