@@ -1,0 +1,12 @@
+{
+  "emergency-help": {
+    "mchs": "МЧС, скорая 112 (с мобильного)",
+    "emergency-room": "Травмпункт в Красной Поляне +7 (862) 243-72-37",
+    "ambulance": "Станция скорой помощи в Красной Поляне +7 (862) 243-74-03"
+  },
+  "transport": {},
+  "rosa-khutor": {},
+  "gazprom": {},
+  "gorkygorod": {},
+  "alpika-service": {}
+}
