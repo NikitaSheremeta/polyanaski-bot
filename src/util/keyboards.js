@@ -23,10 +23,10 @@ const getMainMenu = (ctx) => {
   };
 
   let mainMenu = Markup.keyboard([
-    [buttons.about, buttons.journey],
-    [buttons.hotels, buttons.riding],
-    [buttons.rent, buttons.instructors],
-    [buttons.freeride, buttons.contacts]
+    [buttons.about, buttons.hotels],
+    [buttons.riding, buttons.rent],
+    [buttons.instructors, buttons.freeride],
+    [buttons.contacts]
   ]);
 
   mainMenu = mainMenu.resize().extra();
