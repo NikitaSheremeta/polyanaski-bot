@@ -2,7 +2,7 @@ const { match } = require('telegraf-i18n');
 const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
 
-const Contacts = require('../../models/contacts');
+const Contacts = require('../../models/contacts/index');
 
 const { getMainKeyboard, getBackKeyboard } = require('../../util/keyboards');
 
