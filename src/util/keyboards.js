@@ -1,11 +1,13 @@
+// Переписываем на класс
+const Extra = require('telegraf/extra');
 const Markup = require('telegraf/markup');
 
 const getStartKeyboard = (ctx) => {
   const buttons = { start: ctx.i18n.t('keyboards.start-menu.start') };
 
-  let keyboard = Markup.keyboard([buttons.start]);
+  let keyboard = Markup.keyboard([buttons.start]).resize();
 
-  keyboard = keyboard.resize().extra();
+  keyboard = Extra.markdown().markup(keyboard);
 
   return { keyboard };
 };
@@ -22,14 +24,16 @@ const getMainKeyboard = (ctx) => {
     contacts: ctx.i18n.t('keyboards.main-menu.contacts')
   };
 
-  let keyboard = Markup.keyboard([
+  const keyLayout = [
     [buttons.about, buttons.hotels],
     [buttons.riding, buttons.rent],
     [buttons.instructors, buttons.freeride],
     [buttons.contacts]
-  ]);
+  ];
 
-  keyboard = keyboard.resize().extra();
+  let keyboard = Markup.keyboard(keyLayout).resize();
+
+  keyboard = Extra.markdown().markup(keyboard);
 
   return { keyboard };
 };
@@ -37,9 +41,9 @@ const getMainKeyboard = (ctx) => {
 const getBackKeyboard = (ctx) => {
   const buttons = { back: ctx.i18n.t('keyboards.navigation.back') };
 
-  let keyboard = Markup.keyboard([buttons.back]);
+  let keyboard = Markup.keyboard([buttons.back]).resize();
 
-  keyboard = keyboard.resize().extra();
+  keyboard = Extra.markdown().markup(keyboard);
 
   return { keyboard };
 };

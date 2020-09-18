@@ -10,18 +10,35 @@ const { leave } = Stage;
 
 const contacts = new Scene('contacts');
 
-contacts.enter(async (ctx) => {
+// Выносим в модель и накидываем на конструктор
+const toMessage = async () => {
   const data = await Contacts.getData();
+
+  let message = [];
+
+  for (const key in data) {
+    const value = Object.values(data[key]);
+
+    if (value.length) message.push(...value);
+  }
+
+  message = message.join('\n\n');
+
+  return message;
+};
+
+contacts.enter(async (ctx) => {
+  const message = await toMessage();
 
   const { keyboard } = getBackKeyboard(ctx);
 
-  ctx.reply(data, keyboard);
+  await ctx.reply(message, keyboard);
 });
 
-contacts.leave((ctx) => {
+contacts.leave(async (ctx) => {
   const { keyboard } = getMainKeyboard(ctx);
 
-  ctx.reply('Выход из контактной сцены', keyboard);
+  await ctx.reply('Выход из контактной сцены', keyboard);
 });
 
 contacts.hears(match('keyboards.navigation.back'), leave());
