@@ -10,15 +10,12 @@ const contacts = new Contacts();
 
 scene.enter(async (ctx) => {
   const message = await contacts.toMessage();
-
   const { keyboard } = getBackKeyboard(ctx);
-
   await ctx.reply(message, keyboard);
 });
 
 scene.leave(async (ctx) => {
   const { keyboard } = getMainKeyboard(ctx);
-
   await ctx.reply('Выход из контактной сцены', keyboard);
 });
 

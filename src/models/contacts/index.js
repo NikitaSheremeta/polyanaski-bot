@@ -14,23 +14,17 @@ class Contacts {
 
   async getAll() {
     const data = await this.fetch();
-
     return data;
   }
 
   async toMessage() {
     const data = await this.fetch();
-
     let message = [];
-
     for (const key in data) {
       const value = Object.values(data[key]);
-
       if (value.length) message.push(...value);
     }
-
     message = message.join('\n\n');
-
     return message;
   }
 }

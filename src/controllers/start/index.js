@@ -11,22 +11,17 @@ const start = new Scene('start');
 
 start.enter((ctx) => {
   const { keyboard } = getStartKeyboard(ctx);
-
   const messages = {
     greeting: ctx.i18n.t('scenes.start.greeting'),
     description: ctx.i18n.t('scenes.start.description')
   };
-
   ctx.reply(messages.greeting);
-
   setTimeout(() => ctx.reply(messages.description, keyboard), REPLY_INTERVAL);
 });
 
 start.leave((ctx) => {
   const { keyboard } = getMainKeyboard(ctx);
-
   const messages = { go: ctx.i18n.t('shared.go') };
-
   ctx.reply(messages.go, keyboard);
 });
 
