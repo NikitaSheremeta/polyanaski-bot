@@ -5,7 +5,7 @@ class Contacts {
   fetch() {
     return new Promise((resolve, reject) => {
       fs.readFile(
-        path.join(__dirname, '../..', 'data', 'contacts.json'),
+        path.join(__dirname, '..', 'locales', 'contacts-ru.json'),
         'utf-8',
         (err, content) => err ? reject(err) : resolve(JSON.parse(content))
       );
@@ -13,19 +13,17 @@ class Contacts {
   }
 
   async getAll() {
-    const data = await this.fetch();
-    return data;
+    return await this.fetch();
   }
 
   async toMessage() {
     const data = await this.fetch();
-    let message = [];
+    const message = [];
     for (const key in data) {
       const value = Object.values(data[key]);
       if (value.length) message.push(...value);
     }
-    message = message.join('\n\n');
-    return message;
+    return message.join('\n\n');
   }
 }
 

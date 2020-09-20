@@ -1,7 +1,7 @@
 const Extra = require('telegraf/extra');
 const Markup = require('telegraf/markup');
 
-class Keyboards {
+class Keyboard {
   constructor(ctx, markdown = false) {
     this.ctx = ctx;
     this.markdown = markdown;
@@ -59,4 +59,4 @@ class Keyboards {
   }
 }
 
-module.exports = Keyboards;
+module.exports = Keyboard;
