@@ -21,11 +21,11 @@ class Keyboards {
   }
 
   keyboard(layout) {
-    const keyboard = Markup.keyboard(layout);
+    const keyboard = Markup.keyboard(layout).resize();
     if (this.markdown) {
       return Extra.markdown().markup(keyboard);
     }
-    return keyboard.resize().extra();
+    return keyboard.extra();
   }
 
   launch() {

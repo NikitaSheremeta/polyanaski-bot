@@ -10,7 +10,7 @@ const contacts = new Contacts();
 
 scene.enter(async (ctx) => {
   const message = await contacts.toMessage();
-  const keyboard = new Keyboards(ctx);
+  const keyboard = new Keyboards(ctx, true);
   await ctx.reply(message, keyboard.navigation('back'));
 });
 
