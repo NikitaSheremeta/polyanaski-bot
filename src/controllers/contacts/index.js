@@ -5,9 +5,7 @@ const Contacts = require('../../models/contacts/index');
 const { getMainKeyboard, getBackKeyboard } = require('../../util/keyboards');
 
 const { leave } = Stage;
-
 const scene = new Scene('contacts');
-
 const contacts = new Contacts();
 
 scene.enter(async (ctx) => {

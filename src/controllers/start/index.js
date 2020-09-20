@@ -7,7 +7,6 @@ const { getStartKeyboard, getMainKeyboard } = require('../../util/keyboards');
 const REPLY_INTERVAL = 1600;
 
 const { leave } = Stage;
-
 const start = new Scene('start');
 
 start.enter((ctx) => {
