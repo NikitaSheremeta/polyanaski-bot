@@ -4,11 +4,9 @@ const { combine, timestamp, printf } = format;
 
 function prepareMessage(ctx, msg, ...data) {
   const message = data.length ? util.format(msg, ...data) : msg;
-
   if (ctx && ctx.from) {
     return `[${ctx.from.id}/${ctx.from.username}]: ${message}`;
   }
-
   return `: ${message}`;
 }
 
@@ -28,10 +26,7 @@ const logger = createLogger({
 
 if (process.env.NODE_ENV !== 'production') {
   logger.add(new transports.Console({
-    format: format.combine(
-      format.colorize(),
-      format.simple()
-    )
+    format: format.combine(format.colorize(), format.simple())
   }));
 }
 
