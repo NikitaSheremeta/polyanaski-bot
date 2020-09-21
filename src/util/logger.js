@@ -2,13 +2,13 @@ const util = require('util');
 const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, printf } = format;
 
-function prepareMessage(ctx, msg, ...data) {
+const prepareMessage = (ctx, msg, ...data) => {
   const message = data.length ? util.format(msg, ...data) : msg;
   if (ctx && ctx.from) {
     return `[${ctx.from.id}/${ctx.from.username}]: ${message}`;
   }
   return `: ${message}`;
-}
+};
 
 const logFormat = printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level}: ${message}`;
