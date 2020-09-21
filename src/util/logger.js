@@ -3,36 +3,41 @@ const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, printf } = format;
 
 function prepareMessage(ctx, msg, ...data) {
-  const formattedMessage = data.length ? util.format(msg, ...data) : msg;
+  const message = data.length ? util.format(msg, ...data) : msg;
 
   if (ctx && ctx.from) {
-    return `[${ctx.from.id}/${ctx.from.username}]: ${formattedMessage}`;
+    return `[${ctx.from.id}/${ctx.from.username}]: ${message}`;
   }
 
-  return `: ${formattedMessage}`;
+  return `: ${message}`;
 }
 
-const logFormat = printf(info => {
-  return `[${info.timestamp}] [${info.level}]${info.message}`;
+const logFormat = printf(({ level, message, label, timestamp }) => {
+  return `${timestamp} [${label}] ${level}: ${message}`;
 });
 
 const logger = createLogger({
+  format: combine(timestamp(), format.splat(), format.simple(), logFormat),
   transports: [
     new transports.Console({
       level: process.env.NODE_ENV === 'production' ? 'error' : 'debug'
     }),
     new transports.File({ filename: 'debug.log', level: 'debug' })
-  ],
-  format: combine(timestamp(), format.splat(), format.simple(), logFormat)
+  ]
 });
 
 if (process.env.NODE_ENV !== 'production') {
-  logger.debug('Logging initialized at debug level');
+  logger.add(new transports.Console({
+    format: format.combine(
+      format.colorize(),
+      format.simple()
+    )
+  }));
 }
 
-const CTXLogger = {
+const loggerWithCtx = {
   debug: (ctx, msg, ...data) => logger.debug(prepareMessage(ctx, msg, ...data)),
   error: (ctx, msg, ...data) => logger.error(prepareMessage(ctx, msg, ...data))
 };
 
-module.exports = { CTXLogger };
+module.exports = { loggerWithCtx };
