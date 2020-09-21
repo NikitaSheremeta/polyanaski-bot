@@ -24,7 +24,8 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "telegraf": "^3.38.0",
-    "telegraf-i18n": "^6.6.0"
+    "telegraf-i18n": "^6.6.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "eslint": "^7.8.1",
