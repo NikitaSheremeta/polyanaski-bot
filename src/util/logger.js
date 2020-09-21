@@ -10,8 +10,8 @@ const prepareMessage = (ctx, msg, ...data) => {
   return `: ${message}`;
 };
 
-const logFormat = printf(({ level, message, label, timestamp }) => {
-  return `${timestamp} [${label}] ${level}: ${message}`;
+const logFormat = printf(({ level, message, timestamp }) => {
+  return `${timestamp} ${level}: ${message}`;
 });
 
 const logger = createLogger({
@@ -35,4 +35,4 @@ const loggerWithCtx = {
   error: (ctx, msg, ...data) => logger.error(prepareMessage(ctx, msg, ...data))
 };
 
-module.exports = { loggerWithCtx };
+module.exports = { logger: loggerWithCtx };
