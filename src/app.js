@@ -30,7 +30,7 @@ bot.start(asyncWrapper(async (ctx) => await ctx.scene.enter('start')));
 
 bot.hears(
   match('keyboards.main-menu.contacts'),
-  (ctx) => ctx.scene.enter('contacts')
+  asyncWrapper(async (ctx) => await ctx.scene.enter('contacts'))
 );
 
 bot.catch((error) => logger.error(undefined, 'Global error, %O', error));

@@ -12,19 +12,9 @@ class Contacts {
     });
   }
 
-  async getAll() {
-    return await this.fetch();
-  }
-
   async toMessage() {
     const data = await this.fetch();
-    const message = [];
-
-    for (const key in data) {
-      const value = Object.values(data[key]);
-
-      if (value.length) message.push(...value);
-    }
+    const message = Object.values(data);
 
     return message.join('\n\n');
   }
