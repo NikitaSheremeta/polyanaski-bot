@@ -19,10 +19,13 @@ class Contacts {
   async toMessage() {
     const data = await this.fetch();
     const message = [];
+
     for (const key in data) {
       const value = Object.values(data[key]);
+
       if (value.length) message.push(...value);
     }
+
     return message.join('\n\n');
   }
 }

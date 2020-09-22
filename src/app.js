@@ -33,8 +33,6 @@ bot.hears(
   (ctx) => ctx.scene.enter('contacts')
 );
 
-bot.catch((error) => {
-  logger.error(undefined, 'Global error has happened, %O', error);
-});
+bot.catch((error) => logger.error(undefined, 'Global error, %O', error));
 
 bot.startPolling();

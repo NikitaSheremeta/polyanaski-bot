@@ -11,14 +11,18 @@ const contacts = new Contacts();
 
 scene.enter(async (ctx) => {
   logger.debug(ctx, 'Enters contact scene');
+
   const message = await contacts.toMessage();
   const keyboard = new Keyboard(ctx, true);
+
   await ctx.reply(message, keyboard.navigation('back'));
 });
 
 scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the contact scene');
+
   const keyboard = new Keyboard(ctx);
+
   await ctx.reply('Выход из контактной сцены', keyboard.main());
 });
 

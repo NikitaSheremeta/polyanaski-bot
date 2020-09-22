@@ -4,9 +4,11 @@ const { combine, timestamp, printf } = format;
 
 const prepareMessage = (ctx, msg, ...data) => {
   const message = data.length ? util.format(msg, ...data) : msg;
+
   if (ctx && ctx.from) {
     return `[${ctx.from.id}/${ctx.from.username}]: ${message}`;
   }
+
   return `: ${message}`;
 };
 
