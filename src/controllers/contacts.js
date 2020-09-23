@@ -21,9 +21,10 @@ scene.enter(async (ctx) => {
 scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the contact scene');
 
+  const messages = { mainMenu: ctx.i18n.t('shared.main-menu') };
   const keyboard = new Keyboard(ctx);
 
-  await ctx.reply('Выход из контактной сцены', keyboard.main());
+  await ctx.reply(messages.mainMenu, keyboard.main());
 });
 
 scene.hears(match('keyboards.navigation.back'), leave());

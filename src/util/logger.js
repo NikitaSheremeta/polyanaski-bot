@@ -32,9 +32,7 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
-const loggerWithCtx = {
+module.exports.logger = {
   debug: (ctx, msg, ...data) => logger.debug(prepareMessage(ctx, msg, ...data)),
   error: (ctx, msg, ...data) => logger.error(prepareMessage(ctx, msg, ...data))
 };
-
-module.exports = { logger: loggerWithCtx };

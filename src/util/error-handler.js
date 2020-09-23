@@ -1,6 +1,6 @@
 const logger = require('./logger');
 
-function asyncWrapper(fn) {
+module.exports.asyncWrapper = (fn) => {
   return (async (ctx, next) => {
     try {
       return await fn(ctx);
@@ -12,6 +12,4 @@ function asyncWrapper(fn) {
       return next();
     }
   });
-}
-
-module.exports = { asyncWrapper };
+};

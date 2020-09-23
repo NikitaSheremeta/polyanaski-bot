@@ -9,10 +9,7 @@ class Keyboard {
       launch: this.ctx.i18n.t('keyboards.launch'),
       back: this.ctx.i18n.t('keyboards.navigation.back'),
       next: this.ctx.i18n.t('keyboards.navigation.next'),
-      about: this.ctx.i18n.t('keyboards.main-menu.about'),
-      journey: this.ctx.i18n.t('keyboards.main-menu.journey'),
-      hotels: this.ctx.i18n.t('keyboards.main-menu.hotels'),
-      riding: this.ctx.i18n.t('keyboards.main-menu.riding'),
+      skipass: this.ctx.i18n.t('keyboards.main-menu.ski-pass'),
       rent: this.ctx.i18n.t('keyboards.main-menu.rent'),
       instructors: this.ctx.i18n.t('keyboards.main-menu.instructors'),
       freeride: this.ctx.i18n.t('keyboards.main-menu.freeride'),
@@ -36,8 +33,7 @@ class Keyboard {
 
   main() {
     const layout = [
-      [this.buttons.about, this.buttons.hotels],
-      [this.buttons.riding, this.buttons.rent],
+      [this.buttons.skipass, this.buttons.rent],
       [this.buttons.instructors, this.buttons.freeride],
       [this.buttons.contacts]
     ];
