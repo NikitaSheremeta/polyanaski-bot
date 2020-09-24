@@ -16,16 +16,16 @@ scene.enter(async (ctx) => {
   const message = await contacts.toMessage();
   const keyboards = new Keyboards(ctx, true);
 
-  await ctx.reply(message, keyboards.navigation('back'));
+  await ctx.reply(message, keyboards.back);
 });
 
 scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the contact scene');
 
-  const messages = new Messages(ctx).getMessages();
+  const messages = new Messages(ctx);
   const keyboards = new Keyboards(ctx);
 
-  await ctx.reply(messages.mainMenu, keyboards.main());
+  await ctx.reply(messages.mainMenu, keyboards.main);
 });
 
 scene.hears(match('navigation.back'), leave());

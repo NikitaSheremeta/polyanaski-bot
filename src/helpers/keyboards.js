@@ -18,29 +18,15 @@ class Keyboards extends Buttons {
     return keyboard.extra();
   }
 
-  launch() {
+  get launch() {
     return this.keyboard([this.buttons.launch]);
   }
 
-  navigation(key) {
-    if (key) {
-      switch (key) {
-        case 'back':
-          return this.keyboard([this.buttons.back]);
-        case 'next':
-          return this.keyboard([this.buttons.next]);
-      }
-    }
-
-    const layout = [
-      [this.buttons.next],
-      [this.buttons.back],
-    ];
-
-    return this.keyboard(layout);
+  get back() {
+    return this.keyboard([this.buttons.back]);
   }
 
-  main() {
+  get main() {
     const layout = [
       [this.buttons.skipass, this.buttons.rent],
       [this.buttons.instructors, this.buttons.freeride],
@@ -50,7 +36,7 @@ class Keyboards extends Buttons {
     return this.keyboard(layout);
   }
 
-  resorts() {
+  get resorts() {
     const layout = [
       [this.buttons.rosaKhutor, this.buttons.gorkiGorod],
       [this.buttons.gazprom, this.buttons.alpikaService]

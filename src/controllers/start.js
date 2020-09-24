@@ -14,12 +14,10 @@ scene.enter(async (ctx) => {
   logger.debug(ctx, 'Enters start scene');
 
   const keyboards = new Keyboards(ctx);
-  const messages = new Messages(ctx).getMessages();
+  const messages = new Messages(ctx);
 
   await ctx.reply(messages.greeting).then(() => {
-    setTimeout(() => {
-      ctx.reply(messages.description, keyboards.launch());
-    }, DELAY);
+    setTimeout(() => ctx.reply(messages.description, keyboards.launch), DELAY);
   });
 });
 
@@ -27,9 +25,9 @@ scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the start scene');
 
   const keyboards = new Keyboards(ctx);
-  const messages = new Messages(ctx).getMessages();
+  const messages = new Messages(ctx);
 
-  await ctx.reply(messages.go, keyboards.main());
+  await ctx.reply(messages.go, keyboards.main);
 });
 
 scene.hears(match('shared.launch'), leave());

@@ -9,8 +9,20 @@ class Messages {
     };
   }
 
-  getMessages() {
-    return this.messages;
+  get greeting() {
+    return this.messages.greeting;
+  }
+
+  get description() {
+    return this.messages.description;
+  }
+
+  get go() {
+    return this.messages.go;
+  }
+
+  get mainMenu() {
+    return this.messages.mainMenu;
   }
 }
 

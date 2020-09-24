@@ -16,10 +16,6 @@ class Buttons {
       alpikaService: this.ctx.i18n.t('resorts.alpika-service'),
     };
   }
-
-  getButtons() {
-    return this.buttons;
-  }
 }
 
 module.exports = Buttons;
