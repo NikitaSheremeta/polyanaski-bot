@@ -2,7 +2,7 @@ const Extra = require('telegraf/extra');
 const Markup = require('telegraf/markup');
 const Buttons = require('./buttons');
 
-class Keyboard extends Buttons {
+class Keyboards extends Buttons {
   constructor(ctx, markdown = false) {
     super(ctx);
     this.markdown = markdown;
@@ -60,4 +60,4 @@ class Keyboard extends Buttons {
   }
 }
 
-module.exports = Keyboard;
+module.exports = Keyboards;
