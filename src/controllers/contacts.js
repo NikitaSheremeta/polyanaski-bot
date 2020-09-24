@@ -27,6 +27,6 @@ scene.leave(async (ctx) => {
   await ctx.reply(messages.mainMenu, keyboard.main());
 });
 
-scene.hears(match('keyboards.navigation.back'), leave());
+scene.hears(match('navigation.back'), leave());
 
 module.exports = { contacts: scene };

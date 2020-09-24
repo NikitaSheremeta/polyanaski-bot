@@ -6,14 +6,14 @@ class Keyboard {
     this.ctx = ctx;
     this.markdown = markdown;
     this.buttons = {
-      launch: this.ctx.i18n.t('keyboards.launch'),
-      back: this.ctx.i18n.t('keyboards.navigation.back'),
-      next: this.ctx.i18n.t('keyboards.navigation.next'),
-      skipass: this.ctx.i18n.t('keyboards.main-menu.ski-pass'),
-      rent: this.ctx.i18n.t('keyboards.main-menu.rent'),
-      instructors: this.ctx.i18n.t('keyboards.main-menu.instructors'),
-      freeride: this.ctx.i18n.t('keyboards.main-menu.freeride'),
-      contacts: this.ctx.i18n.t('keyboards.main-menu.contacts'),
+      launch: this.ctx.i18n.t('shared.launch'),
+      back: this.ctx.i18n.t('navigation.back'),
+      next: this.ctx.i18n.t('navigation.next'),
+      skipass: this.ctx.i18n.t('categories.ski-passes'),
+      rent: this.ctx.i18n.t('categories.rent'),
+      instructors: this.ctx.i18n.t('categories.instructors'),
+      freeride: this.ctx.i18n.t('categories.freeride'),
+      contacts: this.ctx.i18n.t('categories.contacts'),
       rosaKhutor: this.ctx.i18n.t('resorts.rosa-khutor'),
       gorkiGorod: this.ctx.i18n.t('resorts.gorki-gorod'),
       gazprom: this.ctx.i18n.t('resorts.gazprom'),

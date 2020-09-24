@@ -32,6 +32,6 @@ scene.leave(async (ctx) => {
   await ctx.reply(messages.go, keyboard.main());
 });
 
-scene.hears(match('keyboards.launch'), leave());
+scene.hears(match('shared.launch'), leave());
 
 module.exports = { start: scene };
