@@ -3,6 +3,7 @@ const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
 const Contacts = require('../models/contacts');
 const Keyboards = require('../helpers/keyboards');
+const Messages = require('../helpers/messages');
 const { logger } = require('../util/logger');
 
 const { leave } = Stage;
@@ -21,7 +22,7 @@ scene.enter(async (ctx) => {
 scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the contact scene');
 
-  const messages = { mainMenu: ctx.i18n.t('shared.main-menu') };
+  const messages = new Messages(ctx).getMessages();
   const keyboards = new Keyboards(ctx);
 
   await ctx.reply(messages.mainMenu, keyboards.main());

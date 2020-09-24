@@ -2,6 +2,7 @@ const { match } = require('telegraf-i18n');
 const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
 const Keyboards = require('../helpers/keyboards');
+const Messages = require('../helpers/messages');
 const { logger } = require('../util/logger');
 
 const DELAY = 1600;
@@ -13,10 +14,7 @@ scene.enter(async (ctx) => {
   logger.debug(ctx, 'Enters start scene');
 
   const keyboards = new Keyboards(ctx);
-  const messages = {
-    greeting: ctx.i18n.t('scenes.start.greeting'),
-    description: ctx.i18n.t('scenes.start.description')
-  };
+  const messages = new Messages(ctx).getMessages();
 
   await ctx.reply(messages.greeting).then(() => {
     setTimeout(() => {
@@ -29,7 +27,7 @@ scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the start scene');
 
   const keyboards = new Keyboards(ctx);
-  const messages = { go: ctx.i18n.t('shared.go') };
+  const messages = new Messages(ctx).getMessages();
 
   await ctx.reply(messages.go, keyboards.main());
 });
