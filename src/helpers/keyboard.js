@@ -13,7 +13,11 @@ class Keyboard {
       rent: this.ctx.i18n.t('keyboards.main-menu.rent'),
       instructors: this.ctx.i18n.t('keyboards.main-menu.instructors'),
       freeride: this.ctx.i18n.t('keyboards.main-menu.freeride'),
-      contacts: this.ctx.i18n.t('keyboards.main-menu.contacts')
+      contacts: this.ctx.i18n.t('keyboards.main-menu.contacts'),
+      rosaKhutor: this.ctx.i18n.t('resorts.rosa-khutor'),
+      gorkiGorod: this.ctx.i18n.t('resorts.gorki-gorod'),
+      gazprom: this.ctx.i18n.t('resorts.gazprom'),
+      alpikaService: this.ctx.i18n.t('resorts.alpika-service'),
     };
   }
 
@@ -31,16 +35,6 @@ class Keyboard {
     return this.keyboard([this.buttons.launch]);
   }
 
-  main() {
-    const layout = [
-      [this.buttons.skipass, this.buttons.rent],
-      [this.buttons.instructors, this.buttons.freeride],
-      [this.buttons.contacts]
-    ];
-
-    return this.keyboard(layout);
-  }
-
   navigation(key) {
     if (key) {
       switch (key) {
@@ -54,6 +48,25 @@ class Keyboard {
     const layout = [
       [this.buttons.next],
       [this.buttons.back],
+    ];
+
+    return this.keyboard(layout);
+  }
+
+  main() {
+    const layout = [
+      [this.buttons.skipass, this.buttons.rent],
+      [this.buttons.instructors, this.buttons.freeride],
+      [this.buttons.contacts]
+    ];
+
+    return this.keyboard(layout);
+  }
+
+  resorts() {
+    const layout = [
+      [this.buttons.rosaKhutor, this.buttons.gorkiGorod],
+      [this.buttons.gazprom, this.buttons.alpikaService]
     ];
 
     return this.keyboard(layout);
