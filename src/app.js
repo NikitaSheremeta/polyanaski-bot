@@ -29,7 +29,7 @@ bot.use(stage.middleware());
 bot.start(asyncWrapper(async (ctx) => await ctx.scene.enter('start')));
 
 bot.hears(
-  match('keyboards.main-menu.contacts'),
+  match('categories.contacts'),
   asyncWrapper(async (ctx) => await ctx.scene.enter('contacts'))
 );
 
