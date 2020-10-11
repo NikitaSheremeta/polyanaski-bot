@@ -1,6 +1,6 @@
-const { match } = require('telegraf-i18n');
 const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
+const { match } = require('telegraf-i18n');
 const Contacts = require('../models/contacts');
 const Keyboards = require('../helpers/keyboards');
 const Messages = require('../helpers/messages');

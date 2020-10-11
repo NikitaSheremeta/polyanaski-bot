@@ -1,14 +1,14 @@
 require('dotenv').config();
 
-const path = require('path');
 const { Telegraf } = require('telegraf');
 const TelegrafI18n = require('telegraf-i18n');
-const { match } = require('telegraf-i18n');
+const path = require('path');
 const Stage = require('telegraf/stage');
+const { match } = require('telegraf-i18n');
 const { start } = require('./controllers/start');
 const { contacts } = require('./controllers/contacts');
-const { logger } = require('./util/logger');
 const { asyncWrapper } = require('./util/error-handler');
+const { logger } = require('./util/logger');
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 
@@ -29,7 +29,7 @@ bot.use(stage.middleware());
 bot.start(asyncWrapper(async (ctx) => await ctx.scene.enter('start')));
 
 bot.hears(
-  match('categories.contacts'),
+  match('categories.consultation'),
   asyncWrapper(async (ctx) => await ctx.scene.enter('contacts'))
 );
 

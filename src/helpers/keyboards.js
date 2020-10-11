@@ -1,5 +1,5 @@
-const Extra = require('telegraf/extra');
 const Markup = require('telegraf/markup');
+const Extra = require('telegraf/extra');
 const Buttons = require('./buttons');
 
 class Keyboards extends Buttons {
@@ -28,9 +28,10 @@ class Keyboards extends Buttons {
 
   get main() {
     const layout = [
-      [this.buttons.skipass, this.buttons.rent],
-      [this.buttons.instructors, this.buttons.freeride],
-      [this.buttons.contacts]
+      [this.buttons.openTrails, this.buttons.trailMaps],
+      [this.buttons.instructors, this.buttons.skiPasses],
+      [this.buttons.rent, this.buttons.weather],
+      [this.buttons.consultation]
     ];
 
     return this.keyboard(layout);
@@ -38,8 +39,9 @@ class Keyboards extends Buttons {
 
   get resorts() {
     const layout = [
-      [this.buttons.rosaKhutor, this.buttons.gorkiGorod],
-      [this.buttons.gazprom, this.buttons.alpikaService]
+      [this.buttons.krasnayaPolyana],
+      [this.buttons.rosaKhutor],
+      [this.buttons.gazprom],
     ];
 
     return this.keyboard(layout);

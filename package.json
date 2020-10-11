@@ -4,8 +4,8 @@
   "description": "Telegram assistant in Krasnaya Polyana",
   "scripts": {
     "serve": "NODE_ENV=production node ./src/app.js",
-    "watch": "nodemon ./src/app.js",
-    "start": "npm run serve"
+    "start": "npm run serve",
+    "watch-node": "nodemon ./src/app.js"
   },
   "repository": {
     "type": "git",

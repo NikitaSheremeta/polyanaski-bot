@@ -5,7 +5,7 @@ class Messages {
       greeting: ctx.i18n.t('scenes.start.greeting'),
       description: ctx.i18n.t('scenes.start.description'),
       go: ctx.i18n.t('shared.go'),
-      mainMenu: ctx.i18n.t('shared.main-menu')
+      mainMenu: ctx.i18n.t('shared.mainMenu')
     };
   }
 
