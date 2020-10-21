@@ -2,19 +2,21 @@ class Buttons {
   constructor(ctx) {
     this.ctx = ctx;
     this.buttons = {
-      launch: this.ctx.i18n.t('shared.launch'),
+      allResorts: this.ctx.i18n.t('util.allResorts'),
       back: this.ctx.i18n.t('navigation.back'),
+      consultation: this.ctx.i18n.t('categories.consultation'),
+      gazprom: this.ctx.i18n.t('resorts.gazprom'),
+      instructors: this.ctx.i18n.t('categories.instructors'),
+      krasnayaPolyana: this.ctx.i18n.t('resorts.krasnayaPolyana'),
+      launch: this.ctx.i18n.t('shared.launch'),
       next: this.ctx.i18n.t('navigation.next'),
       openTrails: this.ctx.i18n.t('categories.openTrails'),
-      trailMaps: this.ctx.i18n.t('categories.trailMaps'),
-      instructors: this.ctx.i18n.t('categories.instructors'),
-      skiPasses: this.ctx.i18n.t('categories.skiPasses'),
       rent: this.ctx.i18n.t('categories.rent'),
-      weather: this.ctx.i18n.t('categories.weather'),
-      consultation: this.ctx.i18n.t('categories.consultation'),
-      krasnayaPolyana: this.ctx.i18n.t('resorts.krasnayaPolyana'),
       rosaKhutor: this.ctx.i18n.t('resorts.rosaKhutor'),
-      gazprom: this.ctx.i18n.t('resorts.gazprom')
+      singleSkiPass: this.ctx.i18n.t('util.singleSkiPass'),
+      skiPasses: this.ctx.i18n.t('categories.skiPasses'),
+      trailMaps: this.ctx.i18n.t('categories.trailMaps'),
+      weather: this.ctx.i18n.t('categories.weather')
     };
   }
 }
