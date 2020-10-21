@@ -3,12 +3,17 @@ const Extra = require('telegraf/extra');
 const Buttons = require('./buttons');
 
 class Keyboards extends Buttons {
-  constructor(ctx, markdown = false) {
+  constructor(ctx) {
     super(ctx);
-    this.markdown = markdown;
+    this.escape = false;
+    this.markdown = false;
   }
 
   keyboard(layout) {
+    if (this.escape) {
+      layout.push([this.buttons.back]);
+    }
+
     const keyboard = Markup.keyboard(layout).resize();
 
     if (this.markdown) {
@@ -16,6 +21,14 @@ class Keyboards extends Buttons {
     }
 
     return keyboard.extra();
+  }
+
+  set escapeKey(isEscape) {
+    this.escape = isEscape;
+  }
+
+  set extraMarkdown(isMarkdown) {
+    this.markdown = isMarkdown;
   }
 
   get launch() {
