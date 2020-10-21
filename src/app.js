@@ -7,7 +7,7 @@ const Stage = require('telegraf/stage');
 const { match } = require('telegraf-i18n');
 const { start } = require('./controllers/start');
 const { openTrails } = require('./controllers/open-trails');
-const { contacts } = require('./controllers/contacts');
+const { trailMaps } = require('./controllers/trail-maps');
 const { asyncWrapper } = require('./util/error-handler');
 const { logger } = require('./util/logger');
 
@@ -21,7 +21,7 @@ const i18n = new TelegrafI18n({
   useSession: true
 });
 
-const stage = new Stage([start, contacts, openTrails]);
+const stage = new Stage([start, openTrails, trailMaps]);
 
 bot.use(Telegraf.session());
 bot.use(i18n.middleware());
@@ -35,8 +35,8 @@ bot.hears(
 );
 
 bot.hears(
-  match('categories.consultation'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('contacts'))
+  match('categories.trailMaps'),
+  asyncWrapper(async (ctx) => await ctx.scene.enter('trail-maps'))
 );
 
 bot.catch((error) => logger.error(undefined, 'Global error, %O', error));

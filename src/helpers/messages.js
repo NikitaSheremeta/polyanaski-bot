@@ -2,10 +2,11 @@ class Messages {
   constructor(ctx) {
     this.ctx = ctx;
     this.messages = {
-      greeting: ctx.i18n.t('scenes.start.greeting'),
       description: ctx.i18n.t('scenes.start.description'),
+      greeting: ctx.i18n.t('scenes.start.greeting'),
       go: ctx.i18n.t('shared.go'),
-      mainMenu: ctx.i18n.t('shared.mainMenu')
+      mainMenu: ctx.i18n.t('shared.mainMenu'),
+      trailMaps: ctx.i18n.t('shared.trailMaps'),
     };
   }
 
@@ -23,6 +24,10 @@ class Messages {
 
   get mainMenu() {
     return this.messages.mainMenu;
+  }
+
+  get trailMaps() {
+    return this.messages.trailMaps;
   }
 }
 
