@@ -5,11 +5,16 @@ const Buttons = require('./buttons');
 class Keyboards extends Buttons {
   constructor(ctx) {
     super(ctx);
-    this.escape = false;
     this.markdown = false;
+    this.mainMap = false;
+    this.escape = false;
   }
 
   keyboard(layout) {
+    if (this.mainMap) {
+      layout.unshift([this.buttons.mainMap]);
+    }
+
     if (this.escape) {
       layout.push([this.buttons.back]);
     }
@@ -23,10 +28,17 @@ class Keyboards extends Buttons {
     return keyboard.extra();
   }
 
+  // Set winter map button Krasnaya Polyana
+  set mainMapKey(isMainMap) {
+    this.mainMap = isMainMap;
+  }
+
+  // Set escape button
   set escapeKey(isEscape) {
     this.escape = isEscape;
   }
 
+  // Set extra for the buttons
   set extraMarkdown(isMarkdown) {
     this.markdown = isMarkdown;
   }

@@ -2,7 +2,7 @@ class Buttons {
   constructor(ctx) {
     this.ctx = ctx;
     this.buttons = {
-      allResorts: this.ctx.i18n.t('util.allResorts'),
+      mainMap: this.ctx.i18n.t('util.mainMap'),
       back: this.ctx.i18n.t('navigation.back'),
       consultation: this.ctx.i18n.t('categories.consultation'),
       gazprom: this.ctx.i18n.t('resorts.gazprom'),
