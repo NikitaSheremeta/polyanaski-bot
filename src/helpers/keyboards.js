@@ -8,6 +8,27 @@ class Keyboards extends Buttons {
     this.escape = false;
     this.mainMap = false;
     this.markdown = false;
+    this.singleSkiPass = false;
+  }
+
+  // Set escape button
+  set escapeKey(isEscape) {
+    this.escape = isEscape;
+  }
+
+  // Set winter map button Krasnaya Polyana
+  set mainMapKey(isMainMap) {
+    this.mainMap = isMainMap;
+  }
+
+  // Set extra for the buttons
+  set extraMarkdown(isMarkdown) {
+    this.markdown = isMarkdown;
+  }
+
+  // Set Single Ski Pass button
+  set SSPKey(isSSP) {
+    this.singleSkiPass = isSSP;
   }
 
   // Result keyboard constructor
@@ -20,6 +41,10 @@ class Keyboards extends Buttons {
       layout.unshift([this.buttons.mainMap]);
     }
 
+    if (this.singleSkiPass) {
+      layout.unshift([this.buttons.singleSkiPass]);
+    }
+
     const keyboard = Markup.keyboard(layout).resize();
 
     if (this.markdown) {
@@ -27,21 +52,6 @@ class Keyboards extends Buttons {
     }
 
     return keyboard.extra();
-  }
-
-  // Set winter map button Krasnaya Polyana
-  set mainMapKey(isMainMap) {
-    this.mainMap = isMainMap;
-  }
-
-  // Set escape button
-  set escapeKey(isEscape) {
-    this.escape = isEscape;
-  }
-
-  // Set extra for the buttons
-  set extraMarkdown(isMarkdown) {
-    this.markdown = isMarkdown;
   }
 
   // Launch keyboard
