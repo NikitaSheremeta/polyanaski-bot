@@ -16,7 +16,7 @@ scene.enter(async (ctx) => {
 
   keyboards.escapeKey = true;
 
-  await ctx.reply(messages.go, keyboards.resorts);
+  await ctx.reply(messages.openTrails, keyboards.resorts);
 });
 
 scene.leave(async (ctx) => {

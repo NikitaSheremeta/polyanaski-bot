@@ -6,6 +6,7 @@ class Messages {
       greeting: ctx.i18n.t('scenes.start.greeting'),
       go: ctx.i18n.t('shared.go'),
       mainMenu: ctx.i18n.t('shared.mainMenu'),
+      openTrails: ctx.i18n.t('shared.openTrails'),
       trailMaps: ctx.i18n.t('shared.trailMaps'),
       skiPasses: ctx.i18n.t('shared.skiPasses')
     };
@@ -25,6 +26,10 @@ class Messages {
 
   get mainMenu() {
     return this.messages.mainMenu;
+  }
+
+  get openTrails() {
+    return this.messages.openTrails;
   }
 
   get trailMaps() {
