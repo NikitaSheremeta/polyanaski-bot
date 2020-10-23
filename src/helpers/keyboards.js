@@ -5,18 +5,19 @@ const Buttons = require('./buttons');
 class Keyboards extends Buttons {
   constructor(ctx) {
     super(ctx);
-    this.markdown = false;
-    this.mainMap = false;
     this.escape = false;
+    this.mainMap = false;
+    this.markdown = false;
   }
 
+  // Result keyboard constructor
   keyboard(layout) {
-    if (this.mainMap) {
-      layout.unshift([this.buttons.mainMap]);
-    }
-
     if (this.escape) {
       layout.push([this.buttons.back]);
+    }
+
+    if (this.mainMap) {
+      layout.unshift([this.buttons.mainMap]);
     }
 
     const keyboard = Markup.keyboard(layout).resize();
@@ -43,14 +44,17 @@ class Keyboards extends Buttons {
     this.markdown = isMarkdown;
   }
 
+  // Launch keyboard
   get launch() {
     return this.keyboard([this.buttons.launch]);
   }
 
+  // Go back keyboard
   get back() {
     return this.keyboard([this.buttons.back]);
   }
 
+  // Categories a.k.a main keyboard
   get main() {
     const layout = [
       [this.buttons.openTrails, this.buttons.trailMaps],
@@ -62,6 +66,7 @@ class Keyboards extends Buttons {
     return this.keyboard(layout);
   }
 
+  // Resorts of Krasnaya Polyana keyboard
   get resorts() {
     const layout = [
       [this.buttons.krasnayaPolyana],

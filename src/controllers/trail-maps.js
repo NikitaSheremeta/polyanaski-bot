@@ -36,13 +36,9 @@ scene.leave(async (ctx) => {
 });
 
 // This is a temporary solution, pending a working solution
-scene.hears(match('util.mainMap'), (ctx) => ctx.replyWithPhoto({
-  url: 'https://riderhelp.ru/shared/files/202001/1_23732.jpg'
-}));
-
 scene.hears(match('resorts.gazprom'), (ctx) => ctx.replyWithDocument({
   source: fs.readFileSync(path.join(__dirname, '..', 'assets', 'images', 'gazprom-map.jpg')),
-  filename: 'Карта Газпрома'
+  filename: 'gazprom-map.jpg'
 }));
 
 scene.hears(match('navigation.back'), leave());

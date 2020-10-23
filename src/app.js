@@ -27,18 +27,23 @@ bot.use(Telegraf.session());
 bot.use(i18n.middleware());
 bot.use(stage.middleware());
 
+// Bot launch
 bot.start(asyncWrapper(async (ctx) => await ctx.scene.enter('start')));
 
+// Open trails scene
 bot.hears(
   match('categories.openTrails'),
   asyncWrapper(async (ctx) => await ctx.scene.enter('open-trails'))
 );
 
+// Trail maps scene
 bot.hears(
   match('categories.trailMaps'),
   asyncWrapper(async (ctx) => await ctx.scene.enter('trail-maps'))
 );
 
+// Catch some troubles
 bot.catch((error) => logger.error(undefined, 'Global error, %O', error));
 
+// Long polling mode
 bot.startPolling();
