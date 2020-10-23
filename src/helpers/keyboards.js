@@ -21,7 +21,7 @@ class Keyboards extends Buttons {
     this.mainMap = isMainMap;
   }
 
-  // Set extra for the buttons
+  // Set extra markdown for the buttons
   set extraMarkdown(isMarkdown) {
     this.markdown = isMarkdown;
   }

@@ -7,6 +7,7 @@ class Messages {
       go: ctx.i18n.t('shared.go'),
       mainMenu: ctx.i18n.t('shared.mainMenu'),
       trailMaps: ctx.i18n.t('shared.trailMaps'),
+      skiPasses: ctx.i18n.t('shared.skiPasses')
     };
   }
 
@@ -28,6 +29,10 @@ class Messages {
 
   get trailMaps() {
     return this.messages.trailMaps;
+  }
+
+  get skiPasses() {
+    return this.messages.skiPasses;
   }
 }
 
