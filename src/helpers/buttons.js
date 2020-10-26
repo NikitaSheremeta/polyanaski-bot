@@ -3,8 +3,11 @@ class Buttons {
     this.ctx = ctx;
     this.buttons = {
       back: this.ctx.i18n.t('navigation.back'),
+      childrensSchool: this.ctx.i18n.t('categories.childrensSchool'),
       consultation: this.ctx.i18n.t('categories.consultation'),
+      freeride: this.ctx.i18n.t('categories.freeride'),
       gazprom: this.ctx.i18n.t('resorts.gazprom'),
+      individualAndGroup: this.ctx.i18n.t('training.individualAndGroup'),
       instructors: this.ctx.i18n.t('categories.instructors'),
       mainMap: this.ctx.i18n.t('util.mainMap'),
       krasnayaPolyana: this.ctx.i18n.t('resorts.krasnayaPolyana'),

@@ -8,6 +8,7 @@ const { match } = require('telegraf-i18n');
 const { start } = require('./controllers/start');
 const { openTrails } = require('./controllers/open-trails');
 const { trailMaps } = require('./controllers/trail-maps');
+const { instructors } = require('./controllers/instructors');
 const { skiPasses } = require('./controllers/ski-passes');
 const { asyncWrapper } = require('./util/error-handler');
 const { logger } = require('./util/logger');
@@ -26,6 +27,7 @@ const stage = new Stage([
   start,
   openTrails,
   trailMaps,
+  instructors,
   skiPasses
 ]);
 
@@ -46,6 +48,12 @@ bot.hears(
 bot.hears(
   match('categories.trailMaps'),
   asyncWrapper(async (ctx) => await ctx.scene.enter('trail-maps'))
+);
+
+// Instructors scene
+bot.hears(
+  match('categories.instructors'),
+  asyncWrapper(async (ctx) => await ctx.scene.enter('instructors'))
 );
 
 // Ski passes scene

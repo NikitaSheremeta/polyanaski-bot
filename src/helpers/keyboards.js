@@ -86,6 +86,17 @@ class Keyboards extends Buttons {
 
     return this.keyboard(layout);
   }
+
+  // Trains with an instructor keyboard
+  get trains() {
+    const layout = [
+      [this.buttons.individualAndGroup],
+      [this.buttons.childrensSchool],
+      [this.buttons.freeride],
+    ];
+
+    return this.keyboard(layout);
+  }
 }
 
 module.exports = Keyboards;

@@ -8,6 +8,7 @@ class Messages {
       mainMenu: ctx.i18n.t('shared.mainMenu'),
       openTrails: ctx.i18n.t('shared.openTrails'),
       trailMaps: ctx.i18n.t('shared.trailMaps'),
+      instructors: ctx.i18n.t('shared.instructors'),
       skiPasses: ctx.i18n.t('shared.skiPasses')
     };
   }
@@ -34,6 +35,10 @@ class Messages {
 
   get trailMaps() {
     return this.messages.trailMaps;
+  }
+
+  get instructors() {
+    return this.messages.instructors;
   }
 
   get skiPasses() {
