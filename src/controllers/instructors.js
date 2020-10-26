@@ -30,6 +30,24 @@ scene.leave(async (ctx) => {
   await ctx.reply(messages.mainMenu, keyboards.main);
 });
 
+scene.hears(match('training.individualAndGroup'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
+scene.hears(match('categories.childrensSchool'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
+scene.hears(match('categories.freeride'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
 scene.hears(match('navigation.back'), leave());
 
 module.exports = { instructors: scene };

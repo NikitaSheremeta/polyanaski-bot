@@ -3,18 +3,15 @@ class Messages {
     this.ctx = ctx;
     this.messages = {
       description: ctx.i18n.t('scenes.start.description'),
-      greeting: ctx.i18n.t('scenes.start.greeting'),
       go: ctx.i18n.t('shared.go'),
+      greeting: ctx.i18n.t('scenes.start.greeting'),
+      instructors: ctx.i18n.t('shared.instructors'),
       mainMenu: ctx.i18n.t('shared.mainMenu'),
       openTrails: ctx.i18n.t('shared.openTrails'),
+      skiPasses: ctx.i18n.t('shared.skiPasses'),
       trailMaps: ctx.i18n.t('shared.trailMaps'),
-      instructors: ctx.i18n.t('shared.instructors'),
-      skiPasses: ctx.i18n.t('shared.skiPasses')
+      workInProgress: ctx.i18n.t('shared.workInProgress')
     };
-  }
-
-  get greeting() {
-    return this.messages.greeting;
   }
 
   get description() {
@@ -25,6 +22,14 @@ class Messages {
     return this.messages.go;
   }
 
+  get greeting() {
+    return this.messages.greeting;
+  }
+
+  get instructors() {
+    return this.messages.instructors;
+  }
+
   get mainMenu() {
     return this.messages.mainMenu;
   }
@@ -33,16 +38,16 @@ class Messages {
     return this.messages.openTrails;
   }
 
+  get skiPasses() {
+    return this.messages.skiPasses;
+  }
+
   get trailMaps() {
     return this.messages.trailMaps;
   }
 
-  get instructors() {
-    return this.messages.instructors;
-  }
-
-  get skiPasses() {
-    return this.messages.skiPasses;
+  get workInProgress() {
+    return this.messages.workInProgress;
   }
 }
 

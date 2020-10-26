@@ -9,7 +9,7 @@ const { leave } = Stage;
 const scene = new Scene('open-trails');
 
 scene.enter(async (ctx) => {
-  logger.debug(ctx, 'Enters open trails scene');
+  logger.debug(ctx, 'Enters the open trails scene');
 
   const messages = new Messages(ctx);
   const keyboards = new Keyboards(ctx);
@@ -28,6 +28,24 @@ scene.leave(async (ctx) => {
   keyboards.extraMarkdown = true;
 
   await ctx.reply(messages.mainMenu, keyboards.main);
+});
+
+scene.hears(match('resorts.krasnayaPolyana'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
+scene.hears(match('resorts.rosaKhutor'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
+scene.hears(match('resorts.gazprom'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
 });
 
 scene.hears(match('navigation.back'), leave());

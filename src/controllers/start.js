@@ -11,7 +11,7 @@ const { leave } = Stage;
 const scene = new Scene('start');
 
 scene.enter(async (ctx) => {
-  logger.debug(ctx, 'Enters start scene');
+  logger.debug(ctx, 'Enters the start scene');
 
   const keyboards = new Keyboards(ctx);
   const messages = new Messages(ctx);

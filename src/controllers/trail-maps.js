@@ -13,7 +13,7 @@ const { leave } = Stage;
 const scene = new Scene('trail-maps');
 
 scene.enter(async (ctx) => {
-  logger.debug(ctx, 'Enters trail maps scene');
+  logger.debug(ctx, 'Enters the trail maps scene');
 
   const messages = new Messages(ctx);
   const keyboards = new Keyboards(ctx);
@@ -33,6 +33,24 @@ scene.leave(async (ctx) => {
   keyboards.extraMarkdown = true;
 
   await ctx.reply(messages.mainMenu, keyboards.main);
+});
+
+scene.hears(match('util.mainMap'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
+scene.hears(match('resorts.krasnayaPolyana'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
+scene.hears(match('resorts.rosaKhutor'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
 });
 
 // This is a temporary solution, pending a working solution

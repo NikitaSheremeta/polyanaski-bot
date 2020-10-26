@@ -33,6 +33,30 @@ scene.leave(async (ctx) => {
   await ctx.reply(messages.mainMenu, keyboards.main);
 });
 
+scene.hears(match('util.singleSkiPass'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
+scene.hears(match('resorts.krasnayaPolyana'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
+scene.hears(match('resorts.rosaKhutor'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
+scene.hears(match('resorts.gazprom'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
 scene.hears(match('navigation.back'), leave());
 
 module.exports = { skiPasses: scene };
