@@ -10,6 +10,9 @@ const { openTrails } = require('./controllers/open-trails');
 const { trailMaps } = require('./controllers/trail-maps');
 const { instructors } = require('./controllers/instructors');
 const { skiPasses } = require('./controllers/ski-passes');
+const { rent } = require('./controllers/rent');
+const { weather } = require('./controllers/weather');
+const { consultation } = require('./controllers/consultation');
 const { asyncWrapper } = require('./util/error-handler');
 const { logger } = require('./util/logger');
 
@@ -28,7 +31,10 @@ const stage = new Stage([
   openTrails,
   trailMaps,
   instructors,
-  skiPasses
+  skiPasses,
+  rent,
+  weather,
+  consultation
 ]);
 
 bot.use(Telegraf.session());
@@ -60,6 +66,24 @@ bot.hears(
 bot.hears(
   match('categories.skiPasses'),
   asyncWrapper(async (ctx) => await ctx.scene.enter('ski-passes'))
+);
+
+// Rent scene
+bot.hears(
+  match('categories.rent'),
+  asyncWrapper(async (ctx) => await ctx.scene.enter('rent'))
+);
+
+// Weather scene
+bot.hears(
+  match('categories.weather'),
+  asyncWrapper(async (ctx) => await ctx.scene.enter('weather'))
+);
+
+// Consultation scene
+bot.hears(
+  match('categories.consultation'),
+  asyncWrapper(async (ctx) => await ctx.scene.enter('consultation'))
 );
 
 // Catch some troubles
