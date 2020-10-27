@@ -2,6 +2,7 @@ class Messages {
   constructor(ctx) {
     this.ctx = ctx;
     this.messages = {
+      childrensSchool: ctx.i18n.t('shared.childrensSchool'),
       description: ctx.i18n.t('scenes.start.description'),
       go: ctx.i18n.t('shared.go'),
       greeting: ctx.i18n.t('scenes.start.greeting'),
@@ -12,6 +13,10 @@ class Messages {
       trailMaps: ctx.i18n.t('shared.trailMaps'),
       workInProgress: ctx.i18n.t('shared.workInProgress')
     };
+  }
+
+  get childrensSchool() {
+    return this.messages.childrensSchool;
   }
 
   get description() {

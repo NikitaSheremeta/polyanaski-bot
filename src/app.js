@@ -13,6 +13,7 @@ const { skiPasses } = require('./controllers/ski-passes');
 const { rent } = require('./controllers/rent');
 const { weather } = require('./controllers/weather');
 const { consultation } = require('./controllers/consultation');
+const { childrensSchool } = require('./controllers/childrens-school');
 const { asyncWrapper } = require('./util/error-handler');
 const { logger } = require('./util/logger');
 
@@ -34,7 +35,8 @@ const stage = new Stage([
   skiPasses,
   rent,
   weather,
-  consultation
+  consultation,
+  childrensSchool
 ]);
 
 bot.use(Telegraf.session());
@@ -84,6 +86,12 @@ bot.hears(
 bot.hears(
   match('categories.consultation'),
   asyncWrapper(async (ctx) => await ctx.scene.enter('consultation'))
+);
+
+// Сhildrens school scene
+bot.hears(
+  match('categories.childrensSchool'),
+  asyncWrapper(async (ctx) => await ctx.scene.enter('childrens-school'))
 );
 
 // Catch some troubles

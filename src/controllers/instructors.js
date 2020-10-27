@@ -39,17 +39,14 @@ scene.hears(match('training.individualAndGroup'), async (ctx) => {
   );
 });
 
-scene.hears(match('categories.childrensSchool'), async (ctx) => {
-  const messages = new Messages(ctx);
+scene.hears(
+  match('categories.childrensSchool'),
+  async (ctx) => {
+    leave();
 
-  await ctx.reply(messages.workInProgress);
-});
-
-scene.hears(match('categories.freeride'), async (ctx) => {
-  const messages = new Messages(ctx);
-
-  await ctx.reply(messages.workInProgress);
-});
+    await ctx.scene.enter('childrens-school');
+  }
+);
 
 scene.hears(match('navigation.back'), leave());
 
