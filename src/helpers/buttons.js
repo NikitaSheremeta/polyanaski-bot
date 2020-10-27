@@ -22,6 +22,10 @@ class Buttons {
       weather: this.ctx.i18n.t('categories.weather')
     };
   }
+
+  get back() {
+    return this.buttons.back;
+  }
 }
 
 module.exports = Buttons;

@@ -4,6 +4,7 @@ const Extra = require('telegraf/extra');
 const { match } = require('telegraf-i18n');
 const Messages = require('../helpers/messages');
 const Keyboards = require('../helpers/keyboards');
+const Buttons = require('../helpers/buttons');
 const { logger } = require('../util/logger');
 
 const { leave } = Stage;
@@ -24,12 +25,16 @@ scene.enter(async (ctx) => {
 scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the instructors scene');
 
-  const messages = new Messages(ctx);
-  const keyboards = new Keyboards(ctx);
+  const buttons = new Buttons(ctx);
 
-  keyboards.extraMarkdown = true;
+  if (ctx.update.message.text === buttons.back) {
+    const messages = new Messages(ctx);
+    const keyboards = new Keyboards(ctx);
 
-  await ctx.reply(messages.mainMenu, keyboards.main);
+    keyboards.extraMarkdown = true;
+
+    await ctx.reply(messages.mainMenu, keyboards.main);
+  }
 });
 
 scene.hears(match('training.individualAndGroup'), async (ctx) => {
