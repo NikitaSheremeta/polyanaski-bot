@@ -6,6 +6,7 @@ const Messages = require('../helpers/messages');
 const Keyboards = require('../helpers/keyboards');
 const Buttons = require('../helpers/buttons');
 const { logger } = require('../util/logger');
+const { asyncWrapper } = require('../util/error-handler');
 
 const { leave } = Stage;
 const scene = new Scene('instructors');
@@ -27,6 +28,7 @@ scene.leave(async (ctx) => {
 
   const buttons = new Buttons(ctx);
 
+  // If you exit the scene through the "back" button, then we issue a message about the main menu
   if (ctx.update.message.text === buttons.back) {
     const messages = new Messages(ctx);
     const keyboards = new Keyboards(ctx);
@@ -37,20 +39,18 @@ scene.leave(async (ctx) => {
   }
 });
 
-scene.hears(match('training.individualAndGroup'), async (ctx) => {
-  await ctx.reply(
+scene.hears(
+  match('training.individualAndGroup'),
+  asyncWrapper(async (ctx) => await ctx.reply(
     '[Инструктор по горным лыжам / сноуборду](https://telegra.ph/Individualnye-i-gruppovye-zanyatiya-10-27)',
     markup
-  );
-});
+  ))
+);
 
 scene.hears(
   match('categories.childrensSchool'),
-  async (ctx) => {
-    leave();
-
-    await ctx.scene.enter('childrens-school');
-  }
+  asyncWrapper(async (ctx) => await ctx.scene.enter('childrens-school')),
+  leave()
 );
 
 scene.hears(match('navigation.back'), leave());
