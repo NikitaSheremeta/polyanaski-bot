@@ -2,6 +2,9 @@ const Markup = require('telegraf/markup');
 const Extra = require('telegraf/extra');
 const Buttons = require('./buttons');
 
+const ITEMS_TO_REMOVE = 1;
+const GAZPROM_RESORT_INDEX = 2;
+
 class Keyboards extends Buttons {
   constructor(ctx) {
     super(ctx);
@@ -9,6 +12,7 @@ class Keyboards extends Buttons {
     this.mainMap = false;
     this.markdown = false;
     this.singleSkiPass = false;
+    this.withoutGazprom = false;
   }
 
   // Set escape button
@@ -31,6 +35,11 @@ class Keyboards extends Buttons {
     this.singleSkiPass = isSSP;
   }
 
+  // Set resort keyboard without gazprom button
+  set removeGazprom(isRemoveGazprom) {
+    this.withoutGazprom = isRemoveGazprom;
+  }
+
   // Result keyboard constructor
   keyboard(layout) {
     if (this.escape) {
@@ -43,6 +52,10 @@ class Keyboards extends Buttons {
 
     if (this.singleSkiPass) {
       layout.unshift([this.buttons.singleSkiPass]);
+    }
+
+    if (this.withoutGazprom) {
+      layout.splice(GAZPROM_RESORT_INDEX, ITEMS_TO_REMOVE);
     }
 
     const keyboard = Markup.keyboard(layout).resize();

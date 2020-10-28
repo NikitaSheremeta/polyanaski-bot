@@ -17,6 +17,7 @@ scene.enter(async (ctx) => {
   const keyboards = new Keyboards(ctx);
 
   keyboards.escapeKey = true;
+  keyboards.withoutGazprom = true;
 
   await ctx.reply(messages.childrensSchool, keyboards.resorts);
 });
@@ -30,6 +31,18 @@ scene.leave(async (ctx) => {
   keyboards.extraMarkdown = true;
 
   await ctx.reply(messages.mainMenu, keyboards.main);
+});
+
+scene.hears(match('resorts.krasnayaPolyana'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
+});
+
+scene.hears(match('resorts.rosaKhutor'), async (ctx) => {
+  const messages = new Messages(ctx);
+
+  await ctx.reply(messages.workInProgress);
 });
 
 scene.hears(match('navigation.back'), leave());
