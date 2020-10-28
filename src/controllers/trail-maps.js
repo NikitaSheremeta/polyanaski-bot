@@ -4,6 +4,7 @@ const { match } = require('telegraf-i18n');
 const Messages = require('../helpers/messages');
 const Keyboards = require('../helpers/keyboards');
 const { logger } = require('../util/logger');
+const { asyncWrapper } = require('../util/error-handler');
 
 // This is a temporary solution, pending a working solution
 const fs = require('fs');
@@ -35,23 +36,32 @@ scene.leave(async (ctx) => {
   await ctx.reply(messages.mainMenu, keyboards.main);
 });
 
-scene.hears(match('util.mainMap'), async (ctx) => {
-  const messages = new Messages(ctx);
+scene.hears(
+  match('util.mainMap'),
+  asyncWrapper(async (ctx) => {
+    const messages = new Messages(ctx);
 
-  await ctx.reply(messages.workInProgress);
-});
+    await ctx.reply(messages.workInProgress);
+  })
+);
 
-scene.hears(match('resorts.krasnayaPolyana'), async (ctx) => {
-  const messages = new Messages(ctx);
+scene.hears(
+  match('resorts.krasnayaPolyana'),
+  asyncWrapper(async (ctx) => {
+    const messages = new Messages(ctx);
 
-  await ctx.reply(messages.workInProgress);
-});
+    await ctx.reply(messages.workInProgress);
+  })
+);
 
-scene.hears(match('resorts.rosaKhutor'), async (ctx) => {
-  const messages = new Messages(ctx);
+scene.hears(
+  match('resorts.rosaKhutor'),
+  asyncWrapper(async (ctx) => {
+    const messages = new Messages(ctx);
 
-  await ctx.reply(messages.workInProgress);
-});
+    await ctx.reply(messages.workInProgress);
+  })
+);
 
 // This is a temporary solution, pending a working solution
 scene.hears(match('resorts.gazprom'), (ctx) => ctx.replyWithDocument({
