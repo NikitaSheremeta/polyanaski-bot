@@ -53,6 +53,12 @@ scene.hears(
   leave()
 );
 
+scene.hears(
+  match('categories.freeride'),
+  asyncWrapper(async (ctx) => await ctx.scene.enter('freeride')),
+  leave()
+);
+
 scene.hears(match('navigation.back'), leave());
 
 module.exports = { instructors: scene };

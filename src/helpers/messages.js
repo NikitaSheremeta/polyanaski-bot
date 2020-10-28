@@ -4,6 +4,7 @@ class Messages {
     this.messages = {
       childrensSchool: ctx.i18n.t('shared.childrensSchool'),
       description: ctx.i18n.t('scenes.start.description'),
+      freeride: ctx.i18n.t('shared.freeride'),
       go: ctx.i18n.t('shared.go'),
       greeting: ctx.i18n.t('scenes.start.greeting'),
       instructors: ctx.i18n.t('shared.instructors'),
@@ -21,6 +22,10 @@ class Messages {
 
   get description() {
     return this.messages.description;
+  }
+
+  get freeride() {
+    return this.messages.freeride;
   }
 
   get go() {
