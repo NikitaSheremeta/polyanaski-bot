@@ -1,5 +1,7 @@
+/* eslint-disable max-statements */
 require('dotenv').config();
 
+const mongoose = require('mongoose');
 const { Telegraf } = require('telegraf');
 const TelegrafI18n = require('telegraf-i18n');
 const path = require('path');
@@ -20,92 +22,112 @@ const { freeride } = require('./controllers/freeride');
 const { asyncWrapper } = require('./util/error-handler');
 const { logger } = require('./util/logger');
 
-const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
+const EXIT_CODE = 1;
 
-const i18n = new TelegrafI18n({
-  defaultLanguage: 'ru',
-  sessionName: 'session',
-  allowMissing: false,
-  directory: path.resolve(__dirname, './locales'),
-  useSession: true
+mongoose.connect(process.env.DATABASE_HOST, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
 });
 
-const stage = new Stage([
-  start,
-  openTrails,
-  trailMaps,
-  instructors,
-  skiPasses,
-  rent,
-  weather,
-  consultation,
-  childrensSchool,
-  freeride
-]);
+mongoose.connection.on('error', err => {
+  logger.error(
+    undefined,
+    `Error while establishing connection to database: %O`,
+    err
+  );
+  process.exit(EXIT_CODE);
+});
 
-bot.use(Telegraf.session());
-bot.use(i18n.middleware());
-bot.use(stage.middleware());
+mongoose.connection.on('open', () => {
+  const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 
-// Bot launch
-bot.start(asyncWrapper(async (ctx) => await ctx.scene.enter('start')));
+  const i18n = new TelegrafI18n({
+    defaultLanguage: 'ru',
+    sessionName: 'session',
+    allowMissing: false,
+    directory: path.resolve(__dirname, './locales'),
+    useSession: true
+  });
 
-// Open trails scene
-bot.hears(
-  match('categories.openTrails'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('open-trails'))
-);
+  const stage = new Stage([
+    start,
+    openTrails,
+    trailMaps,
+    instructors,
+    skiPasses,
+    rent,
+    weather,
+    consultation,
+    childrensSchool,
+    freeride
+  ]);
 
-// Trail maps scene
-bot.hears(
-  match('categories.trailMaps'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('trail-maps'))
-);
+  bot.use(Telegraf.session());
+  bot.use(i18n.middleware());
+  bot.use(stage.middleware());
 
-// Instructors scene
-bot.hears(
-  match('categories.instructors'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('instructors'))
-);
+  // Bot launch
+  bot.start(asyncWrapper(async (ctx) => await ctx.scene.enter('start')));
 
-// Ski passes scene
-bot.hears(
-  match('categories.skiPasses'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('ski-passes'))
-);
+  // Open trails scene
+  bot.hears(
+    match('categories.openTrails'),
+    asyncWrapper(async (ctx) => await ctx.scene.enter('open-trails'))
+  );
 
-// Rent scene
-bot.hears(
-  match('categories.rent'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('rent'))
-);
+  // Trail maps scene
+  bot.hears(
+    match('categories.trailMaps'),
+    asyncWrapper(async (ctx) => await ctx.scene.enter('trail-maps'))
+  );
 
-// Weather scene
-bot.hears(
-  match('categories.weather'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('weather'))
-);
+  // Instructors scene
+  bot.hears(
+    match('categories.instructors'),
+    asyncWrapper(async (ctx) => await ctx.scene.enter('instructors'))
+  );
 
-// Consultation scene
-bot.hears(
-  match('categories.consultation'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('consultation'))
-);
+  // Ski passes scene
+  bot.hears(
+    match('categories.skiPasses'),
+    asyncWrapper(async (ctx) => await ctx.scene.enter('ski-passes'))
+  );
 
-// Сhildrens school scene
-bot.hears(
-  match('categories.childrensSchool'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('childrens-school'))
-);
+  // Rent scene
+  bot.hears(
+    match('categories.rent'),
+    asyncWrapper(async (ctx) => await ctx.scene.enter('rent'))
+  );
 
-// Freeride scene
-bot.hears(
-  match('categories.freeride'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('freeride'))
-);
+  // Weather scene
+  bot.hears(
+    match('categories.weather'),
+    asyncWrapper(async (ctx) => await ctx.scene.enter('weather'))
+  );
 
-// Catch some troubles
-bot.catch((error) => logger.error(undefined, 'Global error, %O', error));
+  // Consultation scene
+  bot.hears(
+    match('categories.consultation'),
+    asyncWrapper(async (ctx) => await ctx.scene.enter('consultation'))
+  );
 
-// Long polling mode
-bot.startPolling();
+  // Сhildrens school scene
+  bot.hears(
+    match('categories.childrensSchool'),
+    asyncWrapper(async (ctx) => await ctx.scene.enter('childrens-school'))
+  );
+
+  // Freeride scene
+  bot.hears(
+    match('categories.freeride'),
+    asyncWrapper(async (ctx) => await ctx.scene.enter('freeride'))
+  );
+
+  // Catch some troubles
+  bot.catch((error) => logger.error(undefined, 'Global error, %O', error));
+
+  // Long polling mode
+  bot.startPolling();
+});
