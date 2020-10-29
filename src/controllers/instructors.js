@@ -46,9 +46,7 @@ scene.leave(async (ctx) => {
 scene.hears(
   match('training.individualAndGroup'),
   asyncWrapper(async (ctx) => {
-    const postID = '5f9a8fbed52c9109ccb792f4';
-
-    const article = await Articles.findById(postID);
+    const article = await Articles.findById(process.env.TRAINS_ID);
 
     const message = `[${article.title}](${article.link})`;
 

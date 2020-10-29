@@ -41,9 +41,7 @@ scene.leave(async (ctx) => {
 scene.hears(
   match('resorts.krasnayaPolyana'),
   asyncWrapper(async (ctx) => {
-    const postID = '5f9a8fdfd52c9109ccb792f5';
-
-    const article = await Articles.findById(postID);
+    const article = await Articles.findById(process.env.KP_CHILDRENS_ID);
 
     const message = `[${article.title}](${article.link})`;
 
@@ -54,9 +52,7 @@ scene.hears(
 scene.hears(
   match('resorts.rosaKhutor'),
   asyncWrapper(async (ctx) => {
-    const postID = '5f9a900ad52c9109ccb792f6';
-
-    const article = await Articles.findById(postID);
+    const article = await Articles.findById(process.env.RK_CHILDRENS_ID);
 
     const message = `[${article.title}](${article.link})`;
 
