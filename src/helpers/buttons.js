@@ -2,6 +2,7 @@ class Buttons {
   constructor(ctx) {
     this.ctx = ctx;
     this.buttons = {
+      abkhazia: this.ctx.i18n.t('util.abkhazia'),
       back: this.ctx.i18n.t('navigation.back'),
       childrensSchool: this.ctx.i18n.t('categories.childrensSchool'),
       consultation: this.ctx.i18n.t('categories.consultation'),

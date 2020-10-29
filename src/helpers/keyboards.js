@@ -111,6 +111,16 @@ class Keyboards extends Buttons {
 
     return this.keyboard(layout);
   }
+
+  // Freeride keyboard
+  get freeride() {
+    const layout = [
+      [this.buttons.krasnayaPolyana],
+      [this.buttons.abkhazia],
+    ];
+
+    return this.keyboard(layout);
+  }
 }
 
 module.exports = Keyboards;

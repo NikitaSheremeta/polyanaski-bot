@@ -23,7 +23,7 @@ scene.enter(async (ctx) => {
 
   keyboards.escapeKey = true;
 
-  await ctx.reply(messages.freeride, keyboards.resorts);
+  await ctx.reply(messages.freeride, keyboards.freeride);
 });
 
 scene.leave(async (ctx) => {
@@ -51,20 +51,15 @@ scene.hears(
 );
 
 scene.hears(
-  match('resorts.rosaKhutor'),
+  match('util.abkhazia'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    // const postID = '';
 
-    await ctx.reply(messages.workInProgress);
-  })
-);
+    // const article = await Articles.findById(postID);
 
-scene.hears(
-  match('resorts.gazprom'),
-  asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    // const message = `[${article.title}](${article.link})`;
 
-    await ctx.reply(messages.workInProgress);
+    await ctx.reply('abkhazia freeride', markup);
   })
 );
 
