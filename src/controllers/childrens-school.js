@@ -9,6 +9,8 @@ const Keyboards = require('../helpers/keyboards');
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
 
+const Articles = require('../models/articles');
+
 const { leave } = Stage;
 const scene = new Scene('childrens-school');
 const markup = Extra.markdown();
@@ -38,18 +40,28 @@ scene.leave(async (ctx) => {
 
 scene.hears(
   match('resorts.krasnayaPolyana'),
-  asyncWrapper(async (ctx) => await ctx.reply(
-    '[Детская школа в Красной поляне](https://telegra.ph/Detskaya-shkola-v-Krasnoj-polyane-10-28)',
-    markup
-  ))
+  asyncWrapper(async (ctx) => {
+    const postID = '5f9a8fdfd52c9109ccb792f5';
+
+    const article = await Articles.findById(postID);
+
+    const message = `[${article.title}](${article.link})`;
+
+    await ctx.reply(message, markup);
+  })
 );
 
 scene.hears(
   match('resorts.rosaKhutor'),
-  asyncWrapper(async (ctx) => await ctx.reply(
-    '[Детская школа на Роза хутор](https://telegra.ph/Detskaya-shkola-na-Roza-hutor-10-28)',
-    markup
-  ))
+  asyncWrapper(async (ctx) => {
+    const postID = '5f9a900ad52c9109ccb792f6';
+
+    const article = await Articles.findById(postID);
+
+    const message = `[${article.title}](${article.link})`;
+
+    await ctx.reply(message, markup);
+  })
 );
 
 scene.hears(match('navigation.back'), leave());

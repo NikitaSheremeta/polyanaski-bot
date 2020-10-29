@@ -10,6 +10,8 @@ const Buttons = require('../helpers/buttons');
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
 
+const Articles = require('../models/articles');
+
 const { leave } = Stage;
 const scene = new Scene('instructors');
 const markup = Extra.markdown();
@@ -43,10 +45,15 @@ scene.leave(async (ctx) => {
 
 scene.hears(
   match('training.individualAndGroup'),
-  asyncWrapper(async (ctx) => await ctx.reply(
-    '[Инструктор по горным лыжам / сноуборду](https://telegra.ph/Individualnye-i-gruppovye-zanyatiya-10-27)',
-    markup
-  ))
+  asyncWrapper(async (ctx) => {
+    const postID = '5f9a8fbed52c9109ccb792f4';
+
+    const article = await Articles.findById(postID);
+
+    const message = `[${article.title}](${article.link})`;
+
+    await ctx.reply(message, markup);
+  })
 );
 
 scene.hears(

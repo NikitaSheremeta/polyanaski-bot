@@ -1,6 +1,6 @@
 const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
-// const Extra = require('telegraf/extra');
+const Extra = require('telegraf/extra');
 const { match } = require('telegraf-i18n');
 
 const Messages = require('../helpers/messages');
@@ -9,9 +9,11 @@ const Keyboards = require('../helpers/keyboards');
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
 
+const Articles = require('../models/articles');
+
 const { leave } = Stage;
 const scene = new Scene('freeride');
-// const markup = Extra.markdown();
+const markup = Extra.markdown();
 
 scene.enter(async (ctx) => {
   logger.debug(ctx, 'Enters the freeride scene');
@@ -38,9 +40,13 @@ scene.leave(async (ctx) => {
 scene.hears(
   match('resorts.krasnayaPolyana'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    const postID = '5f9a9045d52c9109ccb792f7';
 
-    await ctx.reply(messages.workInProgress);
+    const article = await Articles.findById(postID);
+
+    const message = `[${article.title}](${article.link})`;
+
+    await ctx.reply(message, markup);
   })
 );
 
