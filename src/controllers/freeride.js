@@ -40,9 +40,7 @@ scene.leave(async (ctx) => {
 scene.hears(
   match('resorts.krasnayaPolyana'),
   asyncWrapper(async (ctx) => {
-    const postID = '5f9a9045d52c9109ccb792f7';
-
-    const article = await Articles.findById(postID);
+    const article = await Articles.findById(process.env.KP_FREERIDE_ID);
 
     const message = `[${article.title}](${article.link})`;
 
@@ -53,13 +51,18 @@ scene.hears(
 scene.hears(
   match('util.abkhazia'),
   asyncWrapper(async (ctx) => {
-    // const postID = '';
+    const articles = await Articles.find({
+      '_id': { $in: [
+        process.env.ABH_FREERIDE_ID,
+        process.env.ABH_SKITOUR_ID
+      ]}
+    });
 
-    // const article = await Articles.findById(postID);
+    articles.map(async (item) => {
+      const message = `[${item.title}](${item.link})`;
 
-    // const message = `[${article.title}](${article.link})`;
-
-    await ctx.reply('abkhazia freeride', markup);
+      await ctx.reply(message, markup);
+    });
   })
 );
 
