@@ -121,6 +121,16 @@ class Keyboards extends Buttons {
 
     return this.keyboard(layout);
   }
+
+  // Weather keyboard
+  get weather() {
+    const layout = [
+      [this.buttons.morning, this.buttons.day],
+      [this.buttons.evening, this.buttons.night],
+    ];
+
+    return this.keyboard(layout);
+  }
 }
 
 module.exports = Keyboards;

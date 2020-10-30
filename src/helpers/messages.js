@@ -12,7 +12,8 @@ class Messages {
       openTrails: ctx.i18n.t('shared.openTrails'),
       skiPasses: ctx.i18n.t('shared.skiPasses'),
       trailMaps: ctx.i18n.t('shared.trailMaps'),
-      workInProgress: ctx.i18n.t('shared.workInProgress')
+      workInProgress: ctx.i18n.t('shared.workInProgress'),
+      weather: ctx.i18n.t('shared.weather')
     };
   }
 
@@ -54,6 +55,10 @@ class Messages {
 
   get trailMaps() {
     return this.messages.trailMaps;
+  }
+
+  get weather() {
+    return this.messages.weather;
   }
 
   get workInProgress() {
