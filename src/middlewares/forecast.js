@@ -1,80 +1,109 @@
+// TODO: Добавить документацию
+// TODO: Добавить логирование
+// TODO: Добавить i18n
+// TODO: Добавить время прогноза
+// TODO: Добавить HTML список в возврат getMessage
+// TODO: QA тесты
+// TODO: Рефакторинг
+
+const Buttons = require('../helpers/buttons');
+
 const axios = require('axios');
+const dateFormat = require('dateformat');
 
-// Сonnect to the API "Weather Unlocked" in case of an error, log it
-async function connectToForecast() {
-  return axios.get(process.env.API_URI)
-    .then((response) => {
-      return response.data.forecast;
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      } else if (error.request) {
-        console.log(error.request);
-      } else {
-        console.log('Error', error.message);
-      }
-
-      return false;
-    });
-}
-
-// Parse the received data and prepare it for insertion into the message
-async function parseForecast(timeID, timeTitle) {
-  const forecastArray = await connectToForecast();
-
-  if (!forecastArray) {
-    return 'Ошибка получения данных...';
+class Forecast extends Buttons {
+  constructor(ctx) {
+    super(ctx);
   }
 
-  const forecastObject = forecastArray[timeID];
+  // Сonnect to the API "Weather Unlocked" in case of an error, log it.
+  async connectToForecast() {
+    return axios.get(process.env.FORECAST_API)
+      .then((response) => {
+        return response.data.forecast;
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
 
-  return [
-    timeTitle,
-    forecastObject.base.temp_c,
-    forecastObject.base.winddir_compass,
-    forecastObject.base.windspd_ms,
-    forecastObject.frzglvl_m
-  ];
-}
+        return false;
+      });
+  }
 
-// Get parameters from the user and start parsing the forecast data
-function getForecast(timeValue) {
-  const timesOfDay = {
-    morning: {
-      id: 2, // ID is a key for fetching data from the received API
-      title: 'Утро'
-    },
-    day: {
-      id: 4,
-      title: 'День'
-    },
-    evening: {
-      id: 6,
-      title: 'Вечер'
-    },
-    night: {
-      id: 7,
-      title: 'Ночь'
+  // Parsing the received data and preparing for insertion into the message.
+  async parseForecast(timeID) {
+    const forecastArray = await this.connectToForecast();
+
+    if (!forecastArray) {
+      return 'Ошибка получения данных...';
     }
-  };
 
-  switch (timeValue) {
-    case 'Утро':
-      parseForecast(timesOfDay.morning.id, timesOfDay.morning.title);
-      break;
-    case 'День':
-      parseForecast(timesOfDay.day.id, timesOfDay.morning.title);
-      break;
-    case 'Вечер':
-      parseForecast(timesOfDay.evening.id, timesOfDay.morning.title);
-      break;
-    case 'Ночь':
-      parseForecast(timesOfDay.night.id, timesOfDay.morning.title);
-      break;
+    const forecastObject = forecastArray[timeID];
+
+    return {
+      temperatureC: forecastObject.base.temp_c,
+      windDirectionCompass: forecastObject.base.winddir_compass,
+      windSpeedMs: forecastObject.base.windspd_ms,
+      freezingLevel: forecastObject.frzglvl_m
+    };
+  }
+
+  // Get parameters from the user and start parsing the forecast data.
+  getForecast(timeValue) {
+    const timesOfDay = {
+      morning: {
+        id: 2 // ID is a key for fetching data from the received API.
+      },
+      day: {
+        id: 4
+      },
+      evening: {
+        id: 6
+      },
+      night: {
+        id: 7
+      }
+    };
+
+    switch (timeValue) {
+      case 'Утро':
+        return this.parseForecast(timesOfDay.morning.id);
+      case 'День':
+        return this.parseForecast(timesOfDay.day.id);
+      case 'Вечер':
+        return this.parseForecast(timesOfDay.evening.id);
+      case 'Ночь':
+        return this.parseForecast(timesOfDay.night.id);
+    }
+  }
+
+  /**
+    * Receiving parameters from the user and generating a forecast
+    * in the format of markdown markup.
+    * @param {string} timeValue - Times of Day
+    */
+  async getMessage(timeValue) {
+    const forecast = await this.getForecast(timeValue);
+
+    const forecastTitle = `<b>${dateFormat('dddd d mmmm')} (${timeValue})</b>`;
+
+    const forecastArray = [
+      forecastTitle,
+      `Температура воздуха: ${forecast.temperatureC} ℃`,
+      `Направление ветра: ${forecast.windDirectionCompass}`,
+      `Скорость ветра: ${forecast.windSpeedMs} м/с`,
+      `Уровень замерзания: ${forecast.freezingLevel} м`
+    ];
+
+    return forecastArray.join('\n');
   }
 }
 
-getForecast('Утро');
+module.exports = Forecast;
