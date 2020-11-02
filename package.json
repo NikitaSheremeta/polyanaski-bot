@@ -23,6 +23,7 @@
   "homepage": "https://github.com/NikitaSheremeta/polyana-ski-bot#readme",
   "dependencies": {
     "axios": "^0.21.0",
+    "dateformat": "^3.0.3",
     "dotenv": "^8.2.0",
     "mongoose": "^5.10.11",
     "request-promise": "^4.2.6",
