@@ -2,11 +2,14 @@ const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
 const { match } = require('telegraf-i18n');
 
-const Keyboards = require('../helpers/keyboards');
 const Messages = require('../helpers/messages');
+const Keyboards = require('../helpers/keyboards');
+const Buttons = require('../helpers/buttons');
 
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
+
+const Forecast = require('../middlewares/forecast');
 
 const { leave } = Stage;
 const scene = new Scene('weather');
@@ -34,36 +37,48 @@ scene.leave(async (ctx) => {
 scene.hears(
   match('weather.morning'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    const forecast = new Forecast(ctx);
+    const buttons = new Buttons(ctx);
 
-    await ctx.reply(messages.workInProgress);
+    const message = await forecast.getMessage(buttons.morning);
+
+    await ctx.replyWithHTML(message);
   })
 );
 
 scene.hears(
   match('weather.day'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    const forecast = new Forecast(ctx);
+    const buttons = new Buttons(ctx);
 
-    await ctx.reply(messages.workInProgress);
+    const message = await forecast.getMessage(buttons.day);
+
+    await ctx.replyWithHTML(message);
   })
 );
 
 scene.hears(
   match('weather.evening'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    const forecast = new Forecast(ctx);
+    const buttons = new Buttons(ctx);
 
-    await ctx.reply(messages.workInProgress);
+    const message = await forecast.getMessage(buttons.evening);
+
+    await ctx.replyWithHTML(message);
   })
 );
 
 scene.hears(
   match('weather.night'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    const forecast = new Forecast(ctx);
+    const buttons = new Buttons(ctx);
 
-    await ctx.reply(messages.workInProgress);
+    const message = await forecast.getMessage(buttons.night);
+
+    await ctx.replyWithHTML(message);
   })
 );
 
