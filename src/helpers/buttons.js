@@ -28,8 +28,20 @@ class Buttons {
     };
   }
 
-  get back() {
-    return this.buttons.back;
+  get day() {
+    return this.buttons.day;
+  }
+
+  get evening() {
+    return this.buttons.evening;
+  }
+
+  get morning() {
+    return this.buttons.morning;
+  }
+
+  get night() {
+    return this.buttons.night;
   }
 }
 
