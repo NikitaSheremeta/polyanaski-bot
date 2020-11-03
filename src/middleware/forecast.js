@@ -1,9 +1,9 @@
 const axios = require('axios');
-const dateFormat = require('dateformat');
 
 const Buttons = require('../helpers/buttons');
 
 const { logger } = require('../util/logger');
+const dateFormat = require('../util/dateformat');
 
 class Forecast extends Buttons {
   constructor(ctx) {
@@ -51,28 +51,28 @@ class Forecast extends Buttons {
   getForecast(timeValue) {
     const timesOfDay = {
       night: {
-        id: 0 // ID is a key for fetching data from the received API. (01:00)
+        index: 0 // Index is a key for fetching data from the received API. (01:00)
       },
       morning: {
-        id: 2 // Morning index (07:00)
+        index: 2 // Morning index (07:00)
       },
       day: {
-        id: 4 // Day index (13:00)
+        index: 4 // Day index (13:00)
       },
       evening: {
-        id: 6 // Evening index (19:00)
+        index: 6 // Evening index (19:00)
       },
     };
 
     switch (timeValue) {
       case this.buttons.night:
-        return this.parseForecast(timesOfDay.night.id);
+        return this.parseForecast(timesOfDay.night.index);
       case this.buttons.morning:
-        return this.parseForecast(timesOfDay.morning.id);
+        return this.parseForecast(timesOfDay.morning.index);
       case this.buttons.day:
-        return this.parseForecast(timesOfDay.day.id);
+        return this.parseForecast(timesOfDay.day.index);
       case this.buttons.evening:
-        return this.parseForecast(timesOfDay.evening.id);
+        return this.parseForecast(timesOfDay.evening.index);
     }
   }
 
