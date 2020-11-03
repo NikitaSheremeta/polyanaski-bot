@@ -9,7 +9,7 @@ const Buttons = require('../helpers/buttons');
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
 
-const Forecast = require('../middlewares/forecast');
+const Forecast = require('../middleware/forecast');
 
 const { leave } = Stage;
 const scene = new Scene('weather');

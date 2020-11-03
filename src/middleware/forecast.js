@@ -32,7 +32,6 @@ class Forecast extends Buttons {
   async parseForecast(timeID) {
     const forecastArray = await this.connectToForecast();
 
-    // TODO: Обработка ошибки и остановка скрипта
     if (!forecastArray) {
       return this.ctx.i18n.t('shared.errorReceivingData');
     }
@@ -89,10 +88,10 @@ class Forecast extends Buttons {
 
     const forecastArray = [
       title,
-      `- Температура воздуха: ${forecast.temperatureC} ℃`,
-      `- Направление ветра: ${forecast.windDirectionCompass}`,
-      `- Скорость ветра: ${forecast.windSpeedMs} м/с`,
-      `- Уровень замерзания: ${forecast.freezingLevel} м`
+      `* Температура воздуха: ${forecast.temperatureC} ℃`,
+      `* Направление ветра: ${forecast.windDirectionCompass}`,
+      `* Скорость ветра: ${forecast.windSpeedMs} м/с`,
+      `* Уровень замерзания: ${forecast.freezingLevel} м`
     ];
 
     return forecastArray.join('\n');
