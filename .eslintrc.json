@@ -22,7 +22,7 @@
       "ignoreArrayIndexes": true,
       "enforceConst": true,
       "detectObjects": false,
-      "ignore": [0]
+      "ignore": [0, 1, 2]
     }],
     "no-unused-vars": ["error", {
       "args": "after-used"
