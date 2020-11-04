@@ -1,19 +1,45 @@
+// TODO: дописать доку
 const axios = require('axios');
-
-const Buttons = require('../helpers/buttons');
 
 const { logger } = require('../util/logger');
 const dateFormat = require('../util/dateformat');
 
-class Forecast extends Buttons {
-  constructor(ctx) {
-    super(ctx);
+const ONE_DAY = 1;
+const ONE_WEEK = 7;
+const TIMES_OF_DAY = {
+  night: {
+    index: 0, // Index is a key for fetching data from the received API.
+    time: '01:00'
+  },
+  morning: {
+    index: 2,
+    time: '07:00',
+  },
+  day: {
+    index: 4,
+    time: '13:00'
+  },
+  evening: {
+    index: 6,
+    time: '19:00'
+  }
+};
+
+/**
+ * @param {ContextMessageUpdate} ctx - Telegram context.
+ * @param {number} numOfDays - Number of days for forecast API.
+ */
+class Forecast {
+  constructor(ctx, numOfDays = ONE_DAY) {
     this.ctx = ctx;
+    this.numOfDays = numOfDays; // The value of a number from 1 to 7.
   }
 
   // Сonnect to the API "Weather Unlocked" in case of an error, log it.
   async connectToForecast() {
-    return axios.get(process.env.FORECAST_API)
+    const url = process.env.FORECAST_API + `&num_of_days=${this.numOfDays}`;
+
+    return axios.get(url)
       .then((response) => response.data.forecast)
       .catch((error) => {
         if (error.response) {
@@ -29,72 +55,103 @@ class Forecast extends Buttons {
   }
 
   // Parsing the received data and preparing for insertion into the message.
-  async parseForecast(timeID) {
-    const forecastArray = await this.connectToForecast();
+  async parseForecast() {
+    const inputForecast = await this.connectToForecast();
 
-    if (!forecastArray) {
+    if (!inputForecast) {
       return this.ctx.i18n.t('shared.errorReceivingData');
     }
 
-    const forecastObject = forecastArray[timeID];
+    const selectedTimes = [
+      TIMES_OF_DAY.night.index,
+      TIMES_OF_DAY.morning.index,
+      TIMES_OF_DAY.day.index,
+      TIMES_OF_DAY.evening.index,
+    ];
+    const outputForecast = [];
 
-    return {
-      time: forecastObject.time,
-      temperatureC: forecastObject.base.temp_c,
-      windDirectionCompass: forecastObject.base.winddir_compass,
-      windSpeedMs: forecastObject.base.windspd_ms,
-      freezingLevel: forecastObject.frzglvl_m
-    };
-  }
-
-  // Get parameters from the user and start parsing the forecast data.
-  getForecast(timeValue) {
-    const timesOfDay = {
-      night: {
-        index: 0 // Index is a key for fetching data from the received API. (01:00)
-      },
-      morning: {
-        index: 2 // Morning index (07:00)
-      },
-      day: {
-        index: 4 // Day index (13:00)
-      },
-      evening: {
-        index: 6 // Evening index (19:00)
-      },
-    };
-
-    switch (timeValue) {
-      case this.buttons.night:
-        return this.parseForecast(timesOfDay.night.index);
-      case this.buttons.morning:
-        return this.parseForecast(timesOfDay.morning.index);
-      case this.buttons.day:
-        return this.parseForecast(timesOfDay.day.index);
-      case this.buttons.evening:
-        return this.parseForecast(timesOfDay.evening.index);
+    if (this.numOfDays === ONE_DAY) {
+      selectedTimes.forEach(item => {
+        outputForecast.push(inputForecast[item]);
+      });
     }
+
+    if (this.numOfDays === ONE_WEEK) {
+      inputForecast.forEach(item => {
+        if (item.time === TIMES_OF_DAY.day.time) {
+          outputForecast.push(item);
+        }
+      });
+    }
+
+    return outputForecast;
   }
 
-  /**
-    * Receiving parameters from the user and generating a forecast
-    * in the format of markdown markup.
-    * @param {string} timeValue - Times of Day
-    */
-  async getMessage(timeValue) {
-    const forecast = await this.getForecast(timeValue);
-
-    const title = `<b>${dateFormat('dddd, d mmmm')} (${forecast.time})</b>`;
-
-    const forecastArray = [
-      title,
-      `* Температура воздуха: ${forecast.temperatureC} ℃`,
-      `* Направление ветра: ${forecast.windDirectionCompass}`,
-      `* Скорость ветра: ${forecast.windSpeedMs} м/с`,
-      `* Уровень замерзания: ${forecast.freezingLevel} м`
+  messageTemplate(item) {
+    const message = [
+      `• Температура воздуха: ${item.base.temp_c} ℃`,
+      `• Кол-во свежего снега: ${item.upper.freshsnow_cm} см`,
     ];
 
-    return forecastArray.join('\n');
+    if (this.numOfDays === ONE_DAY) {
+      const title = `<b>${item.time} ☀️ ${item.base.wx_desc}</b>`;
+
+      message.splice(0, 0, title);
+
+      const row = [
+        `• Скорость ветра: ${item.mid.windspd_ms} м/с`,
+        `• Видимость: ${item.vis_km} км`,
+        `• Уровень замерзания: ${item.frzglvl_m} м`,
+      ];
+
+      message.splice(2, 0, ...row);
+    }
+
+    return message;
+  }
+
+  async getMessage() {
+    const inputForecast = await this.parseForecast();
+    const outputForecast = [];
+
+    if (this.numOfDays === ONE_DAY) {
+      const title = `Прогноз на ${dateFormat('d mmmm')}`;
+
+      outputForecast.push(title);
+    }
+
+    if (this.numOfDays === ONE_WEEK) {
+      outputForecast.push('Прогноз на неделю');
+    }
+
+    inputForecast.forEach((item) => {
+      if (this.numOfDays === ONE_DAY) {
+        const message = this.messageTemplate(item);
+
+        outputForecast.push(' ', ...message);
+      }
+
+      if (this.numOfDays === ONE_WEEK) {
+        /**
+          * The API gives the date in the day / month / year format,
+          * and the dateFormator accepts a date in the month / day / year format as input.
+          * This is the easiest way out of this situation.
+          */
+        const dateParts = item.date.split('/');
+
+        item.date = [dateParts[1], dateParts[0], dateParts[2]];
+
+        const title = `<b>${dateFormat(item.date, 'dddd, d mmmm')}</b>`;
+
+        outputForecast.push(' ', title);
+
+        const message = this.messageTemplate(item);
+
+        outputForecast.push(...message);
+      }
+    });
+
+    return outputForecast.join('\n');
   }
 }
 
