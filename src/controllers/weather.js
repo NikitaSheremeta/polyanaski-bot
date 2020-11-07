@@ -4,12 +4,14 @@ const { match } = require('telegraf-i18n');
 
 const Messages = require('../helpers/messages');
 const Keyboards = require('../helpers/keyboards');
-// const Buttons = require('../helpers/buttons');
 
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
 
 const Forecast = require('../middleware/forecast');
+
+const FOR_A_DAY = 1;
+const FOR_A_WEAK = 7;
 
 const { leave } = Stage;
 const scene = new Scene('weather');
@@ -35,10 +37,9 @@ scene.leave(async (ctx) => {
 });
 
 scene.hears(
-  match('weather.morning'),
+  match('weather.forADay'),
   asyncWrapper(async (ctx) => {
-    const forecast = new Forecast(ctx);
-    // const buttons = new Buttons(ctx);
+    const forecast = new Forecast(ctx, FOR_A_DAY);
 
     const message = await forecast.getMessage();
 
@@ -47,34 +48,9 @@ scene.hears(
 );
 
 scene.hears(
-  match('weather.day'),
+  match('weather.forAWeak'),
   asyncWrapper(async (ctx) => {
-    const forecast = new Forecast(ctx);
-    // const buttons = new Buttons(ctx);
-
-    const message = await forecast.getMessage();
-
-    await ctx.replyWithHTML(message);
-  })
-);
-
-scene.hears(
-  match('weather.evening'),
-  asyncWrapper(async (ctx) => {
-    const forecast = new Forecast(ctx);
-    // const buttons = new Buttons(ctx);
-
-    const message = await forecast.getMessage();
-
-    await ctx.replyWithHTML(message);
-  })
-);
-
-scene.hears(
-  match('weather.night'),
-  asyncWrapper(async (ctx) => {
-    const forecast = new Forecast(ctx);
-    // const buttons = new Buttons(ctx);
+    const forecast = new Forecast(ctx, FOR_A_WEAK);
 
     const message = await forecast.getMessage();
 
