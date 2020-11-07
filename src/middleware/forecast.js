@@ -1,4 +1,9 @@
+// Наблюдения: 8 ноября 02:23 API не обновилось, показывает прогноз на 7 ноября
 const axios = require('axios');
+
+const WeatherEmoji = require('../models/weather-emoji');
+
+const Common = require('../helpers/common');
 
 const { logger } = require('../util/logger');
 const dateFormat = require('../util/dateformat');
@@ -32,6 +37,16 @@ class Forecast {
   constructor(ctx, numOfDays = ONE_DAY) {
     this.ctx = ctx;
     this.numOfDays = numOfDays; // The value of a number from 1 to 7.
+    this.weatherEmoji;
+    this.connectToWeatherEmoji();
+  }
+
+  async connectToWeatherEmoji() {
+    try {
+      this.weatherEmoji = await WeatherEmoji.find();
+    } catch (error) {
+      logger.debug(this.ctx, error.message);
+    }
   }
 
   // Сonnect to the API "Weather Unlocked" in case of an error, log it.
@@ -86,6 +101,18 @@ class Forecast {
     return outputForecast;
   }
 
+  getWeatherEmoji(weatherCode) {
+    for (const iterator of this.weatherEmoji) {
+      const searchResult = Common.linearSearch(iterator.codes, weatherCode);
+
+      if (searchResult) {
+        return iterator.emoji;
+      }
+    }
+
+    return false;
+  }
+
   headerContentTemplate() {
     if (this.numOfDays === ONE_DAY) {
       return dateFormat('dddd, d mmmm');
@@ -102,6 +129,8 @@ class Forecast {
       `• Кол-во свежего снега: ${item.upper.freshsnow_cm} см`,
     ];
 
+    const weatherEmoji = this.getWeatherEmoji(item.base.wx_code);
+
     if (this.numOfDays === ONE_DAY) {
       /**
         * This is a fix for the forecast API error, it is displayed
@@ -112,7 +141,7 @@ class Forecast {
         item.base.wx_desc = 'Ясно';
       }
 
-      const title = `<b>${item.time} ☀️ ${item.base.wx_desc}</b>`;
+      const title = `<b>${item.time} ${weatherEmoji} ${item.base.wx_desc}</b>`;
 
       message.splice(0, 0, title);
 
@@ -157,11 +186,9 @@ class Forecast {
 
   async createMessage() {
     const foreacast = await this.parseForecast();
-    const messgaeArray = [];
-
     const headerMessage = this.headerContentTemplate();
-
     const bodyMessage = this.bodyContentTemplate(foreacast);
+    const messgaeArray = [];
 
     messgaeArray.push(headerMessage, ...bodyMessage);
 
