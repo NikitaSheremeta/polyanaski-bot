@@ -1,4 +1,4 @@
-// Наблюдения: 8 ноября 02:23 API не обновилось, показывает прогноз на 7 ноября
+// Наблюдения: 8 ноября 03:00 API не обновилось, показывает прогноз на 7 ноября
 const axios = require('axios');
 
 const WeatherEmoji = require('../models/weather-emoji');
@@ -46,6 +46,8 @@ class Forecast {
       this.weatherEmoji = await WeatherEmoji.find();
     } catch (error) {
       logger.debug(this.ctx, error.message);
+
+      return false;
     }
   }
 
@@ -102,6 +104,10 @@ class Forecast {
   }
 
   getWeatherEmoji(weatherCode) {
+    if (!this.weatherEmoji) {
+      return '⁉️';
+    }
+
     for (const iterator of this.weatherEmoji) {
       const searchResult = Common.linearSearch(iterator.codes, weatherCode);
 
@@ -110,7 +116,7 @@ class Forecast {
       }
     }
 
-    return false;
+    return '⁉️';
   }
 
   headerContentTemplate() {
@@ -129,7 +135,7 @@ class Forecast {
       `• Кол-во свежего снега: ${item.upper.freshsnow_cm} см`,
     ];
 
-    const weatherEmoji = this.getWeatherEmoji(item.base.wx_code);
+    const emoji = this.getWeatherEmoji(item.base.wx_code);
 
     if (this.numOfDays === ONE_DAY) {
       /**
@@ -141,7 +147,7 @@ class Forecast {
         item.base.wx_desc = 'Ясно';
       }
 
-      const title = `<b>${item.time} ${weatherEmoji} ${item.base.wx_desc}</b>`;
+      const title = `<b>(${item.time}) ${emoji} ${item.base.wx_desc}</b>`;
 
       message.splice(0, 0, title);
 
