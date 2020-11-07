@@ -1,4 +1,3 @@
-// TODO: дописать доку
 const axios = require('axios');
 
 const { logger } = require('../util/logger');
@@ -87,7 +86,7 @@ class Forecast {
     return outputForecast;
   }
 
-  messageTemplate(item) {
+  createBodyContent(item) {
     const message = [
       `• Температура воздуха: ${item.base.temp_c} ℃`,
       `• Кол-во свежего снега: ${item.upper.freshsnow_cm} см`,
@@ -110,25 +109,16 @@ class Forecast {
     return message;
   }
 
-  async getMessage() {
-    const inputForecast = await this.parseForecast();
-    const outputForecast = [];
+  bodyContentTemplate(forecastData) {
+    const bodyMessageTemplate = [];
 
-    if (this.numOfDays === ONE_DAY) {
-      const title = `Прогноз на ${dateFormat('d mmmm')}`;
+    console.log(forecastData);
 
-      outputForecast.push(title);
-    }
-
-    if (this.numOfDays === ONE_WEEK) {
-      outputForecast.push('Прогноз на неделю');
-    }
-
-    inputForecast.forEach((item) => {
+    forecastData.forEach((item) => {
       if (this.numOfDays === ONE_DAY) {
-        const message = this.messageTemplate(item);
+        const message = this.createBodyContent(item);
 
-        outputForecast.push(' ', ...message);
+        bodyMessageTemplate.push(' ', ...message);
       }
 
       if (this.numOfDays === ONE_WEEK) {
@@ -143,15 +133,45 @@ class Forecast {
 
         const title = `<b>${dateFormat(item.date, 'dddd, d mmmm')}</b>`;
 
-        outputForecast.push(' ', title);
+        bodyMessageTemplate.push(' ', title);
 
-        const message = this.messageTemplate(item);
+        const message = this.createBodyContent(item);
 
-        outputForecast.push(...message);
+        bodyMessageTemplate.push(...message);
       }
     });
 
+    return bodyMessageTemplate;
+  }
+
+  async createMessage() {
+    const inputForecast = await this.parseForecast();
+    const outputForecast = [];
+
+    // Header content template.
+    if (this.numOfDays === ONE_DAY) {
+      const title = `${dateFormat('dddd, d mmmm')}`;
+
+      outputForecast.push(title);
+    }
+
+    if (this.numOfDays === ONE_WEEK) {
+      outputForecast.push('Прогноз погоды на неделю');
+    }
+
+    const bodyMessage = this.bodyContentTemplate(inputForecast);
+
+    outputForecast.push(...bodyMessage);
+
     return outputForecast.join('\n');
+  }
+
+  async getMessage() {
+    try {
+      return await this.createMessage();
+    } catch (error) {
+      logger.debug(this.ctx, error.message);
+    }
   }
 }
 
