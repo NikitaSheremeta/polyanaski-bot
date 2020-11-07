@@ -86,6 +86,16 @@ class Forecast {
     return outputForecast;
   }
 
+  headerContentTemplate() {
+    if (this.numOfDays === ONE_DAY) {
+      return dateFormat('dddd, d mmmm');
+    }
+
+    if (this.numOfDays === ONE_WEEK) {
+      return this.ctx.i18n.t('weather.forAWeak');
+    }
+  }
+
   createBodyContent(item) {
     const message = [
       `• Температура воздуха: ${item.base.temp_c} ℃`,
@@ -93,6 +103,15 @@ class Forecast {
     ];
 
     if (this.numOfDays === ONE_DAY) {
+      /**
+        * This is a fix for the forecast API error, it is displayed
+        * as sun at night, but not clear.
+        */
+      if (item.time === TIMES_OF_DAY.night.time
+          && item.base.wx_desc === ' Солнце') {
+        item.base.wx_desc = 'Ясно';
+      }
+
       const title = `<b>${item.time} ☀️ ${item.base.wx_desc}</b>`;
 
       message.splice(0, 0, title);
@@ -106,64 +125,47 @@ class Forecast {
       message.splice(2, 0, ...row);
     }
 
+    if (this.numOfDays === ONE_WEEK) {
+      /**
+        * The API gives the date in the day / month / year format,
+        * and the dateFormator accepts a date in the month / day / year format as input.
+        * This is the easiest way out of this situation.
+        */
+      const dateParts = item.date.split('/');
+
+      item.date = [dateParts[1], dateParts[0], dateParts[2]];
+
+      const title = `<b>${dateFormat(item.date, 'dddd, d mmmm')}</b>`;
+
+      message.splice(0, 0, title);
+    }
+
     return message;
   }
 
-  bodyContentTemplate(forecastData) {
+  bodyContentTemplate(foreacast) {
     const bodyMessageTemplate = [];
 
-    console.log(forecastData);
+    foreacast.forEach((item) => {
+      const message = this.createBodyContent(item);
 
-    forecastData.forEach((item) => {
-      if (this.numOfDays === ONE_DAY) {
-        const message = this.createBodyContent(item);
-
-        bodyMessageTemplate.push(' ', ...message);
-      }
-
-      if (this.numOfDays === ONE_WEEK) {
-        /**
-          * The API gives the date in the day / month / year format,
-          * and the dateFormator accepts a date in the month / day / year format as input.
-          * This is the easiest way out of this situation.
-          */
-        const dateParts = item.date.split('/');
-
-        item.date = [dateParts[1], dateParts[0], dateParts[2]];
-
-        const title = `<b>${dateFormat(item.date, 'dddd, d mmmm')}</b>`;
-
-        bodyMessageTemplate.push(' ', title);
-
-        const message = this.createBodyContent(item);
-
-        bodyMessageTemplate.push(...message);
-      }
+      bodyMessageTemplate.push(' ', ...message);
     });
 
     return bodyMessageTemplate;
   }
 
   async createMessage() {
-    const inputForecast = await this.parseForecast();
-    const outputForecast = [];
+    const foreacast = await this.parseForecast();
+    const messgaeArray = [];
 
-    // Header content template.
-    if (this.numOfDays === ONE_DAY) {
-      const title = `${dateFormat('dddd, d mmmm')}`;
+    const headerMessage = this.headerContentTemplate();
 
-      outputForecast.push(title);
-    }
+    const bodyMessage = this.bodyContentTemplate(foreacast);
 
-    if (this.numOfDays === ONE_WEEK) {
-      outputForecast.push('Прогноз погоды на неделю');
-    }
+    messgaeArray.push(headerMessage, ...bodyMessage);
 
-    const bodyMessage = this.bodyContentTemplate(inputForecast);
-
-    outputForecast.push(...bodyMessage);
-
-    return outputForecast.join('\n');
+    return messgaeArray.join('\n');
   }
 
   async getMessage() {
