@@ -103,15 +103,23 @@ class Forecast {
     return outputForecast;
   }
 
-  getWeatherEmoji(weatherCode) {
+  /**
+    * Finding an emoticon and its modification depending on the weather code
+    * and time of day.
+    */
+  getWeatherEmoji(weatherCode, timeOfDay) {
     if (!this.weatherEmoji) {
       return '⁉️';
     }
 
     for (const iterator of this.weatherEmoji) {
-      const searchResult = Common.linearSearch(iterator.codes, weatherCode);
+      const searchResults = Common.linearSearch(iterator.codes, weatherCode);
 
-      if (searchResult) {
+      if (searchResults) {
+        if (timeOfDay === TIMES_OF_DAY.night.time) {
+          return iterator.emojiNightMode;
+        }
+
         return iterator.emoji;
       }
     }
@@ -130,26 +138,25 @@ class Forecast {
   }
 
   createBodyContent(item) {
-    const message = [
+    const messageArray = [
       `• Температура воздуха: ${item.base.temp_c} ℃`,
       `• Кол-во свежего снега: ${item.upper.freshsnow_cm} см`,
     ];
+    const weatherEmoji = this.getWeatherEmoji(item.base.wx_code, item.time);
 
-    const emoji = this.getWeatherEmoji(item.base.wx_code);
+    let title = '';
 
     if (this.numOfDays === ONE_DAY) {
       /**
         * This is a fix for the forecast API error, it is displayed
         * as sun at night, but not clear.
+        * And in general it will only be clear.
         */
-      if (item.time === TIMES_OF_DAY.night.time
-          && item.base.wx_desc === ' Солнце') {
+      if (item.base.wx_desc === 'Солнце') {
         item.base.wx_desc = 'Ясно';
       }
 
-      const title = `<b>(${item.time}) ${emoji} ${item.base.wx_desc}</b>`;
-
-      message.splice(0, 0, title);
+      title = `<b>(${item.time}) ${weatherEmoji} ${item.base.wx_desc}</b>`;
 
       const row = [
         `• Скорость ветра: ${item.mid.windspd_ms} м/с`,
@@ -157,7 +164,7 @@ class Forecast {
         `• Уровень замерзания: ${item.frzglvl_m} м`,
       ];
 
-      message.splice(2, 0, ...row);
+      messageArray.splice(2, 0, ...row);
     }
 
     if (this.numOfDays === ONE_WEEK) {
@@ -170,18 +177,18 @@ class Forecast {
 
       item.date = [dateParts[1], dateParts[0], dateParts[2]];
 
-      const title = `<b>${dateFormat(item.date, 'dddd, d mmmm')}</b>`;
-
-      message.splice(0, 0, title);
+      title = `<b>${dateFormat(item.date, 'dddd, d mmmm')}</b>`;
     }
 
-    return message;
+    messageArray.splice(0, 0, title);
+
+    return messageArray;
   }
 
-  bodyContentTemplate(foreacast) {
+  bodyContentTemplate(forecast) {
     const bodyMessageTemplate = [];
 
-    foreacast.forEach((item) => {
+    forecast.forEach((item) => {
       const message = this.createBodyContent(item);
 
       bodyMessageTemplate.push(' ', ...message);
@@ -191,14 +198,14 @@ class Forecast {
   }
 
   async createMessage() {
-    const foreacast = await this.parseForecast();
+    const forecast = await this.parseForecast();
     const headerMessage = this.headerContentTemplate();
-    const bodyMessage = this.bodyContentTemplate(foreacast);
-    const messgaeArray = [];
+    const bodyMessage = this.bodyContentTemplate(forecast);
+    const messageArray = [];
 
-    messgaeArray.push(headerMessage, ...bodyMessage);
+    messageArray.push(headerMessage, ...bodyMessage);
 
-    return messgaeArray.join('\n');
+    return messageArray.join('\n');
   }
 
   async getMessage() {
