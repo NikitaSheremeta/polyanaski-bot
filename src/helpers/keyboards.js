@@ -125,8 +125,7 @@ class Keyboards extends Buttons {
   // Weather keyboard
   get weather() {
     const layout = [
-      [this.buttons.forADay],
-      [this.buttons.forAWeak],
+      [this.buttons.forADay, this.buttons.forAWeak]
     ];
 
     return this.keyboard(layout);
