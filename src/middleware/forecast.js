@@ -133,7 +133,7 @@ class Forecast {
     }
 
     if (this.numOfDays === ONE_WEEK) {
-      return this.ctx.i18n.t('weather.forAWeak');
+      return 'Прогноз погоды на неделю';
     }
   }
 
@@ -158,13 +158,11 @@ class Forecast {
 
       title = `<b>(${item.time}) ${weatherEmoji} ${item.base.wx_desc}</b>`;
 
-      const row = [
+      messageArray.splice(2, 0,
         `• Скорость ветра: ${item.mid.windspd_ms} м/с`,
         `• Видимость: ${item.vis_km} км`,
         `• Уровень замерзания: ${item.frzglvl_m} м`,
-      ];
-
-      messageArray.splice(2, 0, ...row);
+      );
     }
 
     if (this.numOfDays === ONE_WEEK) {
@@ -178,6 +176,8 @@ class Forecast {
       item.date = [dateParts[1], dateParts[0], dateParts[2]];
 
       title = `<b>${dateFormat(item.date, 'dddd, d mmmm')}</b>`;
+
+      messageArray.splice(0, 0, `•${weatherEmoji} ${item.base.wx_desc}`);
     }
 
     messageArray.splice(0, 0, title);
