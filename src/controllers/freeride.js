@@ -52,10 +52,12 @@ scene.hears(
   match('util.abkhazia'),
   asyncWrapper(async (ctx) => {
     const articles = await Articles.find({
-      '_id': { $in: [
-        process.env.ABH_FREERIDE_ID,
-        process.env.ABH_SKITOUR_ID
-      ]}
+      _id: {
+        $in: [
+          process.env.ABH_FREERIDE_ID,
+          process.env.ABH_SKITOUR_ID
+        ]
+      }
     });
 
     articles.map(async (item) => {

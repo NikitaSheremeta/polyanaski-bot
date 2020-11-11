@@ -65,11 +65,16 @@ scene.hears(
   })
 );
 
-// This is a temporary solution, pending a working solution
-scene.hears(match('resorts.gazprom'), (ctx) => ctx.replyWithDocument({
-  source: fs.readFileSync(path.join(__dirname, '..', 'assets', 'images', 'gazprom-map.jpg')),
-  filename: 'gazprom-map.jpg'
-}));
+// [WIP]: This is a temporary solution for testing functionality, pending a working solution.
+scene.hears(
+  match('resorts.gazprom'),
+  (ctx) => ctx.replyWithDocument({
+    source: fs.readFileSync(
+      path.join(__dirname, '..', 'assets', 'images', 'gazprom-map.jpg')
+    ),
+    filename: 'gazprom-map.jpg'
+  })
+);
 
 scene.hears(match('navigation.back'), leave());
 
