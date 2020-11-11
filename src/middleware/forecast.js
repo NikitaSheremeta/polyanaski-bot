@@ -165,7 +165,7 @@ class Forecast {
 
       title = `<b>(${item.time}) ${weatherEmoji} ${item.base.wx_desc}</b>`;
 
-      messageArray.splice(2, 0,
+      messageArray.splice(1, 0,
         `• Скорость ветра: ${item.mid.windspd_ms} м/с`,
         `• Видимость: ${item.vis_km} км`,
         `• Уровень замерзания: ${item.frzglvl_m} м`,
@@ -206,11 +206,11 @@ class Forecast {
 
   async createMessage() {
     const forecast = await this.parseForecast();
-    const headerMessage = this.headerContentTemplate();
-    const bodyMessage = this.bodyContentTemplate(forecast);
+    const headerContent = this.headerContentTemplate();
+    const bodyContent = this.bodyContentTemplate(forecast);
     const messageArray = [];
 
-    messageArray.push(headerMessage, ...bodyMessage);
+    messageArray.push(headerContent, ...bodyContent);
 
     return messageArray.join('\n');
   }
