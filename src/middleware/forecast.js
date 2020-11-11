@@ -51,12 +51,19 @@ class Forecast {
     }
   }
 
-  // Сonnect to the API "Weather Unlocked" in case of an error, log it.
+  /**
+   * Сonnect to the API "Weather Unlocked" in case of an error, log it.
+   * Thinking about replacing axos with a request?
+   */
   async connectToForecast() {
-    const url = process.env.FORECAST_API + `&num_of_days=${this.numOfDays}`;
+    const url = process.env.FORECAST_API;
 
-    return axios.get(url)
-      .then((response) => response.data.forecast)
+    return axios.get(url, {
+      params: {
+        lang: this.ctx.i18n.languageCode,
+        num_of_days: this.numOfDays
+      }
+    }).then((response) => response.data.forecast)
       .catch((error) => {
         if (error.response) {
           logger.debug(this.ctx, error.response.data);
