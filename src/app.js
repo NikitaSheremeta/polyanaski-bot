@@ -31,7 +31,7 @@ mongoose.connect(process.env.DATABASE_HOST, {
   useCreateIndex: true
 });
 
-mongoose.connection.on('error', err => {
+mongoose.connection.on('error', (err) => {
   logger.error(
     undefined,
     `Error while establishing connection to database: %O`,
