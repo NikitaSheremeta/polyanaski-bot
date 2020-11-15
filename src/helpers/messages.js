@@ -13,7 +13,8 @@ class Messages {
       skiPasses: ctx.i18n.t('shared.skiPasses'),
       trailMaps: ctx.i18n.t('shared.trailMaps'),
       workInProgress: ctx.i18n.t('shared.workInProgress'),
-      weather: ctx.i18n.t('shared.weather')
+      weather: ctx.i18n.t('shared.weather'),
+      welcomeBack: ctx.i18n.t('shared.welcomeBack')
     };
   }
 
@@ -63,6 +64,10 @@ class Messages {
 
   get workInProgress() {
     return this.messages.workInProgress;
+  }
+
+  get welcomeBack() {
+    return this.messages.welcomeBack;
   }
 }
 
