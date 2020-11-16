@@ -66,6 +66,14 @@
   "util": {
     "abkhazia": "Абхазия",
     "mainMap": "Зимняя карта Красной Поляны",
-    "singleSkiPass": "Единый ски-пасс"
+    "singleSkiPass": "Единый ски-пасс",
+    "booking": "Записаться",
+    "bookAnInstructor": "Забронировать занятие",
+    "bookAnEquipment": "Забронировать снаряжение",
+    "bookATour": "Забронировать тур"
+  },
+  "contacts": {
+    "instructor": "t.me/@EvgenyVolkov1",
+    "techSupport": "t.me/@NikitaSheremeta"
   }
 }
