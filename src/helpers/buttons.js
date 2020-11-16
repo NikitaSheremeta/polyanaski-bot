@@ -8,7 +8,7 @@ class Buttons {
       childrensSchool: this.ctx.i18n.t('categories.childrensSchool'),
       consultation: this.ctx.i18n.t('categories.consultation'),
       consultationWithInstructor: this.ctx.i18n.t('scenes.consultation.consultationWithInstructor'),
-      consultationWithSupport: this.ctx.i18n.t('scenes.consultation.consultationWithSupport'),
+      techSupport: this.ctx.i18n.t('scenes.consultation.techSupport'),
       contactInstructor: this.ctx.i18n.t('contacts.instructor'),
       contactTechSupport: this.ctx.i18n.t('contacts.techSupport'),
       forADay: this.ctx.i18n.t('scenes.weather.forADay'),

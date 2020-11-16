@@ -33,7 +33,7 @@ class InlineKeyboards extends Buttons {
         url: this.buttons.contactInstructor
       }],
       [{
-        text: this.buttons.consultationWithSupport,
+        text: this.buttons.techSupport,
         url: this.buttons.contactTechSupport
       }]
     ];
