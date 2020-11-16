@@ -5,7 +5,6 @@ const { match } = require('telegraf-i18n');
 
 const Messages = require('../helpers/messages');
 const Keyboards = require('../helpers/keyboards');
-const Buttons = require('../helpers/buttons');
 
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
@@ -30,10 +29,10 @@ scene.enter(async (ctx) => {
 scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the instructors scene');
 
-  const buttons = new Buttons(ctx);
+  const backKey = ctx.i18n.t('navigation.back');
 
   // If you exit the scene through the "back" button, then we issue a message about the main menu
-  if (ctx.update.message.text === buttons.back) {
+  if (ctx.update.message.text === backKey) {
     const messages = new Messages(ctx);
     const keyboards = new Keyboards(ctx);
 
@@ -56,14 +55,12 @@ scene.hears(
 
 scene.hears(
   match('scenes.instructors.childrensSchool'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('childrens-school')),
-  leave()
+  asyncWrapper(async (ctx) => await ctx.scene.enter('childrens-school'))
 );
 
 scene.hears(
   match('scenes.instructors.freeride'),
-  asyncWrapper(async (ctx) => await ctx.scene.enter('freeride')),
-  leave()
+  asyncWrapper(async (ctx) => await ctx.scene.enter('freeride'))
 );
 
 scene.hears(match('navigation.back'), leave());

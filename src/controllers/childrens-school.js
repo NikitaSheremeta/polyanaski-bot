@@ -1,4 +1,3 @@
-const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
 const Extra = require('telegraf/extra');
 const { match } = require('telegraf-i18n');
@@ -11,7 +10,6 @@ const { asyncWrapper } = require('../util/error-handler');
 
 const Articles = require('../models/articles');
 
-const { leave } = Stage;
 const scene = new Scene('childrens-school');
 const markup = Extra.markdown();
 
@@ -25,17 +23,6 @@ scene.enter(async (ctx) => {
   keyboards.withoutGazprom = true;
 
   await ctx.reply(messages.childrensSchool, keyboards.resorts);
-});
-
-scene.leave(async (ctx) => {
-  logger.debug(ctx, 'Leaves the childrens school scene');
-
-  const messages = new Messages(ctx);
-  const keyboards = new Keyboards(ctx);
-
-  keyboards.extraMarkdown = true;
-
-  await ctx.reply(messages.mainMenu, keyboards.main);
 });
 
 scene.hears(
@@ -60,6 +47,13 @@ scene.hears(
   })
 );
 
-scene.hears(match('navigation.back'), leave());
+scene.hears(
+  match('navigation.back'),
+  asyncWrapper(async (ctx) => {
+    logger.debug(ctx, 'Leaves the childrens school scene');
+
+    await ctx.scene.enter('instructors');
+  })
+);
 
 module.exports = { childrensSchool: scene };
