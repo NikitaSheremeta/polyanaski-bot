@@ -125,6 +125,15 @@ mongoose.connection.on('open', () => {
     asyncWrapper(async (ctx) => await ctx.scene.enter('freeride'))
   );
 
+  // System restart command
+  bot.command('restart', asyncWrapper(async (ctx) => {
+    logger.debug(ctx, 'Restart command was pressed');
+
+    await ctx.reply(ctx.i18n.t('shared.restartSystem'));
+
+    return await ctx.scene.leave();
+  }));
+
   // Catch some troubles
   bot.catch((error) => logger.error(undefined, 'Global error, %O', error));
 
