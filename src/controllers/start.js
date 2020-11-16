@@ -1,7 +1,7 @@
 const Scene = require('telegraf/scenes/base');
 
-const Keyboards = require('../helpers/keyboards');
 const Messages = require('../helpers/messages');
+const Keyboards = require('../helpers/keyboards');
 
 const { logger } = require('../util/logger');
 
@@ -37,9 +37,8 @@ scene.enter(async (ctx) => {
   const newUser = new Users(userData);
 
   try {
-    await newUser.save().then(() => {
-      logger.debug(ctx, 'New user has been created');
-    });
+    await newUser.save()
+      .then(() => logger.debug(ctx, 'New user has been created'));
   } catch (error) {
     logger.debug(ctx, 'New user has NOT been created');
   }
@@ -52,8 +51,8 @@ scene.enter(async (ctx) => {
 scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the start scene');
 
-  const keyboards = new Keyboards(ctx);
   const messages = new Messages(ctx);
+  const keyboards = new Keyboards(ctx);
 
   return await ctx.reply(messages.description, keyboards.main);
 });

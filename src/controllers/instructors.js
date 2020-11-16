@@ -44,7 +44,7 @@ scene.leave(async (ctx) => {
 });
 
 scene.hears(
-  match('training.individualAndGroup'),
+  match('scenes.instructors.individualAndGroup'),
   asyncWrapper(async (ctx) => {
     const article = await Articles.findById(process.env.TRAINS_ID);
 
@@ -55,13 +55,13 @@ scene.hears(
 );
 
 scene.hears(
-  match('categories.childrensSchool'),
+  match('scenes.instructors.childrensSchool'),
   asyncWrapper(async (ctx) => await ctx.scene.enter('childrens-school')),
   leave()
 );
 
 scene.hears(
-  match('categories.freeride'),
+  match('scenes.instructors.freeride'),
   asyncWrapper(async (ctx) => await ctx.scene.enter('freeride')),
   leave()
 );

@@ -2,8 +2,8 @@ const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
 const { match } = require('telegraf-i18n');
 
-const Keyboards = require('../helpers/keyboards');
 const Messages = require('../helpers/messages');
+const Keyboards = require('../helpers/keyboards');
 
 const { logger } = require('../util/logger');
 
@@ -13,8 +13,8 @@ const scene = new Scene('rent');
 scene.enter(async (ctx) => {
   logger.debug(ctx, 'Enters the rent scene');
 
-  const keyboards = new Keyboards(ctx);
   const messages = new Messages(ctx);
+  const keyboards = new Keyboards(ctx);
 
   await ctx.reply(messages.workInProgress, keyboards.back);
 });
@@ -22,8 +22,8 @@ scene.enter(async (ctx) => {
 scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the rent scene');
 
-  const keyboards = new Keyboards(ctx);
   const messages = new Messages(ctx);
+  const keyboards = new Keyboards(ctx);
 
   await ctx.reply(messages.mainMenu, keyboards.main);
 });

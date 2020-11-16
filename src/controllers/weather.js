@@ -30,14 +30,14 @@ scene.enter(async (ctx) => {
 scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the weather scene');
 
-  const keyboards = new Keyboards(ctx);
   const messages = new Messages(ctx);
+  const keyboards = new Keyboards(ctx);
 
   await ctx.reply(messages.mainMenu, keyboards.main);
 });
 
 scene.hears(
-  match('weather.forADay'),
+  match('scenes.weather.forADay'),
   asyncWrapper(async (ctx) => {
     const forecast = new Forecast(ctx, FOR_A_DAY);
 
@@ -48,7 +48,7 @@ scene.hears(
 );
 
 scene.hears(
-  match('weather.forAWeak'),
+  match('scenes.weather.forAWeak'),
   asyncWrapper(async (ctx) => {
     const forecast = new Forecast(ctx, FOR_A_WEAK);
 

@@ -2,19 +2,19 @@ class Messages {
   constructor(ctx) {
     this.ctx = ctx;
     this.messages = {
-      childrensSchool: ctx.i18n.t('shared.childrensSchool'),
+      childrensSchool: ctx.i18n.t('scenes.instructors.childrensSchool'),
       consultation: ctx.i18n.t('scenes.consultation.intro'),
       description: ctx.i18n.t('scenes.start.description'),
-      freeride: ctx.i18n.t('shared.freeride'),
+      freeride: ctx.i18n.t('scenes.instructors.freeride'),
       go: ctx.i18n.t('shared.go'),
       greeting: ctx.i18n.t('scenes.start.greeting'),
-      instructors: ctx.i18n.t('shared.instructors'),
+      instructors: ctx.i18n.t('scenes.instructors.intro'),
       mainMenu: ctx.i18n.t('shared.mainMenu'),
-      openTrails: ctx.i18n.t('shared.openTrails'),
-      skiPasses: ctx.i18n.t('shared.skiPasses'),
-      trailMaps: ctx.i18n.t('shared.trailMaps'),
+      openTrails: ctx.i18n.t('scenes.openTrails.intro'),
+      skiPasses: ctx.i18n.t('scenes.skiPasses.intro'),
+      trailMaps: ctx.i18n.t('scenes.trailMaps.intro'),
       workInProgress: ctx.i18n.t('shared.workInProgress'),
-      weather: ctx.i18n.t('shared.weather'),
+      weather: ctx.i18n.t('scenes.weather.intro'),
       welcomeBack: ctx.i18n.t('shared.welcomeBack')
     };
   }
