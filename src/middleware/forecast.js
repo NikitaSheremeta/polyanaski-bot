@@ -184,7 +184,7 @@ class Forecast {
 
       title = `<b>${dateFormat(item.date, 'dddd, d mmmm')}</b>`;
 
-      messageArray.splice(0, 0, `•${weatherEmoji} ${item.base.wx_desc}`);
+      messageArray.splice(0, 0, `• ${weatherEmoji} ${item.base.wx_desc}`);
     }
 
     messageArray.splice(0, 0, title);

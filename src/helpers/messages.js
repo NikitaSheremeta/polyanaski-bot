@@ -3,6 +3,7 @@ class Messages {
     this.ctx = ctx;
     this.messages = {
       childrensSchool: ctx.i18n.t('shared.childrensSchool'),
+      consultation: ctx.i18n.t('scenes.consultation.intro'),
       description: ctx.i18n.t('scenes.start.description'),
       freeride: ctx.i18n.t('shared.freeride'),
       go: ctx.i18n.t('shared.go'),
@@ -20,6 +21,10 @@ class Messages {
 
   get childrensSchool() {
     return this.messages.childrensSchool;
+  }
+
+  get consultation() {
+    return this.messages.consultation;
   }
 
   get description() {
