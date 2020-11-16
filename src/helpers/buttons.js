@@ -6,6 +6,8 @@ class Buttons {
       back: this.ctx.i18n.t('navigation.back'),
       childrensSchool: this.ctx.i18n.t('categories.childrensSchool'),
       consultation: this.ctx.i18n.t('categories.consultation'),
+      consultationWithInstructor: this.ctx.i18n.t('scenes.consultation.consultationWithInstructor'),
+      consultationWithSupport: this.ctx.i18n.t('scenes.consultation.consultationWithSupport'),
       forADay: this.ctx.i18n.t('weather.forADay'),
       forAWeak: this.ctx.i18n.t('weather.forAWeak'),
       freeride: this.ctx.i18n.t('categories.freeride'),
