@@ -1,9 +1,9 @@
 const Scene = require('telegraf/scenes/base');
-const Extra = require('telegraf/extra');
 const { match } = require('telegraf-i18n');
 
 const Messages = require('../helpers/messages');
 const Keyboards = require('../helpers/keyboards');
+const InlineKeyboards = require('../helpers/inline-keyboards');
 
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
@@ -11,7 +11,6 @@ const { asyncWrapper } = require('../util/error-handler');
 const Articles = require('../models/articles');
 
 const scene = new Scene('childrens-school');
-const markup = Extra.markdown();
 
 scene.enter(async (ctx) => {
   logger.debug(ctx, 'Enters the childrens school scene');
@@ -30,9 +29,13 @@ scene.hears(
   asyncWrapper(async (ctx) => {
     const article = await Articles.findById(process.env.KP_CHILDRENS_ID);
 
+    const inlineKeyboards = new InlineKeyboards(ctx);
+
+    inlineKeyboards.extraMarkdown = true;
+
     const message = `[${article.title}](${article.link})`;
 
-    await ctx.reply(message, markup);
+    await ctx.reply(message, inlineKeyboards.booking());
   })
 );
 
@@ -41,9 +44,13 @@ scene.hears(
   asyncWrapper(async (ctx) => {
     const article = await Articles.findById(process.env.RK_CHILDRENS_ID);
 
+    const inlineKeyboards = new InlineKeyboards(ctx);
+
+    inlineKeyboards.extraMarkdown = true;
+
     const message = `[${article.title}](${article.link})`;
 
-    await ctx.reply(message, markup);
+    await ctx.reply(message, inlineKeyboards.booking());
   })
 );
 

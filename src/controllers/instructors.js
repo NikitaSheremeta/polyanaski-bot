@@ -1,10 +1,10 @@
 const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
-const Extra = require('telegraf/extra');
 const { match } = require('telegraf-i18n');
 
 const Messages = require('../helpers/messages');
 const Keyboards = require('../helpers/keyboards');
+const InlineKeyboards = require('../helpers/inline-keyboards');
 
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
@@ -13,7 +13,6 @@ const Articles = require('../models/articles');
 
 const { leave } = Stage;
 const scene = new Scene('instructors');
-const markup = Extra.markdown();
 
 scene.enter(async (ctx) => {
   logger.debug(ctx, 'Enters the instructors scene');
@@ -47,9 +46,15 @@ scene.hears(
   asyncWrapper(async (ctx) => {
     const article = await Articles.findById(process.env.TRAINS_ID);
 
+    const inlineKeyboards = new InlineKeyboards(ctx);
+
+    inlineKeyboards.extraMarkdown = true;
+
     const message = `[${article.title}](${article.link})`;
 
-    await ctx.reply(message, markup);
+    const label = ctx.i18n.t('util.bookAnInstructor');
+
+    await ctx.reply(message, inlineKeyboards.booking(label));
   })
 );
 
