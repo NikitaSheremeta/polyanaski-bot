@@ -4,10 +4,13 @@ class Buttons {
     this.buttons = {
       abkhazia: this.ctx.i18n.t('util.abkhazia'),
       back: this.ctx.i18n.t('navigation.back'),
+      booking: this.ctx.i18n.t('util.booking'),
       childrensSchool: this.ctx.i18n.t('categories.childrensSchool'),
       consultation: this.ctx.i18n.t('categories.consultation'),
       consultationWithInstructor: this.ctx.i18n.t('scenes.consultation.consultationWithInstructor'),
       consultationWithSupport: this.ctx.i18n.t('scenes.consultation.consultationWithSupport'),
+      contactInstructor: this.ctx.i18n.t('contacts.instructor'),
+      contactTechSupport: this.ctx.i18n.t('contacts.techSupport'),
       forADay: this.ctx.i18n.t('scenes.weather.forADay'),
       forAWeak: this.ctx.i18n.t('scenes.weather.forAWeak'),
       freeride: this.ctx.i18n.t('categories.freeride'),

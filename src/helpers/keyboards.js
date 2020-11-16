@@ -105,8 +105,7 @@ class Keyboards extends Buttons {
   get trains() {
     const layout = [
       [this.buttons.individualAndGroup],
-      [this.buttons.childrensSchool],
-      [this.buttons.freeride],
+      [this.buttons.childrensSchool, this.buttons.freeride]
     ];
 
     return this.keyboard(layout);

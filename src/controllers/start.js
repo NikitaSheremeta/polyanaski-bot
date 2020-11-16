@@ -54,7 +54,7 @@ scene.leave(async (ctx) => {
   const messages = new Messages(ctx);
   const keyboards = new Keyboards(ctx);
 
-  return await ctx.reply(messages.description, keyboards.main);
+  await ctx.reply(messages.description, keyboards.main);
 });
 
 module.exports = { start: scene };
