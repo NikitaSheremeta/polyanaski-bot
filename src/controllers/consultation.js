@@ -22,5 +22,4 @@ scene.leave(async (ctx) => {
   logger.debug(ctx, 'Leaves the consultation scene');
 });
 
-
 module.exports = { consultation: scene };

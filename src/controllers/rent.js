@@ -1,33 +1,35 @@
-const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
-const { match } = require('telegraf-i18n');
 
-const Messages = require('../helpers/messages');
-const Keyboards = require('../helpers/keyboards');
+const InlineKeyboards = require('../helpers/inline-keyboards');
 
 const { logger } = require('../util/logger');
 
-const { leave } = Stage;
+const Articles = require('../models/articles');
+
 const scene = new Scene('rent');
 
 scene.enter(async (ctx) => {
   logger.debug(ctx, 'Enters the rent scene');
 
-  const messages = new Messages(ctx);
-  const keyboards = new Keyboards(ctx);
+  const article = await Articles.findById(process.env.KP_RENT);
 
-  await ctx.reply(messages.workInProgress, keyboards.back);
+  const inlineKeyboards = new InlineKeyboards(ctx);
+
+  inlineKeyboards.extraMarkdown = true;
+
+  const message = `[${article.title}](${article.link})`;
+
+  const label = ctx.i18n.t('util.bookAnEquipment');
+
+  try {
+    await ctx.reply(message, inlineKeyboards.booking(label));
+  } catch (error) {
+    logger.debug(ctx, error);
+  }
+
+  return await ctx.scene.leave();
 });
 
-scene.leave(async (ctx) => {
-  logger.debug(ctx, 'Leaves the rent scene');
-
-  const messages = new Messages(ctx);
-  const keyboards = new Keyboards(ctx);
-
-  await ctx.reply(messages.mainMenu, keyboards.main);
-});
-
-scene.hears(match('navigation.back'), leave());
+scene.leave(async (ctx) => logger.debug(ctx, 'Leaves the rent scene'));
 
 module.exports = { rent: scene };
