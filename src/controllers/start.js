@@ -9,6 +9,7 @@ const Users = require('../models/users');
 
 const scene = new Scene('start');
 
+// eslint-disable-next-line max-statements
 scene.enter(async (ctx) => {
   logger.debug(ctx, 'Enters the start scene');
 
@@ -21,7 +22,8 @@ scene.enter(async (ctx) => {
   if (user) {
     logger.debug(ctx, 'Welcome back!');
 
-    await ctx.reply(messages.welcomeBack);
+    await ctx.reply(messages.welcomeBacks)
+      .catch((error) => logger.debug(ctx, error));
 
     return await ctx.scene.leave();
   }
@@ -36,14 +38,12 @@ scene.enter(async (ctx) => {
 
   const newUser = new Users(userData);
 
-  try {
-    await newUser.save()
-      .then(() => logger.debug(ctx, 'New user has been created'));
-  } catch (error) {
-    logger.debug(ctx, 'New user has NOT been created');
-  }
+  await newUser.save()
+    .then(() => logger.debug(ctx, 'New user has been created'))
+    .catch((error) => logger.debug(ctx, error));
 
-  await ctx.reply(messages.greeting);
+  await ctx.reply(messages.greeting)
+    .catch((error) => logger.debug(ctx, error));
 
   return await ctx.scene.leave();
 });
@@ -54,7 +54,8 @@ scene.leave(async (ctx) => {
   const messages = new Messages(ctx);
   const keyboards = new Keyboards(ctx);
 
-  await ctx.reply(messages.description, keyboards.main);
+  await ctx.reply(messages.description, keyboards.main)
+    .catch((error) => logger.debug(ctx, error));
 });
 
 module.exports = { start: scene };

@@ -24,7 +24,8 @@ scene.enter(async (ctx) => {
 
   keyboards.escapeKey = true;
 
-  await ctx.reply(messages.weather, keyboards.weather);
+  await ctx.reply(messages.weather, keyboards.weather)
+    .catch((error) => logger.debug(ctx, error));
 });
 
 scene.leave(async (ctx) => {
@@ -33,7 +34,8 @@ scene.leave(async (ctx) => {
   const messages = new Messages(ctx);
   const keyboards = new Keyboards(ctx);
 
-  await ctx.reply(messages.mainMenu, keyboards.main);
+  await ctx.reply(messages.mainMenu, keyboards.main)
+    .catch((error) => logger.debug(ctx, error));
 });
 
 scene.hears(
@@ -43,7 +45,8 @@ scene.hears(
 
     const message = await forecast.getMessage();
 
-    await ctx.replyWithHTML(message);
+    await ctx.replyWithHTML(message)
+      .catch((error) => logger.debug(ctx, error));
   })
 );
 
@@ -54,7 +57,8 @@ scene.hears(
 
     const message = await forecast.getMessage();
 
-    await ctx.replyWithHTML(message);
+    await ctx.replyWithHTML(message)
+      .catch((error) => logger.debug(ctx, error));
   })
 );
 

@@ -21,7 +21,8 @@ scene.enter(async (ctx) => {
   keyboards.escapeKey = true;
   keyboards.withoutGazprom = true;
 
-  await ctx.reply(messages.childrensSchool, keyboards.resorts);
+  await ctx.reply(messages.childrensSchool, keyboards.resorts)
+    .catch((error) => logger.debug(ctx, error));
 });
 
 scene.hears(
@@ -35,7 +36,8 @@ scene.hears(
 
     const message = `[${article.title}](${article.link})`;
 
-    await ctx.reply(message, inlineKeyboards.booking());
+    await ctx.reply(message, inlineKeyboards.booking())
+      .catch((error) => logger.debug(ctx, error));
   })
 );
 
@@ -50,7 +52,8 @@ scene.hears(
 
     const message = `[${article.title}](${article.link})`;
 
-    await ctx.reply(message, inlineKeyboards.booking());
+    await ctx.reply(message, inlineKeyboards.booking())
+      .catch((error) => logger.debug(ctx, error));
   })
 );
 

@@ -24,7 +24,8 @@ scene.enter(async (ctx) => {
   keyboards.mainMapKey = true;
   keyboards.escapeKey = true;
 
-  await ctx.reply(messages.trailMaps, keyboards.resorts);
+  await ctx.reply(messages.trailMaps, keyboards.resorts)
+    .catch((error) => logger.debug(ctx, error));
 });
 
 scene.leave(async (ctx) => {
@@ -35,7 +36,8 @@ scene.leave(async (ctx) => {
 
   keyboards.extraMarkdown = true;
 
-  await ctx.reply(messages.mainMenu, keyboards.main);
+  await ctx.reply(messages.mainMenu, keyboards.main)
+    .catch((error) => logger.debug(ctx, error));
 });
 
 scene.hears(
@@ -43,7 +45,8 @@ scene.hears(
   asyncWrapper(async (ctx) => {
     const messages = new Messages(ctx);
 
-    await ctx.reply(messages.workInProgress);
+    await ctx.reply(messages.workInProgress)
+      .catch((error) => logger.debug(ctx, error));
   })
 );
 
@@ -52,7 +55,8 @@ scene.hears(
   asyncWrapper(async (ctx) => {
     const messages = new Messages(ctx);
 
-    await ctx.reply(messages.workInProgress);
+    await ctx.reply(messages.workInProgress)
+      .catch((error) => logger.debug(ctx, error));
   })
 );
 
@@ -61,7 +65,8 @@ scene.hears(
   asyncWrapper(async (ctx) => {
     const messages = new Messages(ctx);
 
-    await ctx.reply(messages.workInProgress);
+    await ctx.reply(messages.workInProgress)
+      .catch((error) => logger.debug(ctx, error));
   })
 );
 

@@ -22,7 +22,8 @@ scene.enter(async (ctx) => {
 
   keyboards.escapeKey = true;
 
-  await ctx.reply(messages.instructors, keyboards.trains);
+  await ctx.reply(messages.instructors, keyboards.trains)
+    .catch((error) => logger.debug(ctx, error));
 });
 
 scene.leave(async (ctx) => {
@@ -37,7 +38,8 @@ scene.leave(async (ctx) => {
 
     keyboards.extraMarkdown = true;
 
-    await ctx.reply(messages.mainMenu, keyboards.main);
+    await ctx.reply(messages.mainMenu, keyboards.main)
+      .catch((error) => logger.debug(ctx, error));
   }
 });
 
@@ -54,7 +56,8 @@ scene.hears(
 
     const label = ctx.i18n.t('util.bookAnInstructor');
 
-    await ctx.reply(message, inlineKeyboards.booking(label));
+    await ctx.reply(message, inlineKeyboards.booking(label))
+      .catch((error) => logger.debug(ctx, error));
   })
 );
 
