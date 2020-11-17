@@ -21,8 +21,11 @@ scene.enter(async (ctx) => {
 
   const label = ctx.i18n.t('util.bookAnEquipment');
 
-  await ctx.reply(message, inlineKeyboards.booking(label))
-    .catch((error) => logger.debug(ctx, error));
+  try {
+    await ctx.reply(message, inlineKeyboards.booking(label));
+  } catch (error) {
+    logger.debug(ctx, error);
+  }
 
   return await ctx.scene.leave();
 });

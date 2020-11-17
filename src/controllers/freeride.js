@@ -20,8 +20,11 @@ scene.enter(async (ctx) => {
 
   keyboards.escapeKey = true;
 
-  await ctx.reply(messages.freeride, keyboards.freeride)
-    .catch((error) => logger.debug(ctx, error));
+  try {
+    await ctx.reply(messages.freeride, keyboards.freeride);
+  } catch (error) {
+    logger.debug(ctx, error);
+  }
 });
 
 scene.hears(
@@ -37,8 +40,11 @@ scene.hears(
 
     const label = ctx.i18n.t('util.bookAnInstructor');
 
-    await ctx.reply(message, inlineKeyboards.booking(label))
-      .catch((error) => logger.debug(ctx, error));
+    try {
+      await ctx.reply(message, inlineKeyboards.booking(label));
+    } catch (error) {
+      logger.debug(ctx, error);
+    }
   })
 );
 
@@ -65,8 +71,11 @@ scene.hears(
     articles.forEach(async (item) => {
       const message = `[${item.title}](${item.link})`;
 
-      await ctx.reply(message, keyboard)
-        .catch((error) => logger.debug(ctx, error));
+      try {
+        await ctx.reply(message, keyboard);
+      } catch (error) {
+        logger.debug(ctx, error);
+      }
     });
   })
 );
@@ -76,8 +85,7 @@ scene.hears(
   asyncWrapper(async (ctx) => {
     logger.debug(ctx, 'Leaves the freeride scene');
 
-    await ctx.scene.enter('instructors')
-      .catch((error) => logger.debug(ctx, error));
+    await ctx.scene.enter('instructors');
   })
 );
 

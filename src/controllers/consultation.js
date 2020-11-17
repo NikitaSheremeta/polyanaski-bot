@@ -13,8 +13,11 @@ scene.enter(async (ctx) => {
   const messages = new Messages(ctx);
   const inlineKeyboards = new InlineKeyboards(ctx);
 
-  await ctx.reply(messages.consultation, inlineKeyboards.consultation)
-    .catch((error) => logger.debug(ctx, error));
+  try {
+    await ctx.reply(messages.consultation, inlineKeyboards.consultation);
+  } catch (error) {
+    logger.debug(ctx, error);
+  }
 
   return await ctx.scene.leave();
 });
