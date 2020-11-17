@@ -45,7 +45,7 @@ class Forecast {
     try {
       this.weatherEmoji = await WeatherEmoji.find();
     } catch (error) {
-      logger.debug(this.ctx, error.message);
+      logger.debug(this.ctx, error);
 
       return false;
     }
@@ -58,31 +58,40 @@ class Forecast {
   async connectToForecast() {
     const url = process.env.FORECAST_API;
 
-    return axios.get(url, {
-      params: {
-        lang: this.ctx.i18n.languageCode,
-        num_of_days: this.numOfDays
+    const params = {
+      lang: this.ctx.i18n.languageCode,
+      num_of_days: this.numOfDays
+    };
+
+    try {
+      const response = await axios.get(url, { params });
+
+      return response.data.forecast;
+    } catch (error) {
+      if (error.response) {
+        logger.debug(this.ctx, error.response.data);
+        logger.debug(this.ctx, error.response.status);
+        logger.debug(this.ctx, error.response.headers);
+      } else if (error.request) {
+        logger.debug(this.ctx, error.request);
+      } else {
+        logger.debug(this.ctx, error.message);
       }
-    }).then((response) => response.data.forecast)
-      .catch((error) => {
-        if (error.response) {
-          logger.debug(this.ctx, error.response.data);
-          logger.debug(this.ctx, error.response.status);
-          logger.debug(this.ctx, error.response.headers);
-        } else if (error.request) {
-          logger.debug(this.ctx, error.request);
-        } else {
-          logger.debug(this.ctx, error.message);
-        }
-      });
+
+      throw error;
+    }
   }
 
   // Parsing the received data and preparing for insertion into the message.
   async parseForecast() {
     const inputForecast = await this.connectToForecast();
 
-    if (!inputForecast) {
-      return this.ctx.i18n.t('shared.errorReceivingData');
+    /**
+     * There was a case that the request is processed successfully,
+     * but an empty array is returned, the problem is on the forcast side.
+     */
+    if (inputForecast.length === 0) {
+      throw 'Empty forecast array';
     }
 
     const selectedTimes = [
@@ -130,8 +139,6 @@ class Forecast {
         return iterator.emoji;
       }
     }
-
-    return '⁉️';
   }
 
   headerContentTemplate() {
@@ -219,7 +226,9 @@ class Forecast {
     try {
       return await this.createMessage();
     } catch (error) {
-      logger.debug(this.ctx, error.message);
+      logger.debug(this.ctx, error);
+
+      return this.ctx.i18n.t('shared.errorReceivingData');
     }
   }
 }
