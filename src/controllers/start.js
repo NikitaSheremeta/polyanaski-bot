@@ -7,9 +7,10 @@ const { logger } = require('../util/logger');
 
 const Users = require('../models/users');
 
+const { addNewUser } = require('../actions/add-user');
+
 const scene = new Scene('start');
 
-// eslint-disable-next-line max-statements
 scene.enter(async (ctx) => {
   logger.debug(ctx, 'Enters the start scene');
 
@@ -28,19 +29,8 @@ scene.enter(async (ctx) => {
     return await ctx.scene.leave();
   }
 
-  const userData = {
-    _id: userID,
-    created: new Date().getTime(),
-    username: ctx.from.username,
-    name: `${ctx.from.first_name} ${ctx.from.last_name}`,
-    language: ctx.i18n.languageCode
-  };
-
-  const newUser = new Users(userData);
-
-  await newUser.save()
-    .then(() => logger.debug(ctx, 'New user has been created'))
-    .catch((error) => logger.debug(ctx, error));
+  // Add a new user to the database
+  addNewUser(userID, ctx);
 
   await ctx.reply(messages.greeting)
     .catch((error) => logger.debug(ctx, error));
