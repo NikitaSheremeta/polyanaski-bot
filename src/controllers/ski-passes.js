@@ -49,8 +49,11 @@ scene.hears(
   asyncWrapper(async (ctx) => {
     const messages = new Messages(ctx);
 
-    await ctx.reply(messages.workInProgress)
-      .catch((error) => logger.debug(ctx, error));
+    try {
+      await ctx.reply(messages.workInProgress);
+    } catch (error) {
+      logger.debug(ctx, error);
+    }
   })
 );
 
