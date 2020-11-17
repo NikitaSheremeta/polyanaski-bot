@@ -66,16 +66,18 @@ class Forecast {
     try {
       const response = await axios.get(url, { params });
 
+      if (response.data.forecast.length === 0) {
+        throw 'Empty forecast array';
+      }
+
       return response.data.forecast;
     } catch (error) {
       if (error.response) {
-        logger.debug(this.ctx, error.response.data);
-        logger.debug(this.ctx, error.response.status);
-        logger.debug(this.ctx, error.response.headers);
+        logger.debug(this.ctx, error.response.data.title);
       } else if (error.request) {
         logger.debug(this.ctx, error.request);
       } else {
-        logger.debug(this.ctx, error.message);
+        logger.debug(this.ctx, error);
       }
 
       throw error;
@@ -85,14 +87,6 @@ class Forecast {
   // Parsing the received data and preparing for insertion into the message.
   async parseForecast() {
     const inputForecast = await this.connectToForecast();
-
-    /**
-     * There was a case that the request is processed successfully,
-     * but an empty array is returned, the problem is on the forcast side.
-     */
-    if (inputForecast.length === 0) {
-      throw 'Empty forecast array';
-    }
 
     const selectedTimes = [
       TIMES_OF_DAY.night.index,
@@ -132,7 +126,7 @@ class Forecast {
       const searchResults = Common.linearSearch(iterator.codes, weatherCode);
 
       if (searchResults) {
-        if (timeOfDay === TIMES_OF_DAY.night.time) {
+        if (timeOfDay === TIMES_OF_DAY.night.time && weatherCode === 0) {
           return iterator.emojiNightMode;
         }
 
@@ -226,8 +220,6 @@ class Forecast {
     try {
       return await this.createMessage();
     } catch (error) {
-      logger.debug(this.ctx, error);
-
       return this.ctx.i18n.t('shared.errorReceivingData');
     }
   }
