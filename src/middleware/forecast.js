@@ -47,7 +47,7 @@ class Forecast {
     } catch (error) {
       logger.debug(this.ctx, error);
 
-      return false;
+      this.weatherEmoji = '⁉️';
     }
   }
 
@@ -118,8 +118,8 @@ class Forecast {
    * and time of day.
    */
   getWeatherEmoji(weatherCode, timeOfDay) {
-    if (!this.weatherEmoji) {
-      return '⁉️';
+    if (typeof this.weatherEmoji === 'string') {
+      return this.weatherEmoji;
     }
 
     for (const iterator of this.weatherEmoji) {
@@ -209,9 +209,8 @@ class Forecast {
     const forecast = await this.parseForecast();
     const headerContent = this.headerContentTemplate();
     const bodyContent = this.bodyContentTemplate(forecast);
-    const messageArray = [];
 
-    messageArray.push(headerContent, ...bodyContent);
+    const messageArray = [headerContent, ...bodyContent];
 
     return messageArray.join('\n');
   }
