@@ -13,7 +13,10 @@ module.exports.addNewUser = async (userID, ctx) => {
 
   const newUser = new Users(userData);
 
-  await newUser.save()
-    .then(() => logger.debug(ctx, 'New user has been created'))
-    .catch((error) => logger.debug(ctx, error));
+  try {
+    await newUser.save();
+  } catch (error) {
+    logger.debug(ctx, 'New user has NOT been added');
+    logger.debug(ctx, error);
+  }
 };

@@ -23,17 +23,23 @@ scene.enter(async (ctx) => {
   if (user) {
     logger.debug(ctx, 'Welcome back!');
 
-    await ctx.reply(messages.welcomeBacks)
-      .catch((error) => logger.debug(ctx, error));
+    try {
+      await ctx.reply(messages.welcomeBack);
+    } catch (error) {
+      logger.debug(ctx, error);
+    }
 
     return await ctx.scene.leave();
   }
 
   // Add a new user to the database
-  addNewUser(userID, ctx);
+  await addNewUser(userID, ctx);
 
-  await ctx.reply(messages.greeting)
-    .catch((error) => logger.debug(ctx, error));
+  try {
+    await ctx.reply(messages.greeting);
+  } catch (error) {
+    logger.debug(ctx, error);
+  }
 
   return await ctx.scene.leave();
 });
@@ -44,8 +50,11 @@ scene.leave(async (ctx) => {
   const messages = new Messages(ctx);
   const keyboards = new Keyboards(ctx);
 
-  await ctx.reply(messages.description, keyboards.main)
-    .catch((error) => logger.debug(ctx, error));
+  try {
+    await ctx.reply(messages.description, keyboards.main);
+  } catch (error) {
+    logger.debug(ctx, error);
+  }
 });
 
 module.exports = { start: scene };

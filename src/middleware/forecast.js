@@ -114,9 +114,9 @@ class Forecast {
   }
 
   /**
-    * Finding an emoticon and its modification depending on the weather code
-    * and time of day.
-    */
+   * Finding an emoticon and its modification depending on the weather code
+   * and time of day.
+   */
   getWeatherEmoji(weatherCode, timeOfDay) {
     if (!this.weatherEmoji) {
       return '⁉️';
@@ -156,10 +156,10 @@ class Forecast {
 
     if (this.numOfDays === ONE_DAY) {
       /**
-        * This is a fix for the forecast API error, it is displayed
-        * as sun at night, but not clear.
-        * And in general it will only be clear.
-        */
+       * This is a fix for the forecast API error, it is displayed
+       * as sun at night, but not clear.
+       * And in general it will only be clear.
+       */
       if (item.base.wx_desc === 'Солнце') {
         item.base.wx_desc = 'Ясно';
       }
@@ -175,10 +175,10 @@ class Forecast {
 
     if (this.numOfDays === ONE_WEEK) {
       /**
-        * The API gives the date in the day / month / year format,
-        * and the dateFormator accepts a date in the month / day / year format as input.
-        * This is the easiest way out of this situation.
-        */
+       * The API gives the date in the day / month / year format,
+       * and the dateFormator accepts a date in the month / day / year format as input.
+       * This is the easiest way out of this situation.
+       */
       const dateParts = item.date.split('/');
 
       item.date = [dateParts[1], dateParts[0], dateParts[2]];
