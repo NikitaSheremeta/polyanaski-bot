@@ -66,8 +66,20 @@ class Forecast {
     try {
       const response = await axios.get(url, { params });
 
-      if (response.data.forecast.length === 0) {
+      const forecast = response.data.forecast;
+
+      if (forecast.length === 0) {
         throw 'Empty forecast array';
+      }
+
+      /**
+        * There was a case that on the server side the sampling
+        * was not performed correctly by day.
+        */
+      if (ONE_DAY === this.numOfDays && forecast.length > ONE_DAY) {
+        throw 'Error in the correctness of the received data';
+      } else if (ONE_WEEK === this.numOfDays && forecast.length < ONE_WEEK) {
+        throw 'Error in the correctness of the received data';
       }
 
       return response.data.forecast;
