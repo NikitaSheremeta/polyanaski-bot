@@ -72,16 +72,6 @@ class Forecast {
         throw 'Empty forecast array';
       }
 
-      /**
-        * There was a case that on the server side the sampling
-        * was not performed correctly by day.
-        */
-      if (ONE_DAY === this.numOfDays && forecast.length > ONE_DAY) {
-        throw 'Error in the correctness of the received data';
-      } else if (ONE_WEEK === this.numOfDays && forecast.length < ONE_WEEK) {
-        throw 'Error in the correctness of the received data';
-      }
-
       return response.data.forecast;
     } catch (error) {
       if (error.response) {
