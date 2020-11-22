@@ -19,6 +19,8 @@ const { consultation } = require('./controllers/consultation');
 const { childrensSchool } = require('./controllers/childrens-school');
 const { freeride } = require('./controllers/freeride');
 
+const Keyboards = require('./helpers/keyboards');
+
 const { asyncWrapper } = require('./util/error-handler');
 const { logger } = require('./util/logger');
 
@@ -129,7 +131,9 @@ mongoose.connection.on('open', () => {
   bot.command('restart', asyncWrapper(async (ctx) => {
     logger.debug(ctx, 'Restart command was pressed');
 
-    await ctx.reply(ctx.i18n.t('shared.restartSystem'));
+    const keyboards = new Keyboards(ctx);
+
+    await ctx.reply(ctx.i18n.t('shared.restartSystem'), keyboards.main);
 
     return await ctx.scene.leave();
   }));
