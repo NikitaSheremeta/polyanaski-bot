@@ -73,7 +73,7 @@
     "bookATour": "Забронировать тур"
   },
   "contacts": {
-    "instructor": "t.me/@EvgenyVolkov1",
-    "techSupport": "t.me/@NikitaSheremeta"
+    "instructor": "https://t.me/EvgenyVolkov1",
+    "techSupport": "https://t.me/NikitaSheremeta"
   }
 }
