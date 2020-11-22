@@ -10,10 +10,7 @@ const schema = new Schema(
       type: Number,
       required: true
     },
-    username: {
-      type: String,
-      required: true
-    },
+    username: String,
     name: {
       type: String,
       required: true
