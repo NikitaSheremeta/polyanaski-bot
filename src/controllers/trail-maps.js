@@ -90,7 +90,7 @@ scene.hears(
   match('resorts.gazprom'),
   (ctx) => ctx.replyWithDocument({
     source: fs.readFileSync(
-      path.join(__dirname, '..', 'assets', 'images', 'gazprom-map.jpg')
+      path.join(__dirname, '..', 'assets', 'images', 'gazprom-map-preview.jpg')
     ),
     filename: 'gazprom-map.jpg'
   })
