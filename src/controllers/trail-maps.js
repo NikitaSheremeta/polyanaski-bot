@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 const Stage = require('telegraf/stage');
 const Scene = require('telegraf/scenes/base');
 const { match } = require('telegraf-i18n');
@@ -8,12 +11,49 @@ const Keyboards = require('../helpers/keyboards');
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
 
-// This is a temporary solution, pending a working solution
-const fs = require('fs');
-const path = require('path');
-
 const { leave } = Stage;
 const scene = new Scene('trail-maps');
+
+const IMAGES_DIR = path.join(__dirname, '..', 'assets', 'images');
+
+const TRAIL_MAPS = {
+  mainMap: {
+    filename: 'main-map.jpg',
+    source: fs.readFileSync(
+      path.join(IMAGES_DIR, 'main-map.jpg')
+    ),
+    sourcePreview: fs.readFileSync(
+      path.join(IMAGES_DIR, 'main-map-preview.jpg')
+    )
+  },
+  krasnayaPolyana: {
+    filename: 'krasnaya-polyana-map.jpg',
+    source: fs.readFileSync(
+      path.join(IMAGES_DIR, 'krasnaya-polyana-map.jpg')
+    ),
+    sourcePreview: fs.readFileSync(
+      path.join(IMAGES_DIR, 'krasnaya-polyana-map-preview.jpg')
+    )
+  },
+  rosaKhutor: {
+    filename: 'rosa-khutor-map.jpg',
+    source: fs.readFileSync(
+      path.join(IMAGES_DIR, 'rosa-khutor-map.jpg')
+    ),
+    sourcePreview: fs.readFileSync(
+      path.join(IMAGES_DIR, 'rosa-khutor-map-preview.jpg')
+    )
+  },
+  gazprom: {
+    filename: 'gazprom-map.jpg',
+    source: fs.readFileSync(
+      path.join(IMAGES_DIR, 'gazprom-map.jpg')
+    ),
+    sourcePreview: fs.readFileSync(
+      path.join(IMAGES_DIR, 'gazprom-map-preview.jpg')
+    )
+  }
+};
 
 scene.enter(async (ctx) => {
   logger.debug(ctx, 'Enters the trail maps scene');
@@ -49,10 +89,10 @@ scene.leave(async (ctx) => {
 scene.hears(
   match('util.mainMap'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
-
     try {
-      await ctx.reply(messages.workInProgress);
+      await ctx.replyWithPhoto({
+        source: TRAIL_MAPS.mainMap.sourcePreview
+      });
     } catch (error) {
       logger.debug(ctx, error);
     }
@@ -62,10 +102,10 @@ scene.hears(
 scene.hears(
   match('resorts.krasnayaPolyana'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
-
     try {
-      await ctx.reply(messages.workInProgress);
+      await ctx.replyWithPhoto({
+        source: TRAIL_MAPS.krasnayaPolyana.sourcePreview
+      });
     } catch (error) {
       logger.debug(ctx, error);
     }
@@ -75,24 +115,26 @@ scene.hears(
 scene.hears(
   match('resorts.rosaKhutor'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
-
     try {
-      await ctx.reply(messages.workInProgress);
+      await ctx.replyWithPhoto({
+        source: TRAIL_MAPS.rosaKhutor.sourcePreview
+      });
     } catch (error) {
       logger.debug(ctx, error);
     }
   })
 );
 
-// [WIP]: This is a temporary solution for testing functionality, pending a working solution.
 scene.hears(
   match('resorts.gazprom'),
-  (ctx) => ctx.replyWithDocument({
-    source: fs.readFileSync(
-      path.join(__dirname, '..', 'assets', 'images', 'gazprom-map-preview.jpg')
-    ),
-    filename: 'gazprom-map.jpg'
+  asyncWrapper(async (ctx) => {
+    try {
+      await ctx.replyWithPhoto({
+        source: TRAIL_MAPS.gazprom.sourcePreview
+      });
+    } catch (error) {
+      logger.debug(ctx, error);
+    }
   })
 );
 
