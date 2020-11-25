@@ -70,7 +70,8 @@
     "booking": "Записаться",
     "bookAnInstructor": "Забронировать занятие",
     "bookAnEquipment": "Забронировать снаряжение",
-    "bookATour": "Забронировать тур"
+    "bookATour": "Забронировать тур",
+    "downloadMap": "Загрузить в хорошем качестве"
   },
   "contacts": {
     "instructor": "https://t.me/EvgenyVolkov1",
