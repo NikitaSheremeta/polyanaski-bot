@@ -55,6 +55,17 @@ class InlineKeyboards extends Buttons {
 
     return this.keyboard(layout);
   }
+
+  downloadMap(query) {
+    const layout = [
+      [{
+        text: this.buttons.downloadMap,
+        callback_data: query
+      }]
+    ];
+
+    return this.keyboard(layout);
+  }
 }
 
 module.exports = InlineKeyboards;
