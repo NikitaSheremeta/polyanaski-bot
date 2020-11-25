@@ -33,7 +33,7 @@ scene.enter(async (ctx) => {
   }
 
   // Add a new user to the database
-  await addNewUser(userID, ctx);
+  await addNewUser(ctx, userID);
 
   try {
     await ctx.reply(messages.greeting);

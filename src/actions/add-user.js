@@ -2,7 +2,7 @@ const Users = require('../models/users');
 
 const { logger } = require('../util/logger');
 
-module.exports.addNewUser = async (userID, ctx) => {
+module.exports.addNewUser = async (ctx, userID) => {
   const userData = {
     _id: userID,
     created: new Date().getTime(),
