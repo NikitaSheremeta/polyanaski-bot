@@ -7,9 +7,12 @@ const { match } = require('telegraf-i18n');
 
 const Messages = require('../helpers/messages');
 const Keyboards = require('../helpers/keyboards');
+const InlineKeyboards = require('../helpers/inline-keyboards');
 
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
+
+const { downloadMap } = require('../actions/download-map');
 
 const { leave } = Stage;
 const scene = new Scene('trail-maps');
@@ -89,10 +92,15 @@ scene.leave(async (ctx) => {
 scene.hears(
   match('util.mainMap'),
   asyncWrapper(async (ctx) => {
+    const inlineKeyboards = new InlineKeyboards(ctx);
+
     try {
-      await ctx.replyWithPhoto({
-        source: TRAIL_MAPS.mainMap.sourcePreview
-      });
+      await ctx.replyWithPhoto(
+        {
+          source: TRAIL_MAPS.mainMap.sourcePreview
+        },
+        inlineKeyboards.downloadMap('main-map.jpg')
+      );
     } catch (error) {
       logger.debug(ctx, error);
     }
@@ -102,10 +110,15 @@ scene.hears(
 scene.hears(
   match('resorts.krasnayaPolyana'),
   asyncWrapper(async (ctx) => {
+    const inlineKeyboards = new InlineKeyboards(ctx);
+
     try {
-      await ctx.replyWithPhoto({
-        source: TRAIL_MAPS.krasnayaPolyana.sourcePreview
-      });
+      await ctx.replyWithPhoto(
+        {
+          source: TRAIL_MAPS.krasnayaPolyana.sourcePreview
+        },
+        inlineKeyboards.downloadMap('krasnaya-polyana-map.jpg')
+      );
     } catch (error) {
       logger.debug(ctx, error);
     }
@@ -136,6 +149,14 @@ scene.hears(
       logger.debug(ctx, error);
     }
   })
+);
+
+scene.on(
+  'callback_query',
+  asyncWrapper(async (ctx) => await downloadMap(
+    ctx,
+    ctx.update.callback_query.data
+  ))
 );
 
 scene.hears(match('navigation.back'), leave());
