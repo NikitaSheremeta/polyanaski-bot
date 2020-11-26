@@ -119,10 +119,7 @@ scene.hears(
 
 scene.on(
   'callback_query',
-  asyncWrapper(async (ctx) => await downloadMap(
-    ctx,
-    ctx.update.callback_query.data
-  ))
+  asyncWrapper(async (ctx) => downloadMap(ctx, ctx.update.callback_query.data))
 );
 
 scene.hears(match('navigation.back'), leave());

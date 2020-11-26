@@ -46,7 +46,8 @@ async function downloadMap(ctx, filename) {
   }
 
   try {
-    await ctx.replyWithDocument({ source, filename });
+    ctx.reply(ctx.i18n.t('util.loading'));
+    ctx.replyWithDocument({ source, filename });
   } catch (error) {
     logger.debug(ctx, error);
   }
