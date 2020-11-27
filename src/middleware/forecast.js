@@ -56,7 +56,7 @@ class Forecast {
    * Thinking about replacing axos with a request?
    */
   async connectToForecast() {
-    const url = process.env.FORECAST_API;
+    const URL = process.env.FORECAST_API;
 
     const params = {
       lang: this.ctx.i18n.languageCode,
@@ -64,11 +64,9 @@ class Forecast {
     };
 
     try {
-      const response = await axios.get(url, { params });
+      const response = await axios.get(URL, { params });
 
-      const forecast = response.data.forecast;
-
-      if (forecast.length === 0) {
+      if (response.data.forecast.length === 0) {
         throw 'Empty forecast array';
       }
 
