@@ -84,3 +84,6 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# Local data content
+src/data/**
