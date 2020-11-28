@@ -8,6 +8,8 @@ const Keyboards = require('../helpers/keyboards');
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
 
+const OpenTrails = require('../middleware/open-trails');
+
 const { leave } = Stage;
 const scene = new Scene('open-trails');
 
@@ -44,10 +46,10 @@ scene.leave(async (ctx) => {
 scene.hears(
   match('resorts.krasnayaPolyana'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    const openTrails = new OpenTrails(ctx);
 
     try {
-      await ctx.reply(messages.workInProgress);
+      await ctx.reply(openTrails.getMessage());
     } catch (error) {
       logger.debug(ctx, error);
     }
