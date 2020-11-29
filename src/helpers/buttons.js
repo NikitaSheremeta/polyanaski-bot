@@ -5,6 +5,7 @@ class Buttons {
       abkhazia: this.ctx.i18n.t('util.abkhazia'),
       back: this.ctx.i18n.t('navigation.back'),
       booking: this.ctx.i18n.t('util.booking'),
+      buySkiPass: this.ctx.i18n.t('util.buySkiPass'),
       childrensSchool: this.ctx.i18n.t('categories.childrensSchool'),
       consultation: this.ctx.i18n.t('categories.consultation'),
       consultationWithInstructor: this.ctx.i18n.t('scenes.consultation.consultationWithInstructor'),
