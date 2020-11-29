@@ -46,10 +46,12 @@ scene.leave(async (ctx) => {
 scene.hears(
   match('resorts.krasnayaPolyana'),
   asyncWrapper(async (ctx) => {
-    const openTrails = new OpenTrails(ctx);
+    const openTrails = new OpenTrails(ctx, 'gorki-gorod');
+
+    const message = await openTrails.getMessage();
 
     try {
-      await ctx.reply(openTrails.getMessage());
+      await ctx.replyWithHTML(message);
     } catch (error) {
       logger.debug(ctx, error);
     }
@@ -59,10 +61,12 @@ scene.hears(
 scene.hears(
   match('resorts.rosaKhutor'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    const openTrails = new OpenTrails(ctx, 'roza-khutor');
+
+    const message = await openTrails.getMessage();
 
     try {
-      await ctx.reply(messages.workInProgress);
+      await ctx.replyWithHTML(message);
     } catch (error) {
       logger.debug(ctx, error);
     }
@@ -72,10 +76,12 @@ scene.hears(
 scene.hears(
   match('resorts.gazprom'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    const openTrails = new OpenTrails(ctx, 'gazprom-laura');
+
+    const message = await openTrails.getMessage();
 
     try {
-      await ctx.reply(messages.workInProgress);
+      await ctx.replyWithHTML(message);
     } catch (error) {
       logger.debug(ctx, error);
     }
