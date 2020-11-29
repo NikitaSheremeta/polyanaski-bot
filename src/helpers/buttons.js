@@ -15,6 +15,8 @@ class Buttons {
       forAWeak: this.ctx.i18n.t('scenes.weather.forAWeak'),
       freeride: this.ctx.i18n.t('categories.freeride'),
       gazprom: this.ctx.i18n.t('resorts.gazprom'),
+      gazpromAlpika: this.ctx.i18n.t('resorts.gazpromAlpika'),
+      gazpromLaura: this.ctx.i18n.t('resorts.gazpromLaura'),
       individualAndGroup: this.ctx.i18n.t('scenes.instructors.individualAndGroup'),
       instructors: this.ctx.i18n.t('categories.instructors'),
       mainMap: this.ctx.i18n.t('util.mainMap'),
