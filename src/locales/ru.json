@@ -61,9 +61,9 @@
   "resorts": {
     "krasnayaPolyana": "Красная Поляна",
     "rosaKhutor": "Роза Хутор",
-    "gazprom": "Газпром и Альпика",
-    "gazpromAlpika": "Газпром Альпика",
-    "gazpromLaura": "Газпром Лаура"
+    "gazprom": "Газпром",
+    "gazpromAlpika": "Газпром-Альпика",
+    "gazpromLaura": "Газпром-Лаура"
   },
   "util": {
     "abkhazia": "Абхазия",

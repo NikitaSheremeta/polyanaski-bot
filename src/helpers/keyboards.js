@@ -56,7 +56,7 @@ class Keyboards extends Buttons {
     }
 
     if (this.withoutGazprom) {
-      layout.splice(GAZPROM_RESORT_INDEX, ITEMS_TO_REMOVE);
+      layout[0].splice(GAZPROM_RESORT_INDEX, ITEMS_TO_REMOVE);
     }
 
     const keyboard = Markup.keyboard(layout).resize();
@@ -93,9 +93,11 @@ class Keyboards extends Buttons {
   // Resorts of Krasnaya Polyana keyboard
   get resorts() {
     const layout = [
-      [this.buttons.krasnayaPolyana],
-      [this.buttons.rosaKhutor],
-      [this.buttons.gazprom],
+      [
+        this.buttons.krasnayaPolyana,
+        this.buttons.rosaKhutor,
+        this.buttons.gazprom
+      ],
     ];
 
     return this.keyboard(layout);
@@ -124,8 +126,7 @@ class Keyboards extends Buttons {
   // Freeride keyboard
   get freeride() {
     const layout = [
-      [this.buttons.krasnayaPolyana],
-      [this.buttons.abkhazia],
+      [this.buttons.krasnayaPolyana, this.buttons.abkhazia]
     ];
 
     return this.keyboard(layout);
