@@ -14,7 +14,7 @@ const { trailMaps } = require('./controllers/trail-maps');
 const { instructors } = require('./controllers/instructors');
 const { skiPasses } = require('./controllers/ski-passes');
 const { rent } = require('./controllers/rent');
-const { weather } = require('./controllers/weather');
+const { forecast } = require('./controllers/forecast');
 const { consultation } = require('./controllers/consultation');
 const { childrensSchool } = require('./controllers/childrens-school');
 const { freeride } = require('./controllers/freeride');
@@ -60,7 +60,7 @@ mongoose.connection.on('open', () => {
     instructors,
     skiPasses,
     rent,
-    weather,
+    forecast,
     consultation,
     childrensSchool,
     freeride
@@ -103,10 +103,10 @@ mongoose.connection.on('open', () => {
     asyncWrapper(async (ctx) => await ctx.scene.enter('rent'))
   );
 
-  // Weather scene
+  // Forecast scene
   bot.hears(
-    match('categories.weather'),
-    asyncWrapper(async (ctx) => await ctx.scene.enter('weather'))
+    match('categories.forecast'),
+    asyncWrapper(async (ctx) => await ctx.scene.enter('forecast'))
   );
 
   // Consultation scene

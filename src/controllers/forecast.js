@@ -14,10 +14,10 @@ const FOR_A_DAY = 1;
 const FOR_A_WEAK = 7;
 
 const { leave } = Stage;
-const scene = new Scene('weather');
+const scene = new Scene('forecast');
 
 scene.enter(async (ctx) => {
-  logger.debug(ctx, 'Enters the weather scene');
+  logger.debug(ctx, 'Enters the forecast scene');
 
   const keyboards = new Keyboards(ctx);
   const messages = new Messages(ctx);
@@ -25,14 +25,14 @@ scene.enter(async (ctx) => {
   keyboards.escapeKey = true;
 
   try {
-    await ctx.reply(messages.weather, keyboards.weather);
+    await ctx.reply(messages.forecast, keyboards.forecast);
   } catch (error) {
     logger.debug(ctx, error);
   }
 });
 
 scene.leave(async (ctx) => {
-  logger.debug(ctx, 'Leaves the weather scene');
+  logger.debug(ctx, 'Leaves the forecast scene');
 
   const messages = new Messages(ctx);
   const keyboards = new Keyboards(ctx);
@@ -45,7 +45,7 @@ scene.leave(async (ctx) => {
 });
 
 scene.hears(
-  match('scenes.weather.forADay'),
+  match('scenes.forecast.forADay'),
   asyncWrapper(async (ctx) => {
     const forecast = new Forecast(ctx, FOR_A_DAY);
 
@@ -60,7 +60,7 @@ scene.hears(
 );
 
 scene.hears(
-  match('scenes.weather.forAWeak'),
+  match('scenes.forecast.forAWeak'),
   asyncWrapper(async (ctx) => {
     const forecast = new Forecast(ctx, FOR_A_WEAK);
 
@@ -76,4 +76,4 @@ scene.hears(
 
 scene.hears(match('navigation.back'), leave());
 
-module.exports = { weather: scene };
+module.exports = { forecast: scene };

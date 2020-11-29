@@ -11,8 +11,8 @@ class Buttons {
       contactInstructor: this.ctx.i18n.t('contacts.instructor'),
       contactTechSupport: this.ctx.i18n.t('contacts.techSupport'),
       downloadMap: this.ctx.i18n.t('util.downloadMap'),
-      forADay: this.ctx.i18n.t('scenes.weather.forADay'),
-      forAWeak: this.ctx.i18n.t('scenes.weather.forAWeak'),
+      forADay: this.ctx.i18n.t('scenes.forecast.forADay'),
+      forAWeak: this.ctx.i18n.t('scenes.forecast.forAWeak'),
       freeride: this.ctx.i18n.t('categories.freeride'),
       gazprom: this.ctx.i18n.t('resorts.gazprom'),
       gazpromAlpika: this.ctx.i18n.t('resorts.gazpromAlpika'),
@@ -30,7 +30,7 @@ class Buttons {
       skiPasses: this.ctx.i18n.t('categories.skiPasses'),
       techSupport: this.ctx.i18n.t('scenes.consultation.techSupport'),
       trailMaps: this.ctx.i18n.t('categories.trailMaps'),
-      weather: this.ctx.i18n.t('categories.weather')
+      forecast: this.ctx.i18n.t('categories.forecast')
     };
   }
 }

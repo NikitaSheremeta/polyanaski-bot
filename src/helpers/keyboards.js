@@ -83,7 +83,7 @@ class Keyboards extends Buttons {
     const layout = [
       [this.buttons.openTrails, this.buttons.trailMaps],
       [this.buttons.instructors, this.buttons.skiPasses],
-      [this.buttons.rent, this.buttons.weather],
+      [this.buttons.rent, this.buttons.forecast],
       [this.buttons.consultation]
     ];
 
@@ -131,8 +131,8 @@ class Keyboards extends Buttons {
     return this.keyboard(layout);
   }
 
-  // Weather keyboard
-  get weather() {
+  // Forecast keyboard
+  get forecast() {
     const layout = [
       [this.buttons.forADay, this.buttons.forAWeak]
     ];
