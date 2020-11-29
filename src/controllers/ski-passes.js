@@ -4,9 +4,12 @@ const { match } = require('telegraf-i18n');
 
 const Messages = require('../helpers/messages');
 const Keyboards = require('../helpers/keyboards');
+const InlineKeyboards = require('../helpers/inline-keyboards');
 
 const { logger } = require('../util/logger');
 const { asyncWrapper } = require('../util/error-handler');
+
+const Articles = require('../models/articles');
 
 const { leave } = Stage;
 const scene = new Scene('ski-passes');
@@ -18,7 +21,7 @@ scene.enter(async (ctx) => {
   const keyboards = new Keyboards(ctx);
 
   // Setting keyboard keys
-  keyboards.SSPKey = true;
+  // keyboards.SSPKey = true;
   keyboards.escapeKey = true;
 
   try {
@@ -60,10 +63,18 @@ scene.hears(
 scene.hears(
   match('resorts.krasnayaPolyana'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    const article = await Articles.findById(process.env.KP_SKI_PASSES);
+
+    const inlineKeyboards = new InlineKeyboards(ctx);
+
+    inlineKeyboards.extraMarkdown = true;
+
+    const message = `[${article.title}](${article.link})`;
+
+    const resort = ctx.i18n.t('resorts.krasnayaPolyana');
 
     try {
-      await ctx.reply(messages.workInProgress);
+      await ctx.reply(message, inlineKeyboards.buySkiPass(resort));
     } catch (error) {
       logger.debug(ctx, error);
     }
@@ -73,10 +84,18 @@ scene.hears(
 scene.hears(
   match('resorts.rosaKhutor'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    const article = await Articles.findById(process.env.RK_SKI_PASSES);
+
+    const inlineKeyboards = new InlineKeyboards(ctx);
+
+    inlineKeyboards.extraMarkdown = true;
+
+    const message = `[${article.title}](${article.link})`;
+
+    const resort = ctx.i18n.t('resorts.rosaKhutor');
 
     try {
-      await ctx.reply(messages.workInProgress);
+      await ctx.reply(message, inlineKeyboards.buySkiPass(resort));
     } catch (error) {
       logger.debug(ctx, error);
     }
@@ -86,10 +105,18 @@ scene.hears(
 scene.hears(
   match('resorts.gazprom'),
   asyncWrapper(async (ctx) => {
-    const messages = new Messages(ctx);
+    const article = await Articles.findById(process.env.GP_SKI_PASSES);
+
+    const inlineKeyboards = new InlineKeyboards(ctx);
+
+    inlineKeyboards.extraMarkdown = true;
+
+    const message = `[${article.title}](${article.link})`;
+
+    const resort = ctx.i18n.t('resorts.gazprom');
 
     try {
-      await ctx.reply(messages.workInProgress);
+      await ctx.reply(message, inlineKeyboards.buySkiPass(resort));
     } catch (error) {
       logger.debug(ctx, error);
     }
