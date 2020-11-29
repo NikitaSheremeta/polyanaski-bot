@@ -2,9 +2,10 @@ const fs = require('fs');
 const path = require('path');
 
 const { logger } = require('../util/logger');
+const dateFormat = require('../util/dateformat');
 
 class OpenTrails {
-  constructor(ctx, resort = 'roza-khutor') {
+  constructor(ctx, resort) {
     this.ctx = ctx;
     this.resort = resort;
   }
@@ -25,11 +26,44 @@ class OpenTrails {
     });
   }
 
+  // Message header template.
+  preparingHeaderBody() {
+    return `${dateFormat('dddd, d mmmm HH:MM')}`;
+  }
+
+  // Message body template.
+  preparingMessageBody(openTrails) {
+    const bodyContent = [];
+
+    openTrails.forEach((item) => {
+      if (typeof item === 'string') {
+        bodyContent.push(`\n<b>${item}</b>:`);
+      } else {
+        if (item.status !== 'closed') {
+          bodyContent.push(`${item.complexity} ${item.title}`);
+        }
+      }
+    });
+
+    return bodyContent;
+  }
+
+  async createMessage() {
+    const openTrails = await this.connectToOpenTrails();
+
+    const messageHeader = this.preparingHeaderBody();
+    const messageBody = this.preparingMessageBody(openTrails[this.resort]);
+
+    const messageArray = [messageHeader, ...messageBody];
+
+    return messageArray.join('\n');
+  }
+
   async getMessage() {
     try {
-      return await this.connectToOpenTrails();
+      return await this.createMessage();
     } catch (error) {
-      return this.ctx.i18n.t('shared.errorReceivingData');
+      // return this.ctx.i18n.t('shared.errorReceivingData');
     }
   }
 }
