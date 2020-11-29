@@ -1,5 +1,6 @@
 /* eslint-disable max-statements */
 require('dotenv').config();
+require('./cron/open-trails');
 
 const mongoose = require('mongoose');
 const { Telegraf } = require('telegraf');
