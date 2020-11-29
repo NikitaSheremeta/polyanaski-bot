@@ -1,4 +1,5 @@
 const { CronJob } = require('cron');
+
 const { startParsingOpenTrails } = require('../parsers/open-trails');
 
 const TWENTY_FOUR_HOUR = 24;
