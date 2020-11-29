@@ -13,20 +13,13 @@ const QUERY_INDICES = {
   status: 3
 };
 
-// Object with parameters necessary for interpreting incoming data
-const OPTIONS = {
-  complexity: {
-    'trail-green': '🟢',
-    'trail-blue': '🔵',
-    'trail-red': '🔴',
-    'trail-black': '⚫'
-  },
-  status: {
-    'closed': 'Трасса закрыта',
-    'open': 'Трасса открыта'
-  },
+// Object with complexity indicators necessary for interpreting incoming data.
+const COMPLEXITY = {
+  'trail-green': '🟢',
+  'trail-blue': '🔵',
+  'trail-red': '🔴',
+  'trail-black': '⚫'
 };
-
 
 async function connectToPage() {
   const URL = process.env.FUNSOCHI_URL;
@@ -73,8 +66,8 @@ async function parseTrailsData() {
       status
     ] = [
       row.classNames[QUERY_INDICES.resort],
-      OPTIONS.complexity[row.classNames[QUERY_INDICES.complexity]],
-      OPTIONS.status[row.classNames[QUERY_INDICES.status]]
+      COMPLEXITY[row.classNames[QUERY_INDICES.complexity]],
+      row.classNames[QUERY_INDICES.status]
     ];
 
     if (row.classNames[0] === 'header') {
