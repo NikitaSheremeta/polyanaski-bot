@@ -66,6 +66,31 @@ class InlineKeyboards extends Buttons {
 
     return this.keyboard(layout);
   }
+
+  buySkiPass(resort) {
+    let url = String;
+
+    switch (resort) {
+      case this.ctx.i18n.t('resorts.krasnayaPolyana'):
+        url = process.env.KP_BUY_SKI_PASS_URL;
+        break;
+      case this.ctx.i18n.t('resorts.rosaKhutor'):
+        url = process.env.RK_BUY_SKI_PASS_URL;
+        break;
+      case this.ctx.i18n.t('resorts.gazprom'):
+        url = process.env.GP_BUY_SKI_PASS_URL;
+        break;
+    }
+
+    const layout = [
+      [{
+        text: this.buttons.buySkiPass,
+        url
+      }]
+    ];
+
+    return this.keyboard(layout);
+  }
 }
 
 module.exports = InlineKeyboards;
