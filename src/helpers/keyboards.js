@@ -101,6 +101,16 @@ class Keyboards extends Buttons {
     return this.keyboard(layout);
   }
 
+  // Resorts of Krasnaya Polyana keyboard in full modification
+  get resortsFull() {
+    const layout = [
+      [this.buttons.krasnayaPolyana, this.buttons.rosaKhutor],
+      [this.buttons.gazpromLaura, this.buttons.gazpromAlpika]
+    ];
+
+    return this.keyboard(layout);
+  }
+
   // Trains with an instructor keyboard
   get trains() {
     const layout = [

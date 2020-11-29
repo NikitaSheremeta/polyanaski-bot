@@ -22,7 +22,7 @@ scene.enter(async (ctx) => {
   keyboards.escapeKey = true;
 
   try {
-    await ctx.reply(messages.openTrails, keyboards.resorts);
+    await ctx.reply(messages.openTrails, keyboards.resortsFull);
   } catch (error) {
     logger.debug(ctx, error);
   }
@@ -74,9 +74,24 @@ scene.hears(
 );
 
 scene.hears(
-  match('resorts.gazprom'),
+  match('resorts.gazpromLaura'),
   asyncWrapper(async (ctx) => {
     const openTrails = new OpenTrails(ctx, 'gazprom-laura');
+
+    const message = await openTrails.getMessage();
+
+    try {
+      await ctx.replyWithHTML(message);
+    } catch (error) {
+      logger.debug(ctx, error);
+    }
+  })
+);
+
+scene.hears(
+  match('resorts.gazpromAlpika'),
+  asyncWrapper(async (ctx) => {
+    const openTrails = new OpenTrails(ctx, 'gazprom-alpika');
 
     const message = await openTrails.getMessage();
 

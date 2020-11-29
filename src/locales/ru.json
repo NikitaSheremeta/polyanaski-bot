@@ -59,9 +59,11 @@
     "next": "Дальше"
   },
   "resorts": {
-    "krasnayaPolyana": "«Красная Поляна» (Горки Город)",
+    "krasnayaPolyana": "Красная Поляна",
     "rosaKhutor": "Роза Хутор",
-    "gazprom": "Газпром и Альпика"
+    "gazprom": "Газпром и Альпика",
+    "gazpromAlpika": "Газпром Альпика",
+    "gazpromLaura": "Газпром Лаура"
   },
   "util": {
     "abkhazia": "Абхазия",
