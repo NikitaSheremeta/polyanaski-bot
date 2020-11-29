@@ -119,10 +119,16 @@ async function updateSummaryTrails() {
     JSON.stringify(trailsData),
   ];
 
-  fs.writeFile(filepath, data, (error) => {
-    if (error) throw error;
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filepath, data, (error) => {
+      if (error) {
+        reject(error);
+      } else {
+        logger.debug(null, 'The trails summary has been successfully updated');
 
-    logger.debug(null, 'The trails summary has been successfully updated');
+        resolve();
+      }
+    });
   });
 }
 
