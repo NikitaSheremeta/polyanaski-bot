@@ -9,7 +9,7 @@ const { logger } = require('../util/logger');
 const QUERY_INDICES = {
   header: 0,
   complexity: 1,
-  resort: 2,
+  resortName: 2,
   status: 3
 };
 
@@ -22,7 +22,7 @@ const COMPLEXITY = {
 };
 
 async function connectToPage() {
-  const URL = process.env.FUNSOCHI_URL;
+  const URL = process.env.FUN_SOCHI_URL;
 
   try {
     const response = await axios.get(URL);
@@ -50,6 +50,7 @@ async function parseTrailsData() {
 
   const trailsRow = DocumentTree.querySelectorAll('.trail-row');
 
+  // The skeleton of the object that is written to the local API
   const data = {
     'roza-khutor': [],
     'gorki-gorod': [],
@@ -61,28 +62,38 @@ async function parseTrailsData() {
     const row = trailsRow[key];
 
     const [
-      resort,
+      resortName,
       complexity,
       status
     ] = [
-      row.classNames[QUERY_INDICES.resort],
+      row.classNames[QUERY_INDICES.resortName],
       COMPLEXITY[row.classNames[QUERY_INDICES.complexity]],
       row.classNames[QUERY_INDICES.status]
     ];
 
     if (row.classNames[0] === 'header') {
+      // Create a new object to segment tracks into sectors
+      const sectorData = {
+        sectorName: row.childNodes[0].rawText,
+        trails: []
+      };
+
       /**
        * Because selection is carried out from an array of classes,
        * then the required property can change the index.
        * 3 is the biased index of the resort.
        */
-      data[row.classNames[3]].push(row.childNodes[0].rawText);
+      data[row.classNames[3]].push(sectorData);
     } else {
+      // Determine in which sector to add the track
+      const sectorIndex = data[resortName].length - 1;
+
       let title = row.childNodes[0].childNodes[3].rawText;
 
+      // Cut off unnecessary characters that appeared during parsing
       title = title.replace(/&nbsp;/g, '');
 
-      data[resort].push({ complexity, title, status });
+      data[resortName][sectorIndex].trails.push({ complexity, title, status });
     }
   }
 
@@ -132,7 +143,7 @@ async function updateSummaryTrails() {
   });
 }
 
-async function startParsingOpenTrails() {
+async function start() {
   try {
     await updateSummaryTrails();
   } catch (error) {
@@ -142,4 +153,4 @@ async function startParsingOpenTrails() {
   }
 }
 
-module.exports = { startParsingOpenTrails };
+module.exports.openTrailsParser = { start };

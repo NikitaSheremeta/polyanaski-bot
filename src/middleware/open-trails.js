@@ -31,18 +31,32 @@ class OpenTrails {
     return `${dateFormat('dddd, d mmmm HH:MM')}`;
   }
 
+  createTrailsContent(trails) {
+    const trailsContent = [];
+
+    trails.forEach((item) => {
+      if (item.status !== 'closed') {
+        trailsContent.push(`${item.complexity} ${item.title}`);
+      }
+    });
+
+    if (trailsContent.length === 0) {
+      trailsContent.push(this.ctx.i18n.t('scenes.openTrails.allTrailsClosed'));
+    }
+
+    return trailsContent;
+  }
+
   // Message body template.
   preparingMessageBody(openTrails) {
     const bodyContent = [];
 
     openTrails.forEach((item) => {
-      if (typeof item === 'string') {
-        bodyContent.push(`\n<b>${item}</b>:`);
-      } else {
-        if (item.status !== 'closed') {
-          bodyContent.push(`${item.complexity} ${item.title}`);
-        }
-      }
+      const trailsContent = this.createTrailsContent(item.trails);
+
+      const title = `\n<b>${item.sectorName}</b>:`;
+
+      bodyContent.push(title, ...trailsContent);
     });
 
     return bodyContent;
@@ -63,7 +77,7 @@ class OpenTrails {
     try {
       return await this.createMessage();
     } catch (error) {
-      // return this.ctx.i18n.t('shared.errorReceivingData');
+      return this.ctx.i18n.t('shared.errorReceivingData');
     }
   }
 }
