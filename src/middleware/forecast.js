@@ -1,12 +1,12 @@
 // Наблюдения: 8 ноября 03:00 API не обновилось, показывает прогноз на 7 ноября
 const axios = require('axios');
+const moment = require('moment');
 
 const WeatherEmoji = require('../models/weather-emoji');
 
 const Common = require('../helpers/common');
 
 const { logger } = require('../util/logger');
-const dateFormat = require('../util/dateformat');
 
 const ONE_DAY = 1;
 const ONE_WEEK = 7;
@@ -28,6 +28,8 @@ const TIMES_OF_DAY = {
     time: '19:00'
   }
 };
+
+moment.locale('ru');
 
 /**
  * @param {ContextMessageUpdate} ctx - Telegram context.
@@ -137,7 +139,7 @@ class Forecast {
 
   headerContentTemplate() {
     if (this.numOfDays === ONE_DAY) {
-      return dateFormat('dddd, d mmmm');
+      return moment().format('dddd, Do MMMM');
     }
 
     if (this.numOfDays === ONE_WEEK) {
@@ -176,14 +178,16 @@ class Forecast {
     if (this.numOfDays === ONE_WEEK) {
       /**
        * The API gives the date in the day / month / year format,
-       * and the dateFormator accepts a date in the month / day / year format as input.
-       * This is the easiest way out of this situation.
+       * In this case, it looks I tried to parse the string 27/04/2016,
+       * which is not an ISO format.
        */
-      const dateParts = item.date.split('/');
+      let date = item.date.split('/');
 
-      item.date = [dateParts[1], dateParts[0], dateParts[2]];
+      item.date = [date[2], date[1], date[0]];
 
-      title = `<b>${dateFormat(item.date, 'dddd, d mmmm')}</b>`;
+      date = item.date.join('-');
+
+      title = `<b>${moment(date).format('dddd, Do MMMM')}</b>`;
 
       messageArray.splice(0, 0, `• ${weatherEmoji} ${item.base.wx_desc}`);
     }
