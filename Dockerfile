@@ -8,4 +8,6 @@ RUN npm install
 
 COPY . /usr/src/app
 
+ENV TZ Europe/Moscow
+
 CMD ["npm", "start"]

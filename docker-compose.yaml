@@ -3,3 +3,5 @@ services:
   bot:
     build: .
     image: 79384206762/polyanaski-bot:latest
+    environment:
+      - TZ=Europe/Moscow
