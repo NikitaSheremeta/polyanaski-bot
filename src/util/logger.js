@@ -1,4 +1,5 @@
 const util = require('util');
+const moment = require('moment');
 
 const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, printf } = format;
@@ -13,8 +14,8 @@ function prepareMessage(ctx, msg, ...data) {
   return `: ${message}`;
 }
 
-const logFormat = printf(({ level, message, timestamp }) => {
-  return `${timestamp} ${level}: ${message}`;
+const logFormat = printf(({ level, message }) => {
+  return `${moment().format('dddd, Do MMMM HH:mm')} ${level}: ${message}`;
 });
 
 const logger = createLogger({

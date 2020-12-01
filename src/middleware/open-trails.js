@@ -4,8 +4,6 @@ const moment = require('moment');
 
 const { logger } = require('../util/logger');
 
-moment.locale('ru');
-
 class OpenTrails {
   constructor(ctx, resort) {
     this.ctx = ctx;
@@ -30,7 +28,7 @@ class OpenTrails {
 
   // Message header template.
   preparingHeaderBody() {
-    return `${moment().format('dddd, Do MMMM HH:mm')}`;
+    return `${moment().locale('ru').format('dddd, Do MMMM HH:mm')}`;
   }
 
   createTrailsContent(trails) {

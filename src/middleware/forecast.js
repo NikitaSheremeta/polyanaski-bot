@@ -29,8 +29,6 @@ const TIMES_OF_DAY = {
   }
 };
 
-moment.locale('ru');
-
 /**
  * @param {ContextMessageUpdate} ctx - Telegram context.
  * @param {number} numOfDays - Number of days for forecast API.
@@ -139,7 +137,7 @@ class Forecast {
 
   headerContentTemplate() {
     if (this.numOfDays === ONE_DAY) {
-      return moment().format('dddd, Do MMMM');
+      return moment().locale('ru').format('dddd, Do MMMM');
     }
 
     if (this.numOfDays === ONE_WEEK) {
@@ -187,7 +185,7 @@ class Forecast {
 
       date = item.date.join('-');
 
-      title = `<b>${moment(date).format('dddd, Do MMMM')}</b>`;
+      title = `<b>${moment(date).locale('ru').format('dddd, Do MMMM')}</b>`;
 
       messageArray.splice(0, 0, `• ${weatherEmoji} ${item.base.wx_desc}`);
     }
