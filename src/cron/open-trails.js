@@ -7,7 +7,7 @@ const SEVEN_HOUR = 7;
 
 const now = new Date().getHours();
 
-const openTrailsCron = new CronJob('*/10 * * * *', () => {
+const openTrailsCron = new CronJob('*/30 * * * *', () => {
   if (TWENTY_FOUR_HOUR && now > SEVEN_HOUR) {
     openTrailsParser.start();
   }
